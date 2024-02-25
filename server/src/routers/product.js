@@ -1,0 +1,22 @@
+import express from "express";
+import { productController } from "../controllers/product.js";
+import uploadCloud from "../middlewares/cloundinary.js";
+
+const router = express.Router();
+
+router.route("/").get(productController.getAllProduct);
+router.route("/").get(productController.getProductByPages);
+router.route("/search").get(productController.getProductByKey);
+router.route("/ao-bong-da-clb/").get(productController.getProductClub);
+router.route("/ao-bong-da-doi-tuyen/").get(productController.getProductNation);
+router.route("/ao-bong-da-khong-logo/").get(productController.getProductNoLogo);
+router.route("/phu-kien/").get(productController.getProductAccessory);
+router
+  .route("/create")
+  .post(uploadCloud.array("image", 10), productController.createProduct);
+router
+  .route("/update")
+  .put(uploadCloud.array("image", 10), productController.updateProduct);
+router.route("/delete").delete(productController.deleteProduct);
+
+export default router;
