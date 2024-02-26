@@ -1,16 +1,11 @@
 import React from "react";
-
-function button({
-  type = "button",
-  borderColor,
-  backgroundColor,
-  hoverColor,
-  classname,
-  text,
-}) {
+import clsx from "clsx";
+import { twMerge } from "tailwind-merge";
+function button({ children, className, handleOnClick, type = "button" }) {
+  const buttonClassName = twMerge(clsx("py-2 px-4 "), className);
   return (
-    <button type={type} className={borderColor}>
-      {text}
+    <button type={type} onClick={handleOnClick} className={buttonClassName}>
+      {children}
     </button>
   );
 }
