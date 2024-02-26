@@ -1,5 +1,0 @@
-export const env = {
-  CLOUDINARY_NAME: "dp1k689ar",
-  CLOUDINARY_KEY: "255648665943757",
-  CLOUDINARY_SECRET: "pOiC7UYKTmFGB6-d4ER9whh-gQw",
-};
