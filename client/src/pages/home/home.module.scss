@@ -1,0 +1,10 @@
+.size {
+    max-width: 100%;
+    height: auto;
+}
+
+@media only screen and (max-width: 520px) {
+    .size {
+        width: 100%;
+    }
+}

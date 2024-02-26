@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import { path } from "./utils/path";
 import Layout from "./templates/layout";
-import Home from "./pages/home";
+import Home from "./pages/home/home";
 import Cart from "./pages/cart";
 import ProductDeatails from "./pages/productDeatails";
 import ProductClb from "./pages/productClb";
