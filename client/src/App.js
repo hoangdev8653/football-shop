@@ -6,9 +6,10 @@ import Cart from "./pages/cart";
 import ProductDeatails from "./pages/productDeatails";
 import ProductClb from "./pages/productClb";
 import ProductNation from "./pages/productNation";
-import CafeSport from "./pages/cafeSport";
+import Blog from "./pages/blog/blog";
 import CheckOut from "./pages/checkout";
 import NotFound from "./pages/notFound";
+import Club from "./pages/club";
 
 import Login from "./components/login";
 import Register from "./components/register";
@@ -20,9 +21,11 @@ function App() {
         <Route index element={<Home />} />
         <Route path={path.AO_CLB} element={<ProductClb />} />
         <Route path={path.AO_DOI_TUYEN} element={<ProductNation />} />
+        <Route path={path.PRODUCT_DEATAILS} element={<ProductDeatails />} />
         <Route path={path.CHECKOUT} element={<CheckOut />} />
         <Route path={path.CART} element={<Cart />} />
-        <Route path={path.CAFE_SPORT} element={<CafeSport />} />
+        <Route path={path.BLOG} element={<Blog />} />
+        <Route path={path.CLB} element={<Club />} />
       </Route>
       <Route path={path.LOGIN} element={<Login />} />
       <Route path={path.REGISTER} element={<Register />} />
