@@ -15,6 +15,8 @@ function home() {
     speed: 500,
     slidesToShow: 4,
     slidesToScroll: 2,
+    autoplay: true,
+    autoplaySpeed: 3000,
     responsive: [
       {
         breakpoint: 1024,
@@ -70,10 +72,10 @@ function home() {
         </div>
       </div>
       <Section />
-      <div className=" w-full ">
-        <div className="max-w-[1050px] mx-auto ">
+      <div className=" w-full bg-black">
+        <div className="max-w-[1050px] mx-auto  ">
           <div className="text-orange-500 py-4 flex">
-            <b className="block flex-1 h-[2px]  bg-current font-bold mt-5 opacity-30"></b>
+            <b className="block flex-1 h-[2px] bg-current font-bold mt-5 opacity-30"></b>
             <p className=" flex mx-2 my-2">
               <CiStar className="text-orange-500 text-2xl" />
               <span className="text-lg font-bold">MÙA GIẢI 23/24 MỚI NHẤT</span>
@@ -101,8 +103,8 @@ function home() {
               <b className="block flex-1 h-[2px] bg-current font-bold mt-6 opacity-30"></b>
               <a href="/">
                 <div className="text-orange-500 flex hover:text-white">
-                  <span className="font-bold text-xl ml-2 mt-1">Xem Thêm</span>
-                  <MdOutlineNavigateNext className=" text-3xl mt-1" />
+                  <span className="font-bold text-xl ml-2 mt-2">Xem Thêm</span>
+                  <MdOutlineNavigateNext className=" text-3xl mt-2" />
                 </div>
               </a>
             </div>

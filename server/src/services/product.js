@@ -11,10 +11,9 @@ const getAllProduct = async () => {
 
 const getProductByKey = async ({ name }) => {
   const products = await ProductModel.find({ name });
-  console.log(products.length);
   const productsLength = products.length;
   if (!products || products.length === 0) {
-    throw new Error("User không tồn tại");
+    throw new Error("Product không tồn tại");
   }
   return { products, productsLength };
 };
@@ -54,6 +53,28 @@ const getProductNoLogo = async () => {
     (product) => product.categoryId.slug === "ao-khong-logo"
   );
   return ProductNoLogo;
+};
+
+const getProductFromVN = async () => {
+  const products = await ProductModel.find({}).populate(
+    "categoryId",
+    "name slug -_id"
+  );
+  const getProductFromVN = products.filter(
+    (product) => product.categoryId.slug === "ao-clb-vn"
+  );
+  return getProductFromVN;
+};
+
+const getProductPretty = async () => {
+  const products = await ProductModel.find({}).populate(
+    "categoryId",
+    "name slug -_id"
+  );
+  const getProductPerty = products.filter(
+    (product) => product.categoryId.slug === "ao-doi-tuyen-dep-nhat"
+  );
+  return getProductPerty;
 };
 
 const getProductAccessory = async () => {
@@ -130,6 +151,8 @@ export const productService = {
   getProductNation,
   getProductNoLogo,
   getProductAccessory,
+  getProductFromVN,
+  getProductPretty,
   createProduct,
   updateProduct,
   deleteProduct,

@@ -10,6 +10,8 @@ router.route("/search").get(productController.getProductByKey);
 router.route("/ao-bong-da-clb/").get(productController.getProductClub);
 router.route("/ao-bong-da-doi-tuyen/").get(productController.getProductNation);
 router.route("/ao-bong-da-khong-logo/").get(productController.getProductNoLogo);
+router.route("/ao-bong-da-clb-vn/").get(productController.getProductFromVN);
+router.route("/ao-dep-nhat/").get(productController.getProductPretty);
 router.route("/phu-kien/").get(productController.getProductAccessory);
 router
   .route("/create")

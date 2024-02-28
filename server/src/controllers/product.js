@@ -69,7 +69,10 @@ const getProductNation = async (req, res) => {
     return res
       .status(StatusCodes.OK)
       .json({ status: 200, message: "Xử lý thành công", content: product });
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR);
+  }
 };
 const getProductNoLogo = async (req, res) => {
   try {
@@ -77,12 +80,39 @@ const getProductNoLogo = async (req, res) => {
     return res
       .status(StatusCodes.OK)
       .json({ status: 200, message: "Xử lý thành công", content: product });
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR);
+  }
 };
 
 const getProductAccessory = async (req, res) => {
   try {
     const product = await productService.getProductAccessory();
+    return res
+      .status(StatusCodes.OK)
+      .json({ status: 200, message: "Xử lý thành công", content: product });
+  } catch (error) {
+    console.log(error);
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ Error: "Lỗi Server" });
+  }
+};
+
+const getProductFromVN = async (req, res) => {
+  try {
+    const product = await productService.getProductFromVN();
+    return res
+      .status(StatusCodes.OK)
+      .json({ status: 200, message: "Xử lý thành công", content: product });
+  } catch (error) {
+    console.log(error);
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ Error: "Lỗi Server" });
+  }
+};
+
+const getProductPretty = async (req, res) => {
+  try {
+    const product = await productService.getProductPretty();
     return res
       .status(StatusCodes.OK)
       .json({ status: 200, message: "Xử lý thành công", content: product });
@@ -161,6 +191,8 @@ export const productController = {
   getProductNation,
   getProductNoLogo,
   getProductAccessory,
+  getProductFromVN,
+  getProductPretty,
   createProduct,
   updateProduct,
   deleteProduct,
