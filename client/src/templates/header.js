@@ -5,9 +5,10 @@ import {
   MdOutlineAccountCircle,
   MdOutlinePhone,
 } from "react-icons/md";
-import { BsSearch, BsCart2 } from "react-icons/bs";
-
+import { BsCart2 } from "react-icons/bs";
+import ModalSearch from "../components/modal/modal";
 import Logo from "../assets/logo.png";
+
 function header() {
   return (
     <div className="w-full h-auto">
@@ -30,18 +31,18 @@ function header() {
           </a>
         </div>
       </div>
-      <div className="w-full flex  justify-between ">
-        <div></div>
+      <div className="w-full flex justify-between ">
+        <div className="opacity-0">a</div>
         <div>
           <a
             href="/"
             title="Hệ Thống Bán Lẻ Đồ Thể Thao Sporter.vn - Chuyên cung cấp Quần áo bóng đá, thảm tập yoga, quần áo tập GYM – Yoga chất lượng cao"
           >
-            <img className="w-[300px] mt-2 ml-2" src={Logo} alt="logo" />
+            <img className="w-[300px] mt-2 ml-32" src={Logo} alt="logo" />
           </a>
         </div>
         <div className="flex gap-4 mr-4 justify-center my-auto">
-          <BsSearch className="text-2xl cursor-pointer hover:opacity-60 mt-1" />
+          <ModalSearch />
           <MdOutlineAccountCircle className="text-3xl cursor-pointer hover:opacity-60 " />
           <BsCart2 className="text-2xl cursor-pointer  hover:opacity-60" />
         </div>
