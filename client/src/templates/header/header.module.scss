@@ -1,0 +1,45 @@
+.socal_media {
+    color: white;
+    display: flex;
+    gap: 8px;
+    justify-content: end;
+    margin: 0 15px;
+}
+
+.menu_mobile {
+    opacity: 0;
+    justify-content: center;
+    text-align: center;
+    margin: auto 2rem;
+    font-size: 1.5rem/* 24px */;
+    line-height: 2rem/* 32px */;
+}
+
+.nav_header {
+    background-color: black;
+    color: white; 
+    font-weight: 700;
+    justify-content: center;
+    gap: 16px;
+    font-size: 0.75rem;
+    line-height: 1rem;
+    display: flex;
+    
+}
+
+@media only screen and (max-width: 520px) {
+    .socal_media {
+        display: none;
+    }
+    
+    .menu_mobile{
+        opacity: 1;
+        cursor: pointer;
+        &:hover {
+            opacity: 0.6;
+        }
+    }
+    .nav_header {
+        display: none;
+    }
+}

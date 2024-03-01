@@ -3,7 +3,7 @@ import { path } from "./utils/path";
 import Layout from "./templates/layout";
 import Home from "./pages/home/home";
 import Cart from "./pages/cart/cart";
-import ProductDeatails from "./pages/productDeatails";
+import ProductDeatails from "./pages/productDeatails/productDeatails";
 import ProductClb from "./pages/productClb";
 import ProductNation from "./pages/productNation";
 import Blog from "./pages/blog/blog";

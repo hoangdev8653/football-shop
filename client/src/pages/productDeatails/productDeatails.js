@@ -1,11 +1,12 @@
 import React from "react";
 import Slider from "react-slick";
-import Discount from "../components/discount";
-import BannerIn from "../assets/Banner-keu-goi-in.png";
-import Button from "../components/button";
+import Discount from "../../components/discount";
+import BannerIn from "../../assets/Banner-keu-goi-in.png";
+import Button from "../../components/button";
 import { IoMdArrowUp } from "react-icons/io";
-import SizeVn from "../assets/Tu-van-size-viet-nam.png";
-import SizeTL from "../assets/Tu-van-size-thai-lan.png";
+import SizeVn from "../../assets/Tu-van-size-viet-nam.png";
+import SizeTL from "../../assets/Tu-van-size-thai-lan.png";
+import styles from "./productDeatail.module.scss";
 
 function productDeatails() {
   var settings = {
@@ -28,8 +29,8 @@ function productDeatails() {
         </div>
       </div>
       <div className="max-w-[1050px] mx-auto">
-        <div className=" flex my-8">
-          <div className="w-1/2 bg-red-500 mx-2">
+        <div className={styles.content}>
+          <div className={styles.image_product}>
             <div className="w-full relative">
               <Slider {...settings}>
                 <img
@@ -43,11 +44,11 @@ function productDeatails() {
               </Slider>
               <Discount
                 pecentDiscount={15}
-                className="absolute top-2 py-[18px] px-[14px] rounded-[30px] left-2 text-lg"
+                className="absolute top-2 px-3 py-4 rounded-full left-2 text-lg"
               />
             </div>
           </div>
-          <div className="w-1/2  mx-2">
+          <div className="w-1/2 mx-2">
             <p className="uppercase text-orange-500 font-bold text-xl mb-2">
               Áo bóng đá AC Milan sân khách 23/24 hàng Thái Lan
             </p>

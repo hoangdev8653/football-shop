@@ -13,9 +13,9 @@ function login() {
       }}
       className="max-w-[100%] h-screen flex flex-wrap justify-center items-center p-[15px] bg-no-repeat bg-center bg-cover"
     >
-      <div className="w-[500px] bg-white rounded-xl overflow-hidden px-[55px] py-[65px]">
+      <div className="w-[500px] bg-white rounded-xl overflow-hidden px-[20px] py-[30px]">
         <form className="w-full">
-          <span className="block text-[39px]   text-center pb-[50px]">
+          <span className="block text-[39px]   text-center pb-[12px]">
             Login
           </span>
           <div className="relative w-full border-b-2 border-solid  mb-[24px]">

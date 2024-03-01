@@ -1,0 +1,23 @@
+.content {
+    width: 100%;
+    margin-top: 2rem/* 32px */;
+    margin-bottom: 2rem/* 32px */;
+    display: flex;
+    // overflow-x: hidden;
+}
+.image_product {
+    width: 50%;
+    margin: 0 8px;
+}
+
+@media screen and (max-width : 520px){
+    .content {
+        display: block;
+        overflow-x: hidden;
+    }
+    
+    .image_product {
+        width: 100%;
+        margin: 8px 0;
+    }
+}

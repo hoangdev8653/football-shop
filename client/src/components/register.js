@@ -10,11 +10,11 @@ function register() {
         backgroundImage:
           "url(https://colorlib.com/etc/lf/Login_v4/images/bg-01.jpg)",
       }}
-      className="max-w-[100%] h-auto flex flex-wrap justify-center items-center p-[15px] bg-no-repeat bg-center bg-cover"
+      className="max-w-[100%] h-screen flex flex-wrap justify-center items-center p-[15px] bg-no-repeat bg-center bg-cover"
     >
-      <div className="w-[500px] bg-white rounded-xl overflow-hidden px-[55px] py-[65px]">
+      <div className="w-[500px] bg-white rounded-xl overflow-hidden px-[30px]">
         <form className="w-full">
-          <span className="block text-[39px]   text-center pb-[50px]">
+          <span className="block text-[39px] text-center pb-[12px] mt-4">
             Register
           </span>
           <div className="relative w-full border-b-2 border-solid  mb-[24px]">
@@ -59,7 +59,7 @@ function register() {
               />
             </p>
           </div>
-          <div className="relative w-full border-b-2 border-solid  mb-[24px]">
+          <div className="relative w-full border-b-2 border-solid  mb-[12px]">
             <span className="text-base text-gray-600 pl-[7px] font-medium">
               Phone:
             </span>
