@@ -1,8 +1,9 @@
 import React from "react";
 import { CiLock } from "react-icons/ci";
-import Discount from "../components/discount";
-import WishList from "../components/wishList";
-import Section from "../components/section";
+import Discount from "../../components/discount";
+import WishList from "../../components/wishList";
+import Section from "../../components/section";
+import styles from "./club.module.scss";
 
 function club() {
   return (
@@ -12,14 +13,106 @@ function club() {
           áo bóng đá man city mùa giải mới 23/24 sân nhà và sân khách
         </div>
         <img
-          className="w-full object-cover"
+          className={`${styles.size_img}`}
           src="https://www.sporter.vn/wp-content/uploads/2023/01/Banner-manchester-city.jpg"
           alt="banner"
         />
       </div>
       <div className="max-w-[1050px] mx-auto my-8">
-        <div className="flex">
-          <div className="w-1/3 mx-[2px] relative">
+        <div className={styles.content}>
+          <div className={styles.item_product}>
+            <img
+              style={{
+                background:
+                  "linear-gradient(to top, #323232 0%, rgba(50, 50, 50, 0) 33%)",
+                boxShadow: " rgba(0, 0, 0, 0.35) 0px -50px 36px -28px inset",
+              }}
+              className="w-full"
+              src="https://www.sporter.vn/wp-content/uploads/2023/05/Ao-bong-da-man-city-san-nha-1.png"
+              alt="1"
+            />
+            <div
+              style={{ textShadow: "1px 1px 1px rgba(0,0,0,0.5)" }}
+              className="absolute  w-full bottom-0 "
+            >
+              <div className="mx-10 text-center">
+                <p className="text-gray-200">
+                  Áo bóng đá Man city sân nhà 23/24 hàng thái lan
+                </p>
+                <p className="text-gray-400 ">
+                  <span className="">
+                    <del className="mx-1">330.000đ</del>
+                    <ins className="mx-1 text-white">
+                      <strong>280.000đ</strong>
+                    </ins>
+                  </span>
+                </p>
+                <div className="text-center mt-2 mb-2">
+                  <p className=" text-white flex items-center justify-center gap-2 ">
+                    <CiLock
+                      title="Add to Cart"
+                      className="text-3xl hover:opacity-60 cursor-pointer"
+                    />
+                    <button className="bg-black rounded-2xl px-[6px] font-medium hover:text-black hover:bg-white">
+                      Quick view
+                    </button>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <Discount
+              className="absolute px-2 py-3 rounded-3xl top-4"
+              pecentDiscount={15}
+            />
+            <WishList className="absolute right-3 top-2 " />
+          </div>
+          <div className={styles.item_product}>
+            <img
+              style={{
+                background:
+                  "linear-gradient(to top, #323232 0%, rgba(50, 50, 50, 0) 33%)",
+                boxShadow: " rgba(0, 0, 0, 0.35) 0px -50px 36px -28px inset",
+              }}
+              className="w-full"
+              src="https://www.sporter.vn/wp-content/uploads/2023/05/Ao-bong-da-man-city-san-nha-1.png"
+              alt="1"
+            />
+            <div
+              style={{ textShadow: "1px 1px 1px rgba(0,0,0,0.5)" }}
+              className="absolute  w-full bottom-0 "
+            >
+              <div className="mx-10 text-center">
+                <p className="text-gray-200">
+                  Áo bóng đá Man city sân nhà 23/24 hàng thái lan
+                </p>
+                <p className="text-gray-400 ">
+                  <span className="">
+                    <del className="mx-1">330.000đ</del>
+                    <ins className="mx-1 text-white">
+                      <strong>280.000đ</strong>
+                    </ins>
+                  </span>
+                </p>
+                <div className="text-center mt-2 mb-2">
+                  <p className=" text-white flex items-center justify-center gap-2 ">
+                    <CiLock
+                      title="Add to Cart"
+                      className="text-3xl hover:opacity-60 cursor-pointer"
+                    />
+                    <button className="bg-black rounded-2xl px-[6px] font-medium hover:text-black hover:bg-white">
+                      Quick view
+                    </button>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <Discount
+              className="absolute px-2 py-3 rounded-3xl top-4"
+              pecentDiscount={15}
+            />
+            <WishList className="absolute right-2 top-2 " />
+          </div>
+          <div className={styles.item_product}>
             <img
               style={{
                 background:
@@ -67,9 +160,11 @@ function club() {
           </div>
         </div>
       </div>
-      <Section />
-      <div className="max-w-[1050px] mx-auto">
-        <p className="mb-2 mt-4">
+      <div className={styles.section_destop}>
+        <Section />
+      </div>
+      <div className={`${styles.mx} max-w-[1050px] mx-auto`}>
+        <p className="mb-2 mt-4 ">
           Quần áo bóng đá câu lạc bộ{" "}
           <span className="text-black font-semibold text-base">
             ManChester City

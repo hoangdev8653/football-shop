@@ -9,7 +9,7 @@ import ProductNation from "./pages/productNation";
 import Blog from "./pages/blog/blog";
 import CheckOut from "./pages/checkout";
 import NotFound from "./pages/notFound";
-import Club from "./pages/club";
+import Club from "./pages/club/club";
 
 import Login from "./components/login";
 import Register from "./components/register";

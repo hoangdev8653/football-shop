@@ -1,0 +1,34 @@
+.size_img {
+    width: 100%;
+    object-fit: cover;
+}
+
+.content {
+    display: flex;
+}
+
+.item_product {
+    width: 33.3333%;
+    position: relative;
+    margin: 0 2px;
+}
+
+@media screen and (max-width : 520px) {
+        .size_img {
+            height: 400px;
+        }
+        .content {
+            display: block;
+            overflow-x: hidden;
+        }
+        .item_product {
+            width: 100%;
+            margin: 8px;
+        }
+        .section_destop {
+            display: none;
+        }
+        .mx {
+            margin: 0 8px;
+        }
+}

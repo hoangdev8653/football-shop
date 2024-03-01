@@ -20,7 +20,7 @@ function productDeatails() {
   return (
     <div className="product-deatail">
       <div className="w-full" style={{ backgroundColor: "rgba(0,0,0,0.25)" }}>
-        <div className="max-w-[1050px] mx-auto py-4 text-white uppercase text-lg font-medium flex text-center justify-center gap-2">
+        <div className={styles.page_title}>
           <a className="hover:opacity-70" href="/">
             Home
           </a>{" "}
@@ -48,7 +48,7 @@ function productDeatails() {
               />
             </div>
           </div>
-          <div className="w-1/2 mx-2">
+          <div className={styles.info_product}>
             <p className="uppercase text-orange-500 font-bold text-xl mb-2">
               Áo bóng đá AC Milan sân khách 23/24 hàng Thái Lan
             </p>
