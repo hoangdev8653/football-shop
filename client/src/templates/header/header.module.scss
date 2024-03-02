@@ -27,11 +27,26 @@
     
 }
 
+@media screen and (max-width : 860px){
+    .socal_media {
+        display: none;
+    }
+    .menu_mobile{
+        opacity: 1;
+        cursor: pointer;
+        &:hover {
+            opacity: 0.6;
+        }
+    }
+    .nav_header {
+        display: none;
+    }
+}
+
 @media only screen and (max-width: 520px) {
     .socal_media {
         display: none;
     }
-    
     .menu_mobile{
         opacity: 1;
         cursor: pointer;

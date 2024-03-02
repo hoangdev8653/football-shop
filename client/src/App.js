@@ -5,7 +5,7 @@ import Home from "./pages/home/home";
 import Cart from "./pages/cart/cart";
 import ProductDeatails from "./pages/productDeatails/productDeatails";
 import ProductClb from "./pages/productClb";
-import ProductNation from "./pages/productNation";
+import ProductNation from "./pages/productNation/productNation";
 import Blog from "./pages/blog/blog";
 import CheckOut from "./pages/checkout";
 import NotFound from "./pages/notFound";

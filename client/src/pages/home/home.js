@@ -130,7 +130,7 @@ function home() {
         >
           <div className="max-w-[1050px] mx-auto ">
             <div className="text-orange-500 py-4 flex">
-              <b className="block flex-1 h-[2px]  bg-current font-bold mt-6 opacity-30"></b>
+              <b className="block flex-1 h-[2px] bg-current font-bold mt-6 opacity-30"></b>
               <p className=" flex mx-2 my-2">
                 <CiStar className="text-white text-4xl " />
                 <span className={styles.title_newBlog}>
