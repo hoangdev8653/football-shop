@@ -51,9 +51,11 @@ function Modal() {
                 type="text"
               />
             </div>
-            <BsSearch
-              className={`${styles.positionModal} absolute  z-50  text-white font-bold text-3xl mt-2 mr-3 cursor-pointer hover:opacity-60`}
-            />
+            <a href={`/search/?s=${""}&post_type=product`}>
+              <BsSearch
+                className={`${styles.positionModal} absolute z-50 text-white font-bold text-3xl mt-2 mr-3 cursor-pointer hover:opacity-60`}
+              />
+            </a>
           </div>
           <div className={styles.overlay}></div>
         </>

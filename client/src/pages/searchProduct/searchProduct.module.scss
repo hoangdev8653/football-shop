@@ -1,0 +1,58 @@
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.container {
+    position: relative;
+    cursor: pointer;
+    overflow-y: hidden;
+    display: flex;
+    z-index: 20;
+    margin: 8px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  }
+  
+  .image {
+    display: block;
+    width: 100%;
+    height: auto;
+    padding: 0 2px;
+  }
+  
+  .overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    transition: .5s ease;
+  }
+  
+  .container:hover .overlay {
+    opacity: 1;
+  }
+ .box_text_item {
+    --tw-text-opacity: 1;
+    color: rgb(249 115 22 / var(--tw-text-opacity));
+    text-transform: uppercase;
+    display: block;
+ }
+
+@media screen and (max-width: 1045px) {
+    .grid {
+        padding: 4px;
+        display: grid;
+        grid-template-columns: repeat(1, minmax(0, 1fr));
+    }
+    .container {
+        position: relative;
+        cursor: pointer;
+        overflow-y: hidden;
+        display: block;
+    }
+   
+}

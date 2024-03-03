@@ -9,6 +9,7 @@ export const path = {
   PRODUCT_DEATAILS: "/product/:slug",
   CART: "/cart",
   CHECKOUT: "/checkout",
+  SEARCH_PRODUCT: "/search",
   BLOG: "/blog",
   LOGIN: "/login",
   REGISTER: "/register",

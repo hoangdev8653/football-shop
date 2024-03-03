@@ -9,6 +9,7 @@ import ProductNation from "./pages/productNation/productNation";
 import ProductNoLogo from "./pages/productNoLogo/productNoLogo";
 import Blog from "./pages/blog/blog";
 import CheckOut from "./pages/checkout/checkout";
+import SearchProduct from "./pages/searchProduct/searchProduct";
 import NotFound from "./pages/notFound";
 import Club from "./pages/club/club";
 
@@ -24,6 +25,7 @@ function App() {
         <Route path={path.AO_DOI_TUYEN} element={<ProductNation />} />
         <Route path={path.PRODUCT_DEATAILS} element={<ProductDeatails />} />
         <Route path={path.AO_KHONG_LOGO} element={<ProductNoLogo />} />
+        <Route path={path.SEARCH_PRODUCT} element={<SearchProduct />} />
         <Route path={path.CART} element={<Cart />} />
         <Route path={path.BLOG} element={<Blog />} />
         <Route path={path.CLB} element={<Club />} />
