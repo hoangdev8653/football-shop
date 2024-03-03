@@ -5,11 +5,11 @@ import {
   MdOutlineAccountCircle,
   MdOutlinePhone,
 } from "react-icons/md";
-import { BsCart2 } from "react-icons/bs";
 import ModalSearch from "../../components/modal/modal";
 import Logo from "../../assets/logo.png";
 import { IoMdMenu } from "react-icons/io";
 import styles from "./header.module.scss";
+import Cart from "../../components/cart/cart";
 
 function header() {
   return (
@@ -52,7 +52,7 @@ function header() {
             <MdOutlineAccountCircle className="text-3xl cursor-pointer hover:opacity-60 " />
           </a>
           {/* modal cart */}
-          <BsCart2 className="text-2xl cursor-pointer  hover:opacity-60" />
+          <Cart />
         </div>
       </div>
       <div className={styles.nav_header}>
