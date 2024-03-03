@@ -78,7 +78,7 @@ function productNoLogo() {
                 <p className="mx-4 text-xs pt-2 hover:opacity-60">
                   Áo bóng đá Dortmund sân nhà 23/24 hàng thái lan
                 </p>
-                <p className="mb-6 mt-1 text-xs">
+                <p className="mb-2 mt-1 text-xs">
                   <del className="text-gray-400 mx-2">330,000đ</del>
                   <ins className="mx-2 text-white">
                     <strong>280,000đ</strong>
@@ -113,7 +113,7 @@ function productNoLogo() {
                 <p className="mx-4 text-xs pt-2 hover:opacity-60">
                   Áo bóng đá Dortmund sân nhà 23/24 hàng thái lan
                 </p>
-                <p className="mb-6 mt-1 text-xs">
+                <p className="mb-2 mt-1 text-xs">
                   <del className="text-gray-400 mx-2">330,000đ</del>
                   <ins className="mx-2 text-white">
                     <strong>280,000đ</strong>
@@ -148,7 +148,7 @@ function productNoLogo() {
                 <p className="mx-4 text-xs pt-2 hover:opacity-60">
                   Áo bóng đá Dortmund sân nhà 23/24 hàng thái lan
                 </p>
-                <p className="mb-6 mt-1 text-xs">
+                <p className="mb-2 mt-1 text-xs">
                   <del className="text-gray-400 mx-2">330,000đ</del>
                   <ins className="mx-2 text-white">
                     <strong>280,000đ</strong>
@@ -183,7 +183,7 @@ function productNoLogo() {
                 <p className="mx-4 text-xs pt-2 hover:opacity-60">
                   Áo bóng đá Dortmund sân nhà 23/24 hàng thái lan
                 </p>
-                <p className="mb-6 mt-1 text-xs">
+                <p className="mb-2 mt-1 text-xs">
                   <del className="text-gray-400 mx-2">330,000đ</del>
                   <ins className="mx-2 text-white">
                     <strong>280,000đ</strong>
@@ -218,7 +218,7 @@ function productNoLogo() {
                 <p className="mx-4 text-xs pt-2 hover:opacity-60">
                   Áo bóng đá Dortmund sân nhà 23/24 hàng thái lan
                 </p>
-                <p className="mb-6 mt-1 text-xs">
+                <p className="mb-2 mt-1 text-xs">
                   <del className="text-gray-400 mx-2">330,000đ</del>
                   <ins className="mx-2 text-white">
                     <strong>280,000đ</strong>
@@ -253,7 +253,7 @@ function productNoLogo() {
                 <p className="mx-4 text-xs pt-2 hover:opacity-60">
                   Áo bóng đá Dortmund sân nhà 23/24 hàng thái lan
                 </p>
-                <p className="mb-6 mt-1 text-xs">
+                <p className="mb-2 mt-1 text-xs">
                   <del className="text-gray-400 mx-2">330,000đ</del>
                   <ins className="mx-2 text-white">
                     <strong>280,000đ</strong>

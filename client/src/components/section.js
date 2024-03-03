@@ -18,7 +18,7 @@ function section() {
         <div className="flex flex-wrap justify-center">
           <div className="max-w-[126px] relative flex ">
             <div className="ml-auto p-[15px] relative ">
-              <a className="" href="/" target="_blank">
+              <a className="" href="/club/:slug" target="_blank">
                 <img
                   src="https://www.sporter.vn/wp-content/uploads/2023/11/Logo-arsenal-white.png"
                   alt="logo"

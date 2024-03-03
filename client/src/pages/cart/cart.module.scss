@@ -41,7 +41,41 @@ input:focus {
     background-color: #fff;
 }
 
-@media only screen and (max-width: 520px) { 
+@media only screen and (max-width: 860px) { 
+    .cart {
+        display: block;
+        overflow-x: hidden;
+    }
+    .title_cart_destop {
+        display: none;
+    }
+    .title_cart_mobile {
+        display: block;
+        margin-top: 20px;
+    }
+    .th_price {
+        display: none;
+    }
+    .th_subtotal {
+        display: none;
+    }
+    .td_price {
+        display: none;
+    }
+    .td_subtotal {
+        display: none;
+    }
+    .detail_product {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+    .price_one_product {
+        display: block;
+        margin: 4px;
+    }
+}
+
+@media only screen and (max-width: 600px) { 
     .cart {
         display: block;
         overflow-x: hidden;

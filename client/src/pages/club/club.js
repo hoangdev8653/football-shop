@@ -19,15 +19,10 @@ function club() {
         />
       </div>
       <div className="max-w-[1050px] mx-auto my-8">
-        <div className={styles.content}>
+        <div className={styles.grid}>
           <div className={styles.item_product}>
             <img
-              style={{
-                background:
-                  "linear-gradient(to top, #323232 0%, rgba(50, 50, 50, 0) 33%)",
-                boxShadow: " rgba(0, 0, 0, 0.35) 0px -50px 36px -28px inset",
-              }}
-              className="w-full"
+              className={styles.img_product}
               src="https://www.sporter.vn/wp-content/uploads/2023/05/Ao-bong-da-man-city-san-nha-1.png"
               alt="1"
             />
@@ -36,9 +31,11 @@ function club() {
               className="absolute  w-full bottom-0 "
             >
               <div className="mx-10 text-center">
-                <p className="text-gray-200">
-                  Áo bóng đá Man city sân nhà 23/24 hàng thái lan
-                </p>
+                <a href="/">
+                  <p className="text-gray-200">
+                    Áo bóng đá Man city sân nhà 23/24 hàng thái lan
+                  </p>
+                </a>
                 <p className="text-gray-400 ">
                   <span className="">
                     <del className="mx-1">330.000đ</del>
@@ -68,12 +65,7 @@ function club() {
           </div>
           <div className={styles.item_product}>
             <img
-              style={{
-                background:
-                  "linear-gradient(to top, #323232 0%, rgba(50, 50, 50, 0) 33%)",
-                boxShadow: " rgba(0, 0, 0, 0.35) 0px -50px 36px -28px inset",
-              }}
-              className="w-full"
+              className={styles.img_product}
               src="https://www.sporter.vn/wp-content/uploads/2023/05/Ao-bong-da-man-city-san-nha-1.png"
               alt="1"
             />
@@ -82,9 +74,12 @@ function club() {
               className="absolute  w-full bottom-0 "
             >
               <div className="mx-10 text-center">
-                <p className="text-gray-200">
-                  Áo bóng đá Man city sân nhà 23/24 hàng thái lan
-                </p>
+                <a href="/">
+                  <p className="text-gray-200">
+                    Áo bóng đá Man city sân nhà 23/24 hàng thái lan
+                  </p>
+                </a>
+
                 <p className="text-gray-400 ">
                   <span className="">
                     <del className="mx-1">330.000đ</del>
@@ -114,23 +109,20 @@ function club() {
           </div>
           <div className={styles.item_product}>
             <img
-              style={{
-                background:
-                  "linear-gradient(to top, #323232 0%, rgba(50, 50, 50, 0) 33%)",
-                boxShadow: " rgba(0, 0, 0, 0.35) 0px -50px 36px -28px inset",
-              }}
-              className="w-full"
+              className={styles.img_product}
               src="https://www.sporter.vn/wp-content/uploads/2023/05/Ao-bong-da-man-city-san-nha-1.png"
-              alt="1"
+              alt="anh1"
             />
             <div
               style={{ textShadow: "1px 1px 1px rgba(0,0,0,0.5)" }}
               className="absolute  w-full bottom-0 "
             >
               <div className="mx-10 text-center">
-                <p className="text-gray-200">
-                  Áo bóng đá Man city sân nhà 23/24 hàng thái lan
-                </p>
+                <a href="/">
+                  <p className="text-gray-200">
+                    Áo bóng đá Man city sân nhà 23/24 hàng thái lan
+                  </p>
+                </a>
                 <p className="text-gray-400 ">
                   <span className="">
                     <del className="mx-1">330.000đ</del>

@@ -46,23 +46,27 @@ function header() {
           </a>
         </div>
         <div className="flex gap-4 mr-4 justify-center my-auto">
+          {/* modal search  */}
           <ModalSearch />
-          <MdOutlineAccountCircle className="text-3xl cursor-pointer hover:opacity-60 " />
+          <a href="/login">
+            <MdOutlineAccountCircle className="text-3xl cursor-pointer hover:opacity-60 " />
+          </a>
+          {/* modal cart */}
           <BsCart2 className="text-2xl cursor-pointer  hover:opacity-60" />
         </div>
       </div>
       <div className={styles.nav_header}>
-        <a className="my-2" href="/">
+        <a className="my-2" href="/ao-bong-da-clb/">
           <span className="opacity-80 hover:opacity-100">
             ÁO BÓNG ĐÁ CÂU LẠC BỘ
           </span>
         </a>
-        <a className="my-2" href="/">
+        <a className="my-2" href="/ao-bong-da-doi-tuyen">
           <span className="opacity-80 hover:opacity-100">
             ÁO BÓNG ĐÁ ĐỘI TUYỂN
           </span>
         </a>
-        <a className="my-2" href="/">
+        <a className="my-2" href="/ao-bong-da-khong-logo">
           <span className="opacity-80 hover:opacity-100">
             ÁO BÓNG ĐÁ KHÔNG LOGO
           </span>

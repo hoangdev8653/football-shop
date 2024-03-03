@@ -52,14 +52,18 @@
 .grid {
     display: grid;
     grid-template-columns: repeat(6, minmax(0, 1fr));
-    gap: 4px;
 }
-
 .print {
     margin: 0 192px;
 }
 
-@media screen and (max-width: 860px) {
+@media screen and (max-width : 1080px){
+    .grid {
+        grid-template-columns: repeat(6, minmax(0,1fr));
+    }
+}
+
+@media screen and (max-width: 995px) {
     .grid {
         grid-template-columns: repeat(3, minmax(0,1fr));
     }

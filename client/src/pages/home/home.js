@@ -71,15 +71,21 @@ function home() {
               </p>
               <div className="justify-between items-center ">
                 <div className="ml-6 pb-8">
-                  <Button className="text-orange-600 bg-transparent mx-2 hover:text-white hover:bg-orange-500 border-orange-600 border-solid border-2 font-semibold ">
-                    CÂU LẠC BỘ 23/24
-                  </Button>
-                  <Button className="text-orange-600 bg-transparent mx-2 hover:text-white hover:bg-orange-500 border-orange-600 border-solid border-2 font-semibold ">
-                    ĐỘI TUYỂN QUỐC GIA 2024
-                  </Button>
-                  <Button className="text-orange-600 bg-transparent mx-2 hover:text-white hover:bg-orange-500 border-orange-600 border-solid border-2 font-semibold ">
-                    BÓNG ĐÁ KHÔNG LOGO
-                  </Button>
+                  <a href="/ao-bong-da-clb/">
+                    <Button className="text-orange-600 bg-transparent mx-2 hover:text-white hover:bg-orange-500 border-orange-600 border-solid border-2 font-semibold ">
+                      CÂU LẠC BỘ 23/24
+                    </Button>
+                  </a>
+                  <a href="/ao-bong-da-doi-tuyen">
+                    <Button className="text-orange-600 bg-transparent mx-2 hover:text-white hover:bg-orange-500 border-orange-600 border-solid border-2 font-semibold ">
+                      ĐỘI TUYỂN QUỐC GIA 2024
+                    </Button>
+                  </a>
+                  <a href="/ao-bong-da-khong-logo">
+                    <Button className="text-orange-600 bg-transparent mx-2 hover:text-white hover:bg-orange-500 border-orange-600 border-solid border-2 font-semibold ">
+                      BÓNG ĐÁ KHÔNG LOGO
+                    </Button>
+                  </a>
                 </div>
               </div>
             </div>
