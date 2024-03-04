@@ -16,7 +16,7 @@ function header() {
     <div className="w-full h-auto">
       <div className="bg-black text-right ">
         <div className={styles.socal_media}>
-          <a href="/" title="FaceBook">
+          <a href="/" title="Facebook">
             <FaFacebookF />
           </a>
           <a href="/" title="Instagram">

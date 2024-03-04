@@ -10,6 +10,7 @@ export const path = {
   CART: "/cart",
   CHECKOUT: "/checkout",
   SEARCH_PRODUCT: "/search",
+  PROFILE: "/profile",
   BLOG: "/blog",
   LOGIN: "/login",
   REGISTER: "/register",

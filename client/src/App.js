@@ -8,13 +8,14 @@ import ProductClb from "./pages/productClb/productClb";
 import ProductNation from "./pages/productNation/productNation";
 import ProductNoLogo from "./pages/productNoLogo/productNoLogo";
 import Blog from "./pages/blog/blog";
-import CheckOut from "./pages/checkout/checkout";
 import SearchProduct from "./pages/searchProduct/searchProduct";
-import NotFound from "./pages/notFound";
 import Club from "./pages/club/club";
 
 import Login from "./components/login";
+import NotFound from "./pages/notFound";
+import Profile from "./pages/profile/profile";
 import Register from "./components/register";
+import CheckOut from "./pages/checkout/checkout";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
         <Route path={path.CLB} element={<Club />} />
       </Route>
       <Route path={path.LOGIN} element={<Login />} />
+      <Route path={path.PROFILE} element={<Profile />} />
       <Route path={path.REGISTER} element={<Register />} />
       <Route path={path.CHECKOUT} element={<CheckOut />} />
       <Route path={path.NOTFOUND} element={<NotFound />} />
