@@ -4,7 +4,7 @@ import Layout from "./templates/layout";
 import Home from "./pages/home/home";
 import Cart from "./pages/cart/cart";
 import ProductDeatails from "./pages/productDeatails/productDeatails";
-import ProductClb from "./pages/productClb";
+import ProductClb from "./pages/productClb/productClb";
 import ProductNation from "./pages/productNation/productNation";
 import ProductNoLogo from "./pages/productNoLogo/productNoLogo";
 import Blog from "./pages/blog/blog";

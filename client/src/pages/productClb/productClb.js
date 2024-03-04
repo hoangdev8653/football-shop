@@ -1,11 +1,12 @@
 import React from "react";
-import Banner from "../assets/Banner-bong-da-clb.png";
-import Section from "../components/section";
-import ProductItems from "../components/ProductItems/productItems";
+import Banner from "../../assets/Banner-bong-da-clb.png";
+import Section from "../../components/section/section";
+import ProductItems from "../../components/ProductItems/productItems";
 import { BsCart2 } from "react-icons/bs";
 import { CiStar } from "react-icons/ci";
-import Discount from "../components/discount";
-import WishList from "../components/wishList";
+import styles from "./productClub.module.scss";
+import Discount from "../../components/discount";
+import WishList from "../../components/wishList";
 
 function productClb() {
   return (
@@ -17,10 +18,7 @@ function productClb() {
       </div>
       <div className="w-full relative mb-8">
         <img className="bg-cover w-full" src={Banner} alt="banner" />
-        <div
-          style={{ backgroundColor: "rgba(0,0,0,0.6)" }}
-          className="max-w-[1050px]  absolute bottom-24 left-[20%] "
-        >
+        <div className={styles.box_text}>
           <div className="text-center text-white ">
             <p className="text-2xl pt-4 py-2 font-bold">
               ÁO BÓNG ĐÁ MÙA GIẢI MỚI

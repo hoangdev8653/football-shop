@@ -1,0 +1,13 @@
+.box_text {
+    position: absolute;
+    left: 20%;
+    bottom: 96px;
+    background-color: rgba(0,0,0,0.6);
+}
+
+@media screen and (max-width : 860px) {
+    .box_text {
+        width: 80%;
+        left: 10%;
+    }
+}

@@ -2,7 +2,7 @@ import React from "react";
 import { CiLock } from "react-icons/ci";
 import Discount from "../../components/discount";
 import WishList from "../../components/wishList";
-import Section from "../../components/section";
+import Section from "../../components/section/section";
 import styles from "./club.module.scss";
 
 function club() {

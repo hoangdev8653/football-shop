@@ -3,7 +3,7 @@ import { CiStar } from "react-icons/ci";
 import BannerDestop from "../../assets/Home-banner.jpg";
 import BannerMobile from "../../assets/Banner-homepage-mobile-1.jpg";
 import Button from "../../components/button";
-import Section from "../../components/section";
+import Section from "../../components/section/section";
 import ProductItems from "../../components/ProductItems/productItems";
 import { MdOutlineNavigateNext } from "react-icons/md";
 import Slider from "react-slick";
