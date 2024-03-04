@@ -1,15 +1,16 @@
 .cart {
     position: absolute;
     margin-top: 0.25rem;
-    top: 35px;
+    top: 12px;
     background-color: rgba(0,0,0,0.8);
     width: 300px;
     right: -16px;
     z-index: 50;
 }
 .fill {
-    padding: 8px;
+    padding:  12px;
     cursor: pointer;
+    position: absolute;
 }
 
 .icon_close {

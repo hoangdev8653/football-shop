@@ -24,6 +24,7 @@ function Cart() {
       <BsCart2 className="text-2xl cursor-pointer hover:opacity-60 " />
       {isOpen && (
         <div className={styles.fill}>
+          {/* <p>hoang</p> */}
           <div className={styles.cart}>
             <div className="mx-4">
               <div className="max-h-[400px] overflow-y-auto">
