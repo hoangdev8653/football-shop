@@ -5,8 +5,26 @@ import { IoMdLock } from "react-icons/io";
 import { MdOutlineNavigateNext } from "react-icons/md";
 import Button from "../../components/button";
 import Footer from "../../templates/footer";
+import { useFormik } from "formik";
+import { checkoutValidate } from "../../validations/checkout";
 
-function checkout() {
+function Checkout() {
+  const formik = useFormik({
+    initialValues: {
+      firstname: "",
+      lastname: "",
+      company: "",
+      street: "",
+      city: "",
+      phonenumber: "",
+      email: "",
+      notes: "",
+      picked: "",
+    },
+    onSubmit: (values) => console.log(values),
+    validationSchema: checkoutValidate,
+  });
+
   return (
     <div className={styles.checkout}>
       <div className="max-w-[1050px] mx-auto">
@@ -51,62 +69,178 @@ function checkout() {
             </span>
           </a>
         </div>
-        <div className={styles.content}>
+        <form onSubmit={formik.handleSubmit} className={styles.content}>
           <div className={styles.info_user}>
             <p className="mt-4 mb-2 text-orange-500">BILLING DETAILS</p>
-            <form className="w-full">
-              <div className="my-2">
+            <div className="w-full">
+              <div className="">
                 <label>First name *</label>
                 <input
-                  className="w-full border-[2px] border-solid font-normal border-gray-300 py-1 px-3 my-2 placeholder:font-normal"
+                  className="w-full border-[2px] border-solid font-normal border-gray-300 py-1 px-3 my-1 placeholder:font-normal"
                   placeholder="Please your type first name"
+                  type="text"
+                  name="firstname"
+                  id="firstname"
+                  value={formik.values.firstname}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                 />
               </div>
-              <div className="my-2">
+              {formik.touched.firstname && formik.errors.firstname && (
+                <div
+                  style={{
+                    color: "red",
+                    textAlign: "center",
+                    fontWeight: "500",
+                  }}
+                >
+                  {formik.errors.firstname}
+                </div>
+              )}
+              <div className="">
                 <label>Last name *</label>
                 <input
-                  className="w-full border-[2px] border-solid font-normal border-gray-300 py-1 px-3 my-2 placeholder:font-normal"
+                  className="w-full border-[2px] border-solid font-normal border-gray-300 py-1 px-3 my-1 placeholder:font-normal"
                   placeholder="Please your type last name"
+                  type="text"
+                  name="lastname"
+                  id="lastname"
+                  value={formik.values.lastname}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                 />
               </div>
-              <div className="my-2">
+              {formik.touched.firstname && formik.errors.firstname && (
+                <div
+                  style={{
+                    color: "red",
+                    textAlign: "center",
+                    fontWeight: "500",
+                  }}
+                >
+                  {formik.errors.firstname}
+                </div>
+              )}
+              <div className="">
                 <label>Company name (optional)</label>
-                <input className="w-full border-[2px] border-solid font-normal border-gray-300 py-1 px-3 my-2 placeholder:font-normal" />
+                <input
+                  type="text"
+                  name="company"
+                  id="company"
+                  value={formik.values.company}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  className="w-full border-[2px] border-solid font-normal border-gray-300 py-1 px-3 my-1 placeholder:font-normal"
+                />
               </div>
-              <div className="my-2">
+              <div className="">
                 <label>Street address *</label>
                 <input
-                  className="w-1/2 block border-[2px] border-solid font-normal border-gray-300 py-1 px-3 my-2 placeholder:font-normal"
+                  className="w-1/2 block border-[2px] border-solid font-normal border-gray-300 py-1 px-3 my-1 placeholder:font-normal"
                   placeholder="House number and street name"
+                  type="text"
+                  name="street"
+                  id="street"
+                  value={formik.values.street}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                 />
               </div>
-              <div className="my-2">
+              {formik.touched.street && formik.errors.street && (
+                <div
+                  style={{
+                    color: "red",
+                    textAlign: "left",
+                    fontWeight: "500",
+                  }}
+                >
+                  {formik.errors.street}
+                </div>
+              )}
+              <div className="">
                 <label>Town / City *</label>
-                <input className="w-full border-[2px] border-solid font-normal border-gray-300 py-1 px-3 my-2 placeholder:font-normal" />
+                <input
+                  type="text"
+                  name="city"
+                  id="city"
+                  value={formik.values.city}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                  className="w-full border-[2px] border-solid font-normal border-gray-300 py-1 px-3 my-1 placeholder:font-normal"
+                />
+                {formik.touched.city && formik.errors.city && (
+                  <div
+                    style={{
+                      color: "red",
+                      textAlign: "center",
+                      fontWeight: "500",
+                    }}
+                  >
+                    {formik.errors.city}
+                  </div>
+                )}
                 <label>Phone *</label>
                 <input
+                  className="w-full border-[2px] border-solid font-normal border-gray-300 py-1 px-3 my-1 placeholder:font-normal"
                   type="phone"
-                  className="w-full border-[2px] border-solid font-normal border-gray-300 py-1 px-3 my-2 placeholder:font-normal"
+                  value={formik.values.phonenumber}
+                  name="phonenumber"
+                  id="phonenumber"
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                 />
+                {formik.touched.phonenumber && formik.errors.phonenumber && (
+                  <div
+                    style={{
+                      color: "red",
+                      textAlign: "center",
+                      fontWeight: "500",
+                    }}
+                  >
+                    {formik.errors.phonenumber}
+                  </div>
+                )}
               </div>
-              <div className="my-2">
+              <div className="">
                 <label>Email *</label>
                 <input
+                  className="w-full border-[2px] border-solid font-normal border-gray-300 py-1 px-3 my-1 placeholder:font-normal"
+                  name="email"
+                  id="email"
                   type="email"
-                  className="w-full border-[2px] border-solid font-normal border-gray-300 py-1 px-3 my-2 placeholder:font-normal"
+                  value={formik.values.email}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
                 />
+                {formik.touched.email && formik.errors.email && (
+                  <div
+                    style={{
+                      color: "red",
+                      textAlign: "center",
+                      fontWeight: "500",
+                    }}
+                  >
+                    {formik.errors.email}
+                  </div>
+                )}
               </div>
               <p className="my-2 text-orange-500 font-bold ">
                 ADDITIONAL INFORMATION
               </p>
               <p className="my-2">Order notes (optional)</p>
               <textarea
+                type="text"
+                value={formik.values.notes}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                name="notes"
+                id="notes"
                 className="w-full placeholder:font-normal px-2 py-2 font-normal border-solid border-2 border-gray-400 h-[100px]"
                 role="2"
                 cols="5"
                 placeholder="Notes about your order, e.g. special notes for delivery"
               ></textarea>
-            </form>
+            </div>
           </div>
           <div className={styles.info_payment}>
             <div className={styles.is_well}>
@@ -139,9 +273,11 @@ function checkout() {
                   <div className="flex ">
                     <input
                       type="radio"
-                      name="payment_method"
+                      name="picked"
                       defaultChecked
                       className="mx-2"
+                      value="1"
+                      onChange={formik.handleChange}
                     />
                     <label className="font-semibold mx-2 ">
                       Thanh toán trước bằng hình thức chuyển khoản
@@ -161,15 +297,20 @@ function checkout() {
                   <div className="flex ">
                     <input
                       type="radio"
-                      name="payment_method"
+                      name="picked"
                       className="mx-2"
+                      value="2"
+                      onChange={formik.handleChange}
                     />
                     <label className="font-semibold mx-2 ">
                       COD: Thanh toán khi nhận hàng
                     </label>
                   </div>
                 </div>
-                <Button className="bg-orange-500 text-white font-medium hover:bg-orange-700 my-4">
+                <Button
+                  type="submit"
+                  className="bg-orange-500 text-white font-medium hover:bg-orange-700 my-4"
+                >
                   PLACE ORDER
                 </Button>
                 <p className="my-4">
@@ -181,11 +322,11 @@ function checkout() {
               </div>
             </div>
           </div>
-        </div>
+        </form>
       </div>
       <Footer />
     </div>
   );
 }
 
-export default checkout;
+export default Checkout;

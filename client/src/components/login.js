@@ -3,8 +3,19 @@ import { IoPersonOutline } from "react-icons/io5";
 import { CiLock } from "react-icons/ci";
 import Facebook from "../assets/fb_logo-512x512.png";
 import Google from "../assets/google-search-3.png";
+import { useFormik } from "formik";
+import { loginValidate } from "../validations/auth";
 
-function login() {
+function Login() {
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    onSubmit: (values) => console.log(values),
+    validationSchema: loginValidate,
+  });
+
   return (
     <div
       style={{
@@ -14,38 +25,58 @@ function login() {
       className="max-w-[100%] h-screen flex flex-wrap justify-center items-center p-[15px] bg-no-repeat bg-center bg-cover"
     >
       <div className="w-[500px] bg-white rounded-xl overflow-hidden px-[20px] py-[30px]">
-        <form className="w-full">
+        <form onSubmit={formik.handleSubmit} className="w-full">
           <span className="block text-[39px]   text-center pb-[12px]">
             Login
           </span>
-          <div className="relative w-full border-b-2 border-solid  mb-[24px]">
+          <div className="relative w-full border-b-2 border-solid  mb-[12px]">
             <span className="text-base text-gray-600 pl-[7px] font-medium">
               Email:
             </span>
             <p className="flex">
               <IoPersonOutline className="text-2xl mt-[12px] mx-2" />
               <input
-                className="text-base text-black block w-full h-[48px] pl-2 focus:outline-none "
+                className="w-full"
                 type="email"
+                id="email"
                 name="email"
-                placeholder="Type your Email"
+                value={formik.values.email}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
               />
             </p>
           </div>
-          <div className="relative w-full border-b-2 border-solid  mb-[10px]">
+          {formik.touched.email && formik.errors.email && (
+            <div
+              style={{ color: "red", marginBottom: "8px", textAlign: "center" }}
+            >
+              {formik.errors.email}
+            </div>
+          )}
+          <div className="relative w-full border-b-2 border-solid mb-[12px]">
             <span className="text-base text-gray-600 pl-[7px] font-medium">
               Password:
             </span>
             <p className="flex">
               <CiLock className="text-2xl mt-[12px] mx-2" />
               <input
-                className="text-base text-black block w-full h-[48px] pl-2 focus:outline-none"
+                className="w-full"
                 type="password"
-                name="Password"
-                placeholder="Type your Password"
+                id="password"
+                name="password"
+                value={formik.values.password}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
               />
             </p>
           </div>
+          {formik.touched.password && formik.errors.password && (
+            <div
+              style={{ color: "red", marginBottom: "8px", textAlign: "center" }}
+            >
+              {formik.errors.password}
+            </div>
+          )}
           <p className="text-right hover:text-blue-600 cursor-pointer text-gray-600">
             Forgot Password?
           </p>
@@ -80,4 +111,4 @@ function login() {
   );
 }
 
-export default login;
+export default Login;
