@@ -5,6 +5,7 @@ import Facebook from "../assets/fb_logo-512x512.png";
 import Google from "../assets/google-search-3.png";
 import { useFormik } from "formik";
 import { loginValidate } from "../validations/auth";
+import { AUTH_API } from "../apis/auth";
 
 function Login() {
   const formik = useFormik({
@@ -12,8 +13,15 @@ function Login() {
       email: "",
       password: "",
     },
-    onSubmit: (values) => console.log(values),
     validationSchema: loginValidate,
+    onSubmit: async (values) => {
+      try {
+        const response = await AUTH_API.login(values);
+        console.log(response);
+      } catch (error) {
+        console.log(error);
+      }
+    },
   });
 
   return (

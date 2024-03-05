@@ -37,6 +37,20 @@ const User = mongoose.Schema(
       type: String,
       default: "user",
     },
+    cart: [
+      {
+        productId: { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
+        quantity: Number,
+      },
+    ],
+    totalPrice: {
+      type: Number,
+      default: 0,
+    },
+    refreshToken: {
+      type: String,
+      default: "",
+    },
   },
   {
     timestamps: true,

@@ -2,7 +2,6 @@ import { userServices } from "../services/user.js";
 import { convertJoiError } from "../Utils/validationUntil.js";
 import { UserValidation, LoginValidation } from "../validations/user.js";
 import { StatusCodes } from "http-status-codes";
-// import { v2 as cloudinary } from "cloudinary";
 
 const getAllUser = async (req, res) => {
   try {
@@ -17,6 +16,17 @@ const getAllUser = async (req, res) => {
     res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
       .json({ message: "Lỗi Server" });
+  }
+};
+
+const createCart = async (req, res) => {
+  try {
+    // const
+  } catch (error) {
+    console.log(error);
+    res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ Error: "Server Error" });
   }
 };
 
@@ -51,7 +61,6 @@ const registerUser = async (req, res) => {
 const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
-    console.log(req.body);
     const { error } = LoginValidation.validate(req.body, { abortEarly: false });
     if (error) {
       const errorDetails = convertJoiError(error);
@@ -153,11 +162,18 @@ const deleteUser = async (req, res) => {
 };
 
 const profileUser = async (req, res) => {
-  const token = req.cookies.token;
-  await userServices.profileService(token);
-  return res
-    .status(StatusCodes.OK)
-    .json({ status: 200, message: "Xử lý thành công", content: req.user });
+  try {
+    const id = req.userId;
+    const user = await userServices.profileService(id);
+    return res
+      .status(StatusCodes.OK)
+      .json({ status: 200, message: "Xử lý thành công", content: user });
+  } catch (error) {
+    console.log(error);
+    res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ Error: "Server Error" });
+  }
 };
 
 const authGoogle = async (req, res, next) => {

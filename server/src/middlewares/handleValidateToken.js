@@ -1,26 +1,19 @@
 import jwt from "jsonwebtoken";
-import util from "util";
-import StatusCodes from "http-status-codes";
-
-const verifyAsync = util.promisify(jwt.verify);
-
+import { StatusCodes } from "http-status-codes";
 const validateToken = async (req, res, next) => {
-  const secretKey = "your-secret-key";
   let token;
   const authHeader = req.headers.authorization;
   if (authHeader && authHeader.startsWith("Bearer")) {
     token = authHeader.split(" ")[1];
-    console.log(token);
     try {
-      const decoded = await verifyAsync(
-        token,
-        process.env.ACCESS_TOKEN_SECRET || secretKey
-      );
-      // console.log(decoded.userId);
-      req.user = decoded.userId;
+      const decoded = await jwt.verify(token, process.env.SECRET_KEY);
+      req.userId = decoded.userId;
       next();
     } catch (err) {
-      console.error("Token is invalid or has expired");
+      if (err.name === "JsonWebTokenError") {
+        console.log("Token is invalid or has expired:");
+      }
+      console.error("Error: ", err);
       res
         .status(StatusCodes.UNAUTHORIZED)
         .json({ error: "Token is invalid or has expired" });

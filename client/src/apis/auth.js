@@ -1,7 +1,7 @@
-import axios from "../axios";
+import { axiosConfig } from "../axiosConfig";
 
 const register = async (data) => {
-  axios({
+  return axiosConfig({
     method: "post",
     url: "/register",
     data,
@@ -9,9 +9,9 @@ const register = async (data) => {
 };
 
 const login = async (data) => {
-  axios({
+  return axiosConfig({
     method: "post",
-    url: "/login",
+    url: "/user/dang-nhap",
     data,
   });
 };

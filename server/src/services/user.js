@@ -1,7 +1,6 @@
 import UserModel from "../models/user.js";
 import bcrypt from "bcrypt";
 import { generateTokens } from "../Utils/generateTokens.js";
-import { v2 as cloudinary } from "cloudinary";
 
 const getAllUserService = async () => {
   return await UserModel.find({}, { password: 0 });
@@ -56,11 +55,27 @@ const findUserService = async (id) => {
 
 const loginService = async (email, password) => {
   try {
-    const user = await UserModel.findOne({ email });
+    const user = await UserModel.findOne(
+      { email },
+      {
+        password: 0,
+        authGoogleId: 0,
+        authFacebookId: 0,
+        authType: 0,
+        role: 0,
+        refreshToken: 0,
+      }
+    );
     if (!user) {
       throw { Error: "Email or password is not valid" };
     }
     const { accessToken, refreshToken } = generateTokens(user.id);
+    console.log(accessToken);
+    await UserModel.findByIdAndUpdate(
+      user.id,
+      { refreshToken: refreshToken },
+      { new: true }
+    );
     return { accessToken, refreshToken, user };
   } catch (error) {
     console.log(error);
@@ -68,11 +83,10 @@ const loginService = async (email, password) => {
   }
 };
 
-const profileService = async (token) => {
-  if (!token) {
-    throw { Erorr: "Token not found" };
-  }
-  return;
+const profileService = async (id) => {
+  const user = await UserModel.findById(id);
+  if (!user) throw error("User not found");
+  return user;
 };
 
 const deleUserService = async (id) => {
