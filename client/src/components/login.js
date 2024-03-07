@@ -4,10 +4,14 @@ import { CiLock } from "react-icons/ci";
 import Facebook from "../assets/fb_logo-512x512.png";
 import Google from "../assets/google-search-3.png";
 import { useFormik } from "formik";
+import { toast } from "react-toastify";
 import { loginValidate } from "../validations/auth";
 import { AUTH_API } from "../apis/auth";
+import { setLocalStorage } from "../utils/LocalStorage";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
+  const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -17,7 +21,23 @@ function Login() {
     onSubmit: async (values) => {
       try {
         const data = await AUTH_API.login(values);
-        if (data.response.status) {
+        if (data.response?.status === 500) {
+          toast.error("Mật khẩu không đúng");
+        } else if (data?.status === 200) {
+          const user = {
+            id: data.data.content._id,
+            email: data.data.content.email,
+            avarta: data.data.content.image,
+            phone: data.data.content.phone,
+            username: data.data.content.username,
+          };
+          const token = data.data?.accessToken;
+          setLocalStorage("user", user);
+          setLocalStorage("accessToken", token);
+          toast.success("Đăng nhập thành công");
+          setTimeout(() => {
+            navigate("/");
+          }, 3000);
         }
       } catch (error) {
         console.log(error);

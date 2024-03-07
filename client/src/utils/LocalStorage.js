@@ -1,11 +1,12 @@
-export const setKey = (key, value) => {
-  return localStorage.setItem(key, value);
+export const setLocalStorage = (key, value) => {
+  localStorage.setItem(key, JSON.stringify(value));
 };
 
-export const getKey = (key) => {
-  return localStorage.getItem(key);
+export const getLocalStorage = (key) => {
+  const value = JSON.parse(localStorage.getItem(key));
+  return value;
 };
 
-export const clearKey = () => {
+export const clearLocalStorage = () => {
   return localStorage.clear();
 };

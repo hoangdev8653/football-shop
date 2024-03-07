@@ -1,17 +1,16 @@
-import React from "react";
 import { FaFacebookF, FaInstagram, FaYoutube } from "react-icons/fa";
-import {
-  MdOutlineMailOutline,
-  MdOutlineAccountCircle,
-  MdOutlinePhone,
-} from "react-icons/md";
+import { MdOutlineMailOutline, MdOutlinePhone } from "react-icons/md";
 import ModalSearch from "../../components/modal/modal";
 import Logo from "../../assets/logo.png";
+import UserDeafaute from "../../assets/user_deafaute.jpg";
 import { IoMdMenu } from "react-icons/io";
 import styles from "./header.module.scss";
 import Cart from "../../components/cart/cart";
+import { getLocalStorage } from "../../utils/LocalStorage";
 
-function header() {
+function Header() {
+  const user = getLocalStorage("user");
+
   return (
     <div className="w-full h-auto">
       <div className="bg-black text-right ">
@@ -45,11 +44,15 @@ function header() {
             <img className="w-[300px] mt-2 " src={Logo} alt="logo" />
           </a>
         </div>
-        <div className="flex gap-4 mr-4 justify-center my-auto">
+        <div className="flex gap-4 mr-4 justify-center my-auto items-center">
           {/* modal search  */}
           <ModalSearch />
-          <a href="/login">
-            <MdOutlineAccountCircle className="text-3xl cursor-pointer hover:opacity-60 " />
+          <a href={user?.avarta ? "/profile" : "/login"}>
+            <img
+              className="w-[50px] h-[50px] rounded-full cursor-pointer hover:opacity-60 mb-[2pxp] object-cover"
+              src={user?.avarta || UserDeafaute}
+              alt="avarta"
+            />
           </a>
           {/* modal cart */}
           <Cart />
@@ -79,4 +82,4 @@ function header() {
   );
 }
 
-export default header;
+export default Header;

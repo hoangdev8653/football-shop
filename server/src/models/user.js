@@ -69,7 +69,6 @@ User.pre("save", async function (next) {
 
 User.methods.checkPassword = async function (password) {
   try {
-    console.log(password);
     return await bcrypt.compare(password, this.password);
   } catch (error) {
     console.log("Lỗi", error);
