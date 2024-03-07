@@ -16,8 +16,9 @@ function Login() {
     validationSchema: loginValidate,
     onSubmit: async (values) => {
       try {
-        const response = await AUTH_API.login(values);
-        console.log(response);
+        const data = await AUTH_API.login(values);
+        if (data.response.status) {
+        }
       } catch (error) {
         console.log(error);
       }

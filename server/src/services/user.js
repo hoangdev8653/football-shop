@@ -10,8 +10,6 @@ const getAllUserService = async () => {
   );
 };
 
-// const totalPrice = async (price) => {};
-
 const createCart = async (id, { productId, quantity }) => {
   const user = await UserModel.findById(id);
   if (!user) {
@@ -101,13 +99,14 @@ const registerService = async ({ email, username, password, phone, role }) => {
   if (user) {
     throw { message: "Email đã tồn tại" };
   }
-  return await UserModel.create({
+  const User = new UserModel({
     email,
     username,
-    password: hashPassword,
+    password,
     phone,
     role,
   });
+  return await User.save();
 };
 
 const updateUserService = async (id, { email, password, username, phone }) => {
@@ -150,7 +149,6 @@ const loginService = async (email, password) => {
     const user = await UserModel.findOne(
       { email },
       {
-        password: 0,
         authGoogleId: 0,
         authFacebookId: 0,
         authType: 0,
@@ -161,8 +159,11 @@ const loginService = async (email, password) => {
     if (!user) {
       throw { Error: "Email or password is not valid" };
     }
+    const isValid = await user.checkPassword(password);
+    if (!isValid) {
+      throw Error("Mật khẩu không chính xác");
+    }
     const { accessToken, refreshToken } = generateTokens(user.id);
-    console.log(accessToken);
     await UserModel.findByIdAndUpdate(
       user.id,
       { refreshToken: refreshToken },

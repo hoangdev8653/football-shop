@@ -6,13 +6,13 @@ import { getkey, setKey } from "../configs/redis.js";
 
 const getAllUser = async (req, res) => {
   try {
-    const key = await getkey("id");
+    // const key = await getkey("id");
     const user = await userServices.getAllUserService();
     res.status(StatusCodes.OK).json({
       status: 200,
       message: "Xử lý thành công",
       content: user,
-      key,
+      // key,
     });
   } catch (error) {
     console.log(error);
@@ -25,7 +25,7 @@ const getAllUser = async (req, res) => {
 const createCart = async (req, res) => {
   try {
     const id = req.userId;
-    setKey("id", id);
+    // setKey("id", id);
     const { productId, quantity } = req.body;
     const cart = await userServices.createCart(id, { productId, quantity });
     return res
@@ -124,7 +124,7 @@ const loginUser = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: "Lỗi Server" });
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(error);
   }
 };
 
