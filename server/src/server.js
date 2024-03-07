@@ -1,7 +1,8 @@
 import "dotenv/config";
 import express from "express";
 import cors from "cors";
-import { connectDB } from "./configs/db.js";
+import { connectDB } from "./configs/connectDb.js";
+import { connectRedis } from "./configs/redis.js";
 import { routers } from "./routers/index.js";
 import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
@@ -9,6 +10,8 @@ import { corsOptions } from "./configs/cors.js";
 
 const port = process.env.PORT;
 connectDB();
+connectRedis();
+
 const app = express();
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
@@ -21,6 +24,7 @@ app.use("/category", routers.categoryRoutes);
 app.use("/club", routers.clubRoutes);
 app.use("/product", routers.productRoutes);
 app.use("/blog", routers.blogRoutes);
+
 app.listen(port, (req, res) => {
   console.log(`listen running on port ${port}`);
 });

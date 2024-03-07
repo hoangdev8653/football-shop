@@ -2,14 +2,17 @@ import { userServices } from "../services/user.js";
 import { convertJoiError } from "../Utils/validationUntil.js";
 import { UserValidation, LoginValidation } from "../validations/user.js";
 import { StatusCodes } from "http-status-codes";
+import { getkey, setKey } from "../configs/redis.js";
 
 const getAllUser = async (req, res) => {
   try {
+    const key = await getkey("id");
     const user = await userServices.getAllUserService();
     res.status(StatusCodes.OK).json({
       status: 200,
       message: "Xử lý thành công",
       content: user,
+      key,
     });
   } catch (error) {
     console.log(error);
@@ -21,7 +24,46 @@ const getAllUser = async (req, res) => {
 
 const createCart = async (req, res) => {
   try {
-    // const
+    const id = req.userId;
+    setKey("id", id);
+    const { productId, quantity } = req.body;
+    const cart = await userServices.createCart(id, { productId, quantity });
+    return res
+      .status(StatusCodes.CREATED)
+      .json({ status: 201, message: "Xử lý thành công", content: cart });
+  } catch (error) {
+    console.log(error);
+    res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ Error: "Server Error" });
+  }
+};
+
+const updateCart = async (req, res) => {
+  try {
+    const id = req.userId;
+    const productId = req.query.productId;
+    const { quantity } = req.body;
+    const cart = await userServices.updateCart(id, productId, { quantity });
+    return res
+      .status(StatusCodes.OK)
+      .json({ status: 200, message: "Xử lý thành công", content: cart });
+  } catch (error) {
+    console.log(error);
+    res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ Error: "Server Error" });
+  }
+};
+
+const deleteCart = async (req, res) => {
+  try {
+    const id = req.userId;
+    const productId = req.query.productId;
+    const cart = await userServices.deleteCart(id, productId);
+    return res
+      .status(StatusCodes.OK)
+      .json({ status: 200, message: "Xử lý thành công", content: cart });
   } catch (error) {
     console.log(error);
     res
@@ -184,6 +226,23 @@ const authFacebook = async (req, res, next) => {
   console.log("user", req.user);
 };
 
+const refreshToken = async (req, res) => {
+  try {
+    const { refreshToken } = req.body;
+    const newToken = await userServices.refreshToken(refreshToken);
+    return res.status(StatusCodes.OK).json({
+      status: 200,
+      message: "Xử lý thành công",
+      newToken,
+    });
+  } catch (error) {
+    console.log(error);
+    res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ Error: "Server Error" });
+  }
+};
+
 export const userController = {
   getAllUser,
   deleteUser,
@@ -195,4 +254,8 @@ export const userController = {
   profileUser,
   authGoogle,
   authFacebook,
+  refreshToken,
+  createCart,
+  updateCart,
+  deleteCart,
 };
