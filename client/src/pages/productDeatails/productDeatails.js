@@ -1,4 +1,3 @@
-import React from "react";
 import Slider from "react-slick";
 import Discount from "../../components/discount";
 import BannerIn from "../../assets/Banner-keu-goi-in.png";
@@ -7,8 +6,33 @@ import { IoMdArrowUp } from "react-icons/io";
 import SizeVn from "../../assets/Tu-van-size-viet-nam.png";
 import SizeTL from "../../assets/Tu-van-size-thai-lan.png";
 import styles from "./productDeatail.module.scss";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  deleteQuantity,
+  minusQuantity,
+  plusQuantity,
+} from "../../redux/actions/quantity";
 
-function productDeatails() {
+function ProductDeatails() {
+  const soluong = useSelector((state) => state.valueQuantity.value);
+  // const plus = useSelector((state) => state.valueQuantity.plus);
+  // const minus = useSelector((state) => state.valueQuantity.minus);
+
+  const dispatch = useDispatch();
+
+  const handlePlus = () => {
+    dispatch(plusQuantity());
+  };
+
+  const handleMinus = () => {
+    dispatch(minusQuantity());
+  };
+
+  const handleDelete = (soluong) => {
+    console.log(soluong);
+    dispatch(deleteQuantity());
+  };
+
   var settings = {
     infinite: true,
     dots: true,
@@ -107,15 +131,22 @@ function productDeatails() {
             </p>
             <div className="my-4 flex gap-4">
               <div className="flex">
-                <button className="border-[1px] border-solid border-gray-300 px-2 py-2">
+                <button
+                  onClick={handleMinus}
+                  className="border-[1px] border-solid border-gray-300 px-2 py-2"
+                >
                   -
                 </button>
                 <input
+                  onChange={() => handleDelete(soluong)}
                   type="text"
                   className="border-solid border-[1px] border-gray-300 text-center w-[50px] focus:outline-none"
-                  value="1"
+                  value={soluong}
                 />
-                <button className="border-[1px] border-solid border-gray-300 px-2 py-2">
+                <button
+                  onClick={handlePlus}
+                  className="border-[1px] border-solid border-gray-300 px-2 py-2"
+                >
                   +
                 </button>
               </div>
@@ -220,4 +251,4 @@ function productDeatails() {
   );
 }
 
-export default productDeatails;
+export default ProductDeatails;
