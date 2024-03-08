@@ -1,25 +1,37 @@
 import ClubModel from "../models/club.js";
 
-const getAllClubService = async () => {
+const getAllClub = async () => {
   return await ClubModel.find({}).populate(
     "productId",
     "name price image slug -_id "
   );
 };
 
-const getClubService = async (id) => {
+const getClub = async (id) => {
   try {
-    const club = await ClubModel.findById(id);
+    const club = await ClubModel.findById(id).populate(
+      "productId",
+      "name price image slug -_id "
+    );
     if (!club) {
       throw new { Error: "Không tồn tại " }();
     }
-    return await ClubModel.findByIdAndUpdate(id);
+    return await club;
   } catch (error) {
     console.log(error);
   }
 };
 
-const createClubService = async ({
+const getClubBySlug = async ({ slug }) => {
+  const exits = await ClubModel.findOne({ slug });
+  console.log(slug);
+  if (!exits) {
+    throw Error("Not found");
+  }
+  return await exits;
+};
+
+const createClub = async ({
   name,
   nickname,
   slug,
@@ -47,7 +59,7 @@ const createClubService = async ({
   }
 };
 
-const createImageClubService = async (id, { image }) => {
+const createImageClub = async (id, { image }) => {
   try {
     const club = await ClubModel.findById(id);
     if (!club) {
@@ -59,7 +71,7 @@ const createImageClubService = async (id, { image }) => {
   }
 };
 
-const updateClubService = async (id) => {
+const updateClub = async (id) => {
   try {
     const club = await ClubModel.findById(id);
     if (!club) {
@@ -71,7 +83,7 @@ const updateClubService = async (id) => {
   }
 };
 
-const deleteClubService = async (id) => {
+const deleteclub = async (id) => {
   try {
     const club = await ClubModel.findById(id);
     if (!club) {
@@ -83,11 +95,12 @@ const deleteClubService = async (id) => {
   }
 };
 
-export {
-  getAllClubService,
-  getClubService,
-  createClubService,
-  createImageClubService,
-  updateClubService,
-  deleteClubService,
+export const clubService = {
+  getAllClub,
+  getClub,
+  getClubBySlug,
+  createClub,
+  createImageClub,
+  updateClub,
+  deleteclub,
 };

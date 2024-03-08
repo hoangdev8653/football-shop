@@ -1,7 +1,22 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { CiStar } from "react-icons/ci";
 import styles from "./section.module.scss";
-function section() {
+import { getAllClub } from "../../apis/club";
+function Section() {
+  const [data, setData] = useState("");
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await getAllClub();
+        setData(response.data.content);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, []);
+
   return (
     <div className="w-full bg-black relative h-auto">
       <div className={styles.position}>
@@ -16,20 +31,20 @@ function section() {
           <b className="block flex-1 h-[2px] bg-current font-bold mt-5 opacity-30"></b>
         </div>
         <div className="flex flex-wrap justify-center">
-          <div className="max-w-[126px] relative flex ">
-            <div className="ml-auto p-[15px] relative ">
-              <a className="" href="/club/:slug" target="_blank">
-                <img
-                  src="https://www.sporter.vn/wp-content/uploads/2023/11/Logo-arsenal-white.png"
-                  alt="logo"
-                ></img>
-              </a>
-            </div>
-          </div>
+          {data &&
+            data.map((item, index) => (
+              <div key={index} className="max-w-[132px] relative flex ">
+                <div className="ml-auto p-[15px] relative ">
+                  <a className="" href="/club/:slug" target="_blank">
+                    <img src={item.logo} alt="logo" />
+                  </a>
+                </div>
+              </div>
+            ))}
         </div>
       </div>
     </div>
   );
 }
 
-export default section;
+export default Section;

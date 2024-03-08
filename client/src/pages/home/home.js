@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { CiStar } from "react-icons/ci";
 import BannerDestop from "../../assets/Home-banner.jpg";
 import BannerMobile from "../../assets/Banner-homepage-mobile-1.jpg";
@@ -9,8 +9,28 @@ import { MdOutlineNavigateNext } from "react-icons/md";
 import Slider from "react-slick";
 import { FaAngleDown } from "react-icons/fa";
 import styles from "./home.module.scss";
+import { getAllBlog } from "../../apis/blog";
+import { getProductClub } from "../../apis/product";
 
-function home() {
+function Home() {
+  const [dataBlog, setDataBlog] = useState("");
+  const [dataProductClub, setDataProductClub] = useState("");
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const blogResponse = await getAllBlog();
+        setDataBlog(blogResponse.data.content);
+
+        const productResponse = await getProductClub();
+        setDataProductClub(productResponse.data.content);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   var settings = {
     infinite: true,
     speed: 500,
@@ -126,7 +146,7 @@ function home() {
             <b className="block flex-1 h-[2px] bg-current font-bold mt-5 opacity-30"></b>
           </div>
         </div>
-        <ProductItems />
+        <ProductItems data={dataProductClub} />
         <div
           style={{
             backgroundImage:
@@ -144,7 +164,7 @@ function home() {
                 </span>
               </p>
               <b className="block flex-1 h-[2px] bg-current font-bold mt-6 opacity-30"></b>
-              <a href="/">
+              <a className="flex" href="/blog">
                 <div className="text-orange-500 flex hover:text-white">
                   <span className="font-bold text-xl ml-2 mt-2">Xem Thêm</span>
                   <MdOutlineNavigateNext className=" text-3xl mt-2" />
@@ -153,66 +173,27 @@ function home() {
             </div>
           </div>
           <Slider {...settings}>
-            <div className="w-1/4 cursor-pointer mb-4 ">
-              <img
-                className={styles.size}
-                src="https://www.sporter.vn/wp-content/uploads/2024/02/Tiet-lo-ao-doi-tuyen-argentina-san-nha-copa-america-2024-6.jpg"
-                alt="agr"
-              />
-              <div className="items-center justify-center text-center cursor-pointer">
-                <p className="text-orange-500 font-bold mx-2 my-2 ">
-                  Tiết lộ áo đội tuyển Argentina sân nhà Copa America 2024
-                </p>
-                <span className="text-white hover:opacity-60 mx-2 my-2">
-                  Chúng ta đã có hình ảnh thực tế đầu tiên các mẫu áo đội [..]
-                </span>
-              </div>
-            </div>
-            <div className="w-1/4 cursor-pointer mb-4 ">
-              <img
-                className={styles.size}
-                src="https://www.sporter.vn/wp-content/uploads/2024/02/Tiet-lo-ao-doi-tuyen-argentina-san-nha-copa-america-2024-6.jpg"
-                alt="agr"
-              />
-              <div className="items-center justify-center text-center cursor-pointer">
-                <p className="text-orange-500 font-bold mx-2 my-2 ">
-                  Tiết lộ áo đội tuyển Argentina sân nhà Copa America 2024
-                </p>
-                <span className="text-white hover:opacity-60 mx-2 my-2">
-                  Chúng ta đã có hình ảnh thực tế đầu tiên các mẫu áo đội [..]
-                </span>
-              </div>
-            </div>
-            <div className="w-1/4 cursor-pointer mb-4 ">
-              <img
-                className={styles.size}
-                src="https://www.sporter.vn/wp-content/uploads/2024/02/Tiet-lo-ao-doi-tuyen-argentina-san-nha-copa-america-2024-6.jpg"
-                alt="agr"
-              />
-              <div className="items-center justify-center text-center cursor-pointer">
-                <p className="text-orange-500 font-bold mx-2 my-2 ">
-                  Tiết lộ áo đội tuyển Argentina sân nhà Copa America 2024
-                </p>
-                <span className="text-white hover:opacity-60 mx-2 my-2">
-                  Chúng ta đã có hình ảnh thực tế đầu tiên các mẫu áo đội [..]
-                </span>
-              </div>
-            </div>
-            <div className="w-1/4 cursor-pointer mb-4 ">
-              <img
-                className={styles.size}
-                src="https://www.sporter.vn/wp-content/uploads/2024/02/Tiet-lo-ao-doi-tuyen-argentina-san-nha-copa-america-2024-6.jpg"
-                alt="agr"
-              />
-              <div className="items-center justify-center text-center cursor-pointer">
-                <p className="text-orange-500 font-bold mx-2 my-2 ">
-                  Tiết lộ áo đội tuyển Argentina sân nhà Copa America 2024
-                </p>
-                <span className="text-white hover:opacity-60 mx-2 my-2">
-                  Chúng ta đã có hình ảnh thực tế đầu tiên các mẫu áo đội [..]
-                </span>
-              </div>
-            </div>
+            {dataBlog &&
+              dataBlog.map((item, index) => (
+                <div key={index} className="w-1/4 cursor-pointer mb-4 ">
+                  <a href="/blog">
+                    <img
+                      className={styles.size}
+                      src={item.image}
+                      alt={item.title}
+                    />
+                    <div className="items-center justify-center text-center cursor-pointer">
+                      <p className="text-orange-500 font-bold mx-2 my-2 ">
+                        Tiết lộ áo đội tuyển Argentina sân nhà Copa America 2024
+                      </p>
+                      <span className="text-white hover:opacity-60 mx-2 my-2">
+                        Chúng ta đã có hình ảnh thực tế đầu tiên các mẫu áo đội
+                        [..]
+                      </span>
+                    </div>
+                  </a>
+                </div>
+              ))}
           </Slider>
           <div className="text-center items-center justify-center py-2 ">
             <FaAngleDown className="text-white mx-auto text-4xl cursor-pointer" />
@@ -223,4 +204,4 @@ function home() {
   );
 }
 
-export default home;
+export default Home;
