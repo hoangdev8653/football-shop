@@ -16,6 +16,13 @@ const login = async (data) => {
   });
 };
 
+export const getUserById = async (id) => {
+  return axiosConfig({
+    method: "get",
+    url: `user/findOne?id=${id}`,
+  });
+};
+
 export const AUTH_API = {
   register,
   login,

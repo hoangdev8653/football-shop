@@ -21,8 +21,6 @@ function ProductNation() {
     fetchData();
   }, []);
 
-  console.log(productFromVn);
-
   return (
     <div className="product_nation ">
       <div className="bg-white text-center justify-center w-full">
@@ -108,7 +106,7 @@ function ProductNation() {
           <div className="text-gray-800 font-bold flex border-solid border-2 border-gray-400">
             <p className=" flex mx-2 my-2">
               <CiStar className=" text-2xl " />
-              <span>NHỮNG MẪU ÁO ĐỘI TUYỂN QUỐC GIA ĐẸP NHẤT</span>
+              <span>ÁO BÓNG ĐÁ CÂU LẠC BỘ HÀNG VIỆT NAM</span>
             </p>
           </div>
           <b className="block flex-1 h-[2px] bg-current font-bold mt-6 opacity-30 text-orange-300"></b>

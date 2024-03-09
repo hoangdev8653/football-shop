@@ -1,4 +1,3 @@
-import React from "react";
 import { IoPersonOutline } from "react-icons/io5";
 import { CiLock } from "react-icons/ci";
 import Facebook from "../assets/fb_logo-512x512.png";

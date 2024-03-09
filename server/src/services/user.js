@@ -134,14 +134,18 @@ const updateAvartaService = async (id, { image }) => {
 };
 
 const findUserService = async (id) => {
-  const user = await UserModel.findById(id, { password: 0 }).populate(
-    "cart.productId",
-    "-description -slug -categoryId"
-  );
+  const user = await UserModel.findById(id, {
+    password: 0,
+    authGoogleId: 0,
+    authFacebookId: 0,
+    authType: 0,
+    role: 0,
+    refreshToken: 0,
+  }).populate("cart.productId", "-description -slug -categoryId");
   if (!user) {
     throw { Error: "Không tồn tại user" };
   }
-  return await UserModel.findById(id);
+  return await user;
 };
 
 const loginService = async (email, password) => {

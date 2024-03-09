@@ -5,7 +5,6 @@ import Discount from "../discount";
 import WishList from "../wishList";
 
 function productItems({ itemToShow = 5, data }) {
-  console.log(data);
   var settings = {
     infinite: true,
     speed: 500,
@@ -46,36 +45,38 @@ function productItems({ itemToShow = 5, data }) {
         {data &&
           data.map((item, index) => (
             <div key={index} className={styles.container}>
-              <img
-                className={styles.image}
-                src={item.image[0]}
-                alt={item.slug}
-              />
-              <div className={styles.overlay}>
-                <img className="h-full" src={item.image[1]} alt={item.slug} />
-              </div>
-              <div
-                style={{
-                  backgroundColor: "rgba(0, 0, 0, 0.5)",
-                  textShadow: "1px 1px 1px rgba(0,0,0,0.5)",
-                }}
-                className="absolute bottom-0 w-full text-center text-white"
-              >
-                <p className="mx-4 text-xs pt-2 hover:opacity-60">
-                  {item.name}
-                </p>
-                <p className="mb-6 mt-1 text-xs">
-                  <del className="text-gray-400 mx-2">{item.price}đ</del>
-                  <ins className="mx-2 text-white">
-                    <strong>280,000đ</strong>
-                  </ins>
-                </p>
-              </div>
-              <Discount
-                className="absolute top-1 left-2 px-3 py-4 rounded-full"
-                pecentDiscount={15}
-              />
-              <WishList className="absolute top-2 right-2" />
+              <a href={`/product/${item.slug}`}>
+                <img
+                  className={styles.image}
+                  src={item.image[0]}
+                  alt={item.slug}
+                />
+                <div className={styles.overlay}>
+                  <img className="h-full" src={item.image[1]} alt={item.slug} />
+                </div>
+                <div
+                  style={{
+                    backgroundColor: "rgba(0, 0, 0, 0.5)",
+                    textShadow: "1px 1px 1px rgba(0,0,0,0.5)",
+                  }}
+                  className="absolute bottom-0 w-full text-center text-white"
+                >
+                  <p className="mx-4 text-xs pt-2 hover:opacity-60 uppercase">
+                    {item.name}
+                  </p>
+                  <p className="mb-6 mt-1 text-xs">
+                    <del className="text-gray-400 mx-2">{item.price}đ</del>
+                    <ins className="mx-2 text-white">
+                      <strong>280,000đ</strong>
+                    </ins>
+                  </p>
+                </div>
+                <Discount
+                  className="absolute top-1 left-2 px-3 py-4 rounded-full"
+                  pecentDiscount={15}
+                />
+                <WishList className="absolute top-2 right-2" />
+              </a>
             </div>
           ))}
       </Slider>
