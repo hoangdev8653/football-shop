@@ -23,8 +23,10 @@ const getClub = async (id) => {
 };
 
 const getClubBySlug = async ({ slug }) => {
-  const exits = await ClubModel.findOne({ slug });
-  console.log(slug);
+  const exits = await ClubModel.findOne({ slug }).populate(
+    "productId",
+    "name price image slug -_id "
+  );
   if (!exits) {
     throw Error("Not found");
   }

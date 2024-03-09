@@ -6,6 +6,7 @@ const router = express.Router();
 
 router.route("/").get(productController.getAllProduct);
 router.route("/").get(productController.getProductByPages);
+router.route("/detail/:slug").get(productController.getProductBySlug);
 router.route("/search").get(productController.getProductByKey);
 router.route("/ao-bong-da-clb/").get(productController.getProductClub);
 router.route("/ao-bong-da-doi-tuyen/").get(productController.getProductNation);

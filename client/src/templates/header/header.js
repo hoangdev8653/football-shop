@@ -45,11 +45,10 @@ function Header() {
           </a>
         </div>
         <div className="flex gap-4 mr-4 justify-center my-auto items-center">
-          {/* modal search  */}
           <ModalSearch />
           <a href={user?.avarta ? "/profile" : "/login"}>
             <img
-              className="w-[50px] h-[50px] rounded-full cursor-pointer hover:opacity-60 mb-[2pxp] object-cover"
+              className={styles.avarta}
               src={user?.avarta || UserDeafaute}
               alt="avarta"
             />

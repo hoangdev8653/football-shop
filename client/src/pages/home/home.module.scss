@@ -29,13 +29,13 @@
     line-height: 2rem/* 32px */;
 }
 
-@media only screen and (max-width: 480px) {
+@media only screen and (max-width: 500px) {
     .size {
         width: 100%;
     }
     .banner_destop {
         display: none;
-        width: 100%;
+        // width: 100%;
     }
     .banner_mobile {
         display: block;

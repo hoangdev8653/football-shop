@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./productNoLogo.module.scss";
 import Banner from "../../assets/Banner-quan-ao-bong-da-khong-logo-12.jpg";
 import bt4 from "../../assets/button-4.jpg";
@@ -7,7 +7,18 @@ import bt2 from "../../assets/Button-2.jpg";
 import bt1 from "../../assets/Button-1.jpg";
 import Discount from "../../components/discount";
 import WishList from "../../components/wishList";
-function productNoLogo() {
+import { getProductNoLogo } from "../../apis/product";
+
+function ProductNoLogo() {
+  const [data, setData] = useState("");
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await getProductNoLogo();
+      setData(response.data.content);
+    };
+    fetchData();
+  }, []);
   return (
     <div className={styles.productNoLogo}>
       <div className="w-full">
@@ -56,216 +67,41 @@ function productNoLogo() {
         </div>
         <div className="bg-black">
           <div className={styles.grid}>
-            <div className={styles.container}>
-              <img
-                className={styles.image}
-                src="https://www.sporter.vn/wp-content/uploads/2017/06/Ao-bong-da-dortmund-san-nha-2324-1-300x400.png"
-                alt="1"
-              />
-              <div className={styles.overlay}>
-                <img
-                  src="https://www.sporter.vn/wp-content/uploads/2017/06/Ao-bong-da-dortmund-san-nha-2324-2-300x400.png"
-                  alt="2"
-                />
-              </div>
-              <div
-                style={{
-                  backgroundColor: "rgba(0, 0, 0, 0.5)",
-                  textShadow: "1px 1px 1px rgba(0,0,0,0.5)",
-                }}
-                className="absolute bottom-0 w-full text-center text-white"
-              >
-                <p className="mx-4 text-xs pt-2 hover:opacity-60">
-                  Áo bóng đá Dortmund sân nhà 23/24 hàng thái lan
-                </p>
-                <p className="mb-2 mt-1 text-xs">
-                  <del className="text-gray-400 mx-2">330,000đ</del>
-                  <ins className="mx-2 text-white">
-                    <strong>280,000đ</strong>
-                  </ins>
-                </p>
-              </div>
-              <Discount
-                className="absolute top-1 left-2 px-3 py-4 rounded-full"
-                pecentDiscount={15}
-              />
-              <WishList className="absolute top-2 right-2" />
-            </div>
-            <div className={styles.container}>
-              <img
-                className={styles.image}
-                src="https://www.sporter.vn/wp-content/uploads/2017/06/Ao-bong-da-dortmund-san-nha-2324-1-300x400.png"
-                alt="1"
-              />
-              <div className={styles.overlay}>
-                <img
-                  src="https://www.sporter.vn/wp-content/uploads/2017/06/Ao-bong-da-dortmund-san-nha-2324-2-300x400.png"
-                  alt="2"
-                />
-              </div>
-              <div
-                style={{
-                  backgroundColor: "rgba(0, 0, 0, 0.5)",
-                  textShadow: "1px 1px 1px rgba(0,0,0,0.5)",
-                }}
-                className="absolute bottom-0 w-full text-center text-white"
-              >
-                <p className="mx-4 text-xs pt-2 hover:opacity-60">
-                  Áo bóng đá Dortmund sân nhà 23/24 hàng thái lan
-                </p>
-                <p className="mb-2 mt-1 text-xs">
-                  <del className="text-gray-400 mx-2">330,000đ</del>
-                  <ins className="mx-2 text-white">
-                    <strong>280,000đ</strong>
-                  </ins>
-                </p>
-              </div>
-              <Discount
-                className="absolute top-1 left-2 px-3 py-4 rounded-full"
-                pecentDiscount={15}
-              />
-              <WishList className="absolute top-2 right-2" />
-            </div>
-            <div className={styles.container}>
-              <img
-                className={styles.image}
-                src="https://www.sporter.vn/wp-content/uploads/2017/06/Ao-bong-da-dortmund-san-nha-2324-1-300x400.png"
-                alt="1"
-              />
-              <div className={styles.overlay}>
-                <img
-                  src="https://www.sporter.vn/wp-content/uploads/2017/06/Ao-bong-da-dortmund-san-nha-2324-2-300x400.png"
-                  alt="2"
-                />
-              </div>
-              <div
-                style={{
-                  backgroundColor: "rgba(0, 0, 0, 0.5)",
-                  textShadow: "1px 1px 1px rgba(0,0,0,0.5)",
-                }}
-                className="absolute bottom-0 w-full text-center text-white"
-              >
-                <p className="mx-4 text-xs pt-2 hover:opacity-60">
-                  Áo bóng đá Dortmund sân nhà 23/24 hàng thái lan
-                </p>
-                <p className="mb-2 mt-1 text-xs">
-                  <del className="text-gray-400 mx-2">330,000đ</del>
-                  <ins className="mx-2 text-white">
-                    <strong>280,000đ</strong>
-                  </ins>
-                </p>
-              </div>
-              <Discount
-                className="absolute top-1 left-2 px-3 py-4 rounded-full"
-                pecentDiscount={15}
-              />
-              <WishList className="absolute top-2 right-2" />
-            </div>
-            <div className={styles.container}>
-              <img
-                className={styles.image}
-                src="https://www.sporter.vn/wp-content/uploads/2017/06/Ao-bong-da-dortmund-san-nha-2324-1-300x400.png"
-                alt="1"
-              />
-              <div className={styles.overlay}>
-                <img
-                  src="https://www.sporter.vn/wp-content/uploads/2017/06/Ao-bong-da-dortmund-san-nha-2324-2-300x400.png"
-                  alt="2"
-                />
-              </div>
-              <div
-                style={{
-                  backgroundColor: "rgba(0, 0, 0, 0.5)",
-                  textShadow: "1px 1px 1px rgba(0,0,0,0.5)",
-                }}
-                className="absolute bottom-0 w-full text-center text-white"
-              >
-                <p className="mx-4 text-xs pt-2 hover:opacity-60">
-                  Áo bóng đá Dortmund sân nhà 23/24 hàng thái lan
-                </p>
-                <p className="mb-2 mt-1 text-xs">
-                  <del className="text-gray-400 mx-2">330,000đ</del>
-                  <ins className="mx-2 text-white">
-                    <strong>280,000đ</strong>
-                  </ins>
-                </p>
-              </div>
-              <Discount
-                className="absolute top-1 left-2 px-3 py-4 rounded-full"
-                pecentDiscount={15}
-              />
-              <WishList className="absolute top-2 right-2" />
-            </div>
-            <div className={styles.container}>
-              <img
-                className={styles.image}
-                src="https://www.sporter.vn/wp-content/uploads/2017/06/Ao-bong-da-dortmund-san-nha-2324-1-300x400.png"
-                alt="1"
-              />
-              <div className={styles.overlay}>
-                <img
-                  src="https://www.sporter.vn/wp-content/uploads/2017/06/Ao-bong-da-dortmund-san-nha-2324-2-300x400.png"
-                  alt="2"
-                />
-              </div>
-              <div
-                style={{
-                  backgroundColor: "rgba(0, 0, 0, 0.5)",
-                  textShadow: "1px 1px 1px rgba(0,0,0,0.5)",
-                }}
-                className="absolute bottom-0 w-full text-center text-white"
-              >
-                <p className="mx-4 text-xs pt-2 hover:opacity-60">
-                  Áo bóng đá Dortmund sân nhà 23/24 hàng thái lan
-                </p>
-                <p className="mb-2 mt-1 text-xs">
-                  <del className="text-gray-400 mx-2">330,000đ</del>
-                  <ins className="mx-2 text-white">
-                    <strong>280,000đ</strong>
-                  </ins>
-                </p>
-              </div>
-              <Discount
-                className="absolute top-1 left-2 px-3 py-4 rounded-full"
-                pecentDiscount={15}
-              />
-              <WishList className="absolute top-2 right-2" />
-            </div>
-            <div className={styles.container}>
-              <img
-                className={styles.image}
-                src="https://www.sporter.vn/wp-content/uploads/2017/06/Ao-bong-da-dortmund-san-nha-2324-1-300x400.png"
-                alt="1"
-              />
-              <div className={styles.overlay}>
-                <img
-                  src="https://www.sporter.vn/wp-content/uploads/2017/06/Ao-bong-da-dortmund-san-nha-2324-2-300x400.png"
-                  alt="2"
-                />
-              </div>
-              <div
-                style={{
-                  backgroundColor: "rgba(0, 0, 0, 0.5)",
-                  textShadow: "1px 1px 1px rgba(0,0,0,0.5)",
-                }}
-                className="absolute bottom-0 w-full text-center text-white"
-              >
-                <p className="mx-4 text-xs pt-2 hover:opacity-60">
-                  Áo bóng đá Dortmund sân nhà 23/24 hàng thái lan
-                </p>
-                <p className="mb-2 mt-1 text-xs">
-                  <del className="text-gray-400 mx-2">330,000đ</del>
-                  <ins className="mx-2 text-white">
-                    <strong>280,000đ</strong>
-                  </ins>
-                </p>
-              </div>
-              <Discount
-                className="absolute top-1 left-2  rounded-full"
-                pecentDiscount={15}
-              />
-              <WishList className="absolute top-2 right-2" />
-            </div>
+            {data &&
+              data.map((item, index) => (
+                <div key={index} className={styles.container}>
+                  <img
+                    className={styles.image}
+                    src={item.image[0]}
+                    alt={item.slug}
+                  />
+                  <div className={styles.overlay}>
+                    <img src={item.image[1]} alt={item.slug} />
+                  </div>
+                  <div
+                    style={{
+                      backgroundColor: "rgba(0, 0, 0, 0.5)",
+                      textShadow: "1px 1px 1px rgba(0,0,0,0.5)",
+                    }}
+                    className="absolute bottom-0 w-full text-center text-white"
+                  >
+                    <p className="mx-4 text-xs pt-2 hover:opacity-60">
+                      {item.name}
+                    </p>
+                    <p className="mb-2 mt-1 text-xs">
+                      <del className="text-gray-400 mx-2">330,000đ</del>
+                      <ins className="mx-2 text-white">
+                        <strong>{item.price}đ</strong>
+                      </ins>
+                    </p>
+                  </div>
+                  <Discount
+                    className="absolute top-1 left-2  rounded-full"
+                    pecentDiscount={15}
+                  />
+                  <WishList className="absolute top-2 right-2" />
+                </div>
+              ))}
           </div>
           <div className=" py-24 mx-auto max-w-[1050px] text-white ">
             <div className={styles.print}>
@@ -295,4 +131,4 @@ function productNoLogo() {
   );
 }
 
-export default productNoLogo;
+export default ProductNoLogo;

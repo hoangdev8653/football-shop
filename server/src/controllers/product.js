@@ -15,6 +15,21 @@ const getAllProduct = async (req, res) => {
   }
 };
 
+const getProductBySlug = async (req, res) => {
+  try {
+    const slug = req.params.slug;
+    const product = await productService.getProductBySlug({ slug });
+    return res
+      .status(StatusCodes.OK)
+      .json({ status: 200, message: "Xử lý thành công", content: product });
+  } catch (error) {
+    console.log(error);
+    res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ Error: "Server Error!" });
+  }
+};
+
 const getProductByKey = async (req, res) => {
   try {
     const keySearch = req.query.s;
@@ -185,6 +200,7 @@ const deleteProduct = async (req, res) => {
 
 export const productController = {
   getAllProduct,
+  getProductBySlug,
   getProductByKey,
   getProductByPages,
   getProductClub,

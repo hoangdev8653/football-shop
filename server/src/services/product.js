@@ -5,8 +5,19 @@ const getAllProduct = async () => {
     "categoryId",
     "name slug -_id"
   );
-
   return products;
+};
+
+const getProductBySlug = async ({ slug }) => {
+  try {
+    const product = await ProductModel.findOne({ slug });
+    if (!product) {
+      throw new Error("Product Not Found");
+    }
+    return await product;
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 const getProductByKey = async ({ name }) => {
@@ -145,6 +156,7 @@ const deleteProduct = async (id) => {
 
 export const productService = {
   getAllProduct,
+  getProductBySlug,
   getProductByKey,
   getProductByPages,
   getProductClub,

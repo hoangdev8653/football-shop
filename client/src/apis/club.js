@@ -6,3 +6,10 @@ export const getAllClub = async () => {
     url: "/club",
   });
 };
+
+export const getClubBySlug = async (slug) => {
+  return axiosConfig({
+    method: "get",
+    url: `/club/detail/${slug}`,
+  });
+};

@@ -35,7 +35,7 @@ function Section() {
             data.map((item, index) => (
               <div key={index} className="max-w-[132px] relative flex ">
                 <div className="ml-auto p-[15px] relative ">
-                  <a className="" href="/club/:slug" target="_blank">
+                  <a href={`/club/${item.slug}`} target="_blank">
                     <img src={item.logo} alt="logo" />
                   </a>
                 </div>
