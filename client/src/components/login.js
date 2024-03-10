@@ -31,8 +31,11 @@ function Login() {
             username: data.data.content.username,
           };
           const token = data.data?.accessToken;
+          const refreshToken = data.data?.refreshToken;
+          console.log(data?.data);
           setLocalStorage("user", user);
           setLocalStorage("accessToken", token);
+          setLocalStorage("refreshToken", refreshToken);
           toast.success("Đăng nhập thành công");
           setTimeout(() => {
             navigate("/");

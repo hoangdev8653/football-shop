@@ -14,7 +14,7 @@ root.render(
   <Provider store={store}>
     <BrowserRouter>
       <App />
-      <ToastContainer theme="colored" autoClose={200} />
+      <ToastContainer theme="colored" autoClose={2000} />
     </BrowserRouter>
   </Provider>
 );

@@ -75,7 +75,6 @@ const deleteCart = async (req, res) => {
 const registerUser = async (req, res) => {
   try {
     const { email, username, password, phone, role } = req.body;
-    console.log(req.body);
     const { error } = UserValidation.validate(req.body, { abortEarly: false });
     if (error) {
       console.log("Validation Error:", error);
@@ -103,16 +102,18 @@ const registerUser = async (req, res) => {
 const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
-    const { error } = LoginValidation.validate(req.body, { abortEarly: false });
-    if (error) {
-      const errorDetails = convertJoiError(error);
-      return res
-        .status(StatusCodes.BAD_REQUEST)
-        .json({ error: errorDetails, customMessage: "Invalid Input" });
-    }
+    // const { error } = LoginValidation.validate(req.body, { abortEarly: false });
+    // if (error) {
+    //   const errorDetails = convertJoiError(error);
+    //   return res
+    //     .status(StatusCodes.BAD_REQUEST)
+    //     .json({ error: errorDetails, customMessage: "Invalid Input" });
+    // }
     const { accessToken, refreshToken, user } = await userServices.loginService(
-      email,
-      password
+      {
+        email,
+        password,
+      }
     );
     res.cookie("token", accessToken, { httpOnly: true });
     res.status(StatusCodes.OK).json({

@@ -19,6 +19,7 @@ function ProductNoLogo() {
     };
     fetchData();
   }, []);
+  console.log(data);
   return (
     <div className={styles.productNoLogo}>
       <div className="w-full">
@@ -69,38 +70,40 @@ function ProductNoLogo() {
           <div className={styles.grid}>
             {data &&
               data.map((item, index) => (
-                <div key={index} className={styles.container}>
-                  <img
-                    className={styles.image}
-                    src={item.image[0]}
-                    alt={item.slug}
-                  />
-                  <div className={styles.overlay}>
-                    <img src={item.image[1]} alt={item.slug} />
+                <a href={`/product/${item.slug}`}>
+                  <div key={index} className={styles.container}>
+                    <img
+                      className={styles.image}
+                      src={item.image[0]}
+                      alt={item.slug}
+                    />
+                    <div className={styles.overlay}>
+                      <img src={item.image[1]} alt={item.slug} />
+                    </div>
+                    <div
+                      style={{
+                        backgroundColor: "rgba(0, 0, 0, 0.5)",
+                        textShadow: "1px 1px 1px rgba(0,0,0,0.5)",
+                      }}
+                      className="absolute bottom-0 w-full text-center text-white"
+                    >
+                      <p className="mx-4 text-xs pt-2 hover:opacity-60">
+                        {item.name}
+                      </p>
+                      <p className="mb-2 mt-1 text-xs">
+                        <del className="text-gray-400 mx-2">330,000đ</del>
+                        <ins className="mx-2 text-white">
+                          <strong>{item.price}đ</strong>
+                        </ins>
+                      </p>
+                    </div>
+                    <Discount
+                      className="absolute top-1 left-2  rounded-full"
+                      pecentDiscount={15}
+                    />
+                    <WishList className="absolute top-2 right-2" />
                   </div>
-                  <div
-                    style={{
-                      backgroundColor: "rgba(0, 0, 0, 0.5)",
-                      textShadow: "1px 1px 1px rgba(0,0,0,0.5)",
-                    }}
-                    className="absolute bottom-0 w-full text-center text-white"
-                  >
-                    <p className="mx-4 text-xs pt-2 hover:opacity-60">
-                      {item.name}
-                    </p>
-                    <p className="mb-2 mt-1 text-xs">
-                      <del className="text-gray-400 mx-2">330,000đ</del>
-                      <ins className="mx-2 text-white">
-                        <strong>{item.price}đ</strong>
-                      </ins>
-                    </p>
-                  </div>
-                  <Discount
-                    className="absolute top-1 left-2  rounded-full"
-                    pecentDiscount={15}
-                  />
-                  <WishList className="absolute top-2 right-2" />
-                </div>
+                </a>
               ))}
           </div>
           <div className=" py-24 mx-auto max-w-[1050px] text-white ">

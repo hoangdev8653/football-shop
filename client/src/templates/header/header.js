@@ -46,7 +46,7 @@ function Header() {
         </div>
         <div className="flex gap-4 mr-4 justify-center my-auto items-center">
           <ModalSearch />
-          <a href={user?.avarta ? "/profile" : "/login"}>
+          <a href={user ? "/profile" : "/login"}>
             <img
               className={styles.avarta}
               src={user?.avarta || UserDeafaute}

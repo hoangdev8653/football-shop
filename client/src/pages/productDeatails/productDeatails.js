@@ -16,7 +16,10 @@ import {
   plusQuantity,
 } from "../../redux/actions/quantity";
 import { getProductBySlug } from "../../apis/product";
+import { addProduct } from "../../apis/cart";
 import Loader from "../../components/logoLoader/logoLoader";
+import { getLocalStorage } from "../../utils/LocalStorage";
+import { toast } from "react-toastify";
 
 function ProductDeatails() {
   const [data, setData] = useState([]);
@@ -24,6 +27,8 @@ function ProductDeatails() {
   const soluong = useSelector((state) => state.valueQuantity.value);
   const dispatch = useDispatch();
   const { slug } = useParams();
+  const token = getLocalStorage("accessToken");
+
   // console.log(id);
   // const plus = useSelector((state) => state.valueQuantity.plus);
   // const minus = useSelector((state) => state.valueQuantity.minus);
@@ -42,7 +47,25 @@ function ProductDeatails() {
     fetchData();
   }, [slug]);
 
-  console.log(data);
+  const handleSubmit = async () => {
+    const productId = data?._id;
+    const quantity = soluong;
+    try {
+      if (!token) {
+        throw new Error("Token is not Valid");
+      }
+      const response = await addProduct({ productId, quantity }, token);
+      if (!response) {
+        toast.error("Thất bại");
+      }
+      toast.success("Thêm sản phẩm vào giỏ hàng thành công");
+      setTimeout(() => {
+        window.location.reload();
+      }, 2500);
+    } catch (error) {
+      console.log("Lỗi: ", error);
+    }
+  };
 
   const handlePlus = () => {
     dispatch(plusQuantity());
@@ -87,7 +110,11 @@ function ProductDeatails() {
               <div className={styles.image_product}>
                 <div className="w-full relative">
                   <Slider {...settings}>
-                    <img src={data.image[0]} alt={data.slug} />
+                    <img
+                      className="h-full w-full"
+                      src={data.image[0]}
+                      alt={data.slug}
+                    />
                     <img
                       className="w-full h-full"
                       src={data?.image[1] || image_comming_soon}
@@ -180,7 +207,10 @@ function ProductDeatails() {
                       +
                     </button>
                   </div>
-                  <Button className="text-white bg-orange-500 font-semibold hover:bg-orange-700">
+                  <Button
+                    onClick={handleSubmit}
+                    className="text-white bg-orange-500 font-semibold hover:bg-orange-700"
+                  >
                     ADD TO CART
                   </Button>
                 </div>

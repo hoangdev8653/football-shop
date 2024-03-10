@@ -4,22 +4,36 @@ import { IoIosCloseCircleOutline } from "react-icons/io";
 import styles from "./cart.module.scss";
 import Button from "../../components/button";
 import { getLocalStorage } from "../../utils/LocalStorage";
-import { getUserById } from "../../apis/auth";
+import { getUserCurrent } from "../../apis/auth";
 
 function Cart() {
   const [isOpen, setIsOpen] = useState(false);
   const [cart, setCart] = useState([]);
   const [data, setData] = useState("");
-  const user = getLocalStorage("user");
-  const id = user?.id;
+  const token = getLocalStorage("accessToken");
   useEffect(() => {
-    const fetchData = async () => {
-      const response = await getUserById(id);
-      setData(response.data.content);
-      setCart(response.data.content.cart);
-    };
-    fetchData();
-  }, [id]);
+    if (!token) {
+      return;
+    } else {
+      const fetchData = async () => {
+        try {
+          const response = await getUserCurrent(token);
+          setData(response.data.content);
+          setCart(response.data.content.cart);
+        } catch (error) {
+          console.log(error);
+        }
+      };
+      fetchData();
+    }
+  }, [token]);
+  const quantity = cart?.map((item, index) => {
+    return item.quantity;
+  });
+  const totalQuantity = quantity.reduce((value, currentValue) => {
+    return value + currentValue;
+  }, 0);
+  console.log(totalQuantity);
   const handleIconCartHover = () => {
     setIsOpen(true);
   };
@@ -82,7 +96,7 @@ function Cart() {
         </div>
       )}
       <div className="absolute">
-        <div className={styles.quantity}>{cart.length}</div>
+        <div className={styles.quantity}>{totalQuantity}</div>
       </div>
     </div>
   );

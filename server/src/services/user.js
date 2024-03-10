@@ -1,5 +1,5 @@
 import UserModel from "../models/user.js";
-import bcrypt from "bcrypt";
+import bcrypt, { compare, hash, hashSync } from "bcrypt";
 import { generateTokens } from "../Utils/generateTokens.js";
 import { verifyRefreshToken } from "../middlewares/verifyRefreshToken.js";
 
@@ -66,7 +66,6 @@ const deleteCart = async (id, productId) => {
     if (!existingUser) {
       throw new Error("User not found");
     }
-
     const cart = existingUser.cart;
     const productIndex = cart.findIndex(
       (product) => product.productId.toString() === productId
@@ -95,18 +94,17 @@ const deleteCart = async (id, productId) => {
 
 const registerService = async ({ email, username, password, phone, role }) => {
   const user = await UserModel.findOne({ email });
-  const hashPassword = await bcrypt.hash(password, 10);
   if (user) {
     throw { message: "Email đã tồn tại" };
   }
-  const User = new UserModel({
+  const hashPassword = hashSync(password, 10);
+  return await UserModel.create({
     email,
     username,
-    password,
+    password: hashPassword,
     phone,
     role,
   });
-  return await User.save();
 };
 
 const updateUserService = async (id, { email, password, username, phone }) => {
@@ -125,7 +123,7 @@ const updateAvartaService = async (id, { image }) => {
   try {
     const user = await UserModel.findById(id);
     if (!user) {
-      throw new { Error: "Không tìm thấy user" }();
+      throw new Error({ Error: "Không tìm thấy user" });
     }
     return await UserModel.findByIdAndUpdate(id, { image }, { new: true });
   } catch (error) {
@@ -148,23 +146,15 @@ const findUserService = async (id) => {
   return await user;
 };
 
-const loginService = async (email, password) => {
+const loginService = async ({ email, password }) => {
   try {
-    const user = await UserModel.findOne(
-      { email },
-      {
-        authGoogleId: 0,
-        authFacebookId: 0,
-        authType: 0,
-        role: 0,
-        refreshToken: 0,
-      }
-    );
+    const user = await UserModel.findOne({ email });
+
     if (!user) {
-      throw { Error: "Email or password is not valid" };
+      throw new Error("User not found");
     }
-    const isValid = await user.checkPassword(password);
-    if (!isValid) {
+    const checkPassword = bcrypt.compare(password, user.password);
+    if (!checkPassword) {
       throw Error("Mật khẩu không chính xác");
     }
     const { accessToken, refreshToken } = generateTokens(user.id);
@@ -176,13 +166,11 @@ const loginService = async (email, password) => {
     return { accessToken, refreshToken, user };
   } catch (error) {
     console.log(error);
-    throw error;
   }
 };
 
 const profileService = async (id) => {
   const user = await UserModel.findById(id, {
-    password: 0,
     authGoogleId: 0,
     authFacebookId: 0,
     authType: 0,
@@ -198,7 +186,6 @@ const profileService = async (id) => {
     (accumulator, currentPrice) => accumulator + currentPrice,
     0
   );
-  console.log(sumTotal);
   user.totalPrice = sumTotal;
   await user.save();
   return user;
