@@ -75,7 +75,6 @@ function ProductDeatails() {
   };
 
   const handleDelete = (soluong) => {
-    console.log(soluong);
     dispatch(deleteQuantity());
   };
 

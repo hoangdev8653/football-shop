@@ -5,6 +5,8 @@ import styles from "./cart.module.scss";
 import Button from "../../components/button";
 import { getLocalStorage } from "../../utils/LocalStorage";
 import { getUserCurrent } from "../../apis/auth";
+import { deleteProduct } from "../../apis/cart";
+import { toast } from "react-toastify";
 
 function Cart() {
   const [isOpen, setIsOpen] = useState(false);
@@ -27,18 +29,33 @@ function Cart() {
       fetchData();
     }
   }, [token]);
+
   const quantity = cart?.map((item, index) => {
     return item.quantity;
   });
   const totalQuantity = quantity.reduce((value, currentValue) => {
     return value + currentValue;
   }, 0);
-  console.log(totalQuantity);
   const handleIconCartHover = () => {
     setIsOpen(true);
   };
   const handleIconCartLeave = () => {
     setIsOpen(false);
+  };
+
+  const handleDelete = async (productId) => {
+    try {
+      const response = await deleteProduct(productId, token);
+      if (response.error) {
+        toast.error("Thất bại");
+      }
+      toast.success("Xóa sản phẩm thành công");
+      setTimeout(() => {
+        window.location.reload();
+      }, 2500);
+    } catch (error) {
+      console.log("Error: ", error);
+    }
   };
 
   return (
@@ -52,15 +69,18 @@ function Cart() {
         <div className={styles.fill}>
           <div className={styles.cart}>
             <div className="mx-4">
-              {cart &&
-                cart.map((item, index) => (
-                  <div className="max-h-[400px] overflow-y-auto">
-                    <div className="flex mt-4 border-b-[1px] border-gray-400 border-solid mb-2 justify-between">
+              <div className="max-h-[400px] overflow-y-auto">
+                {cart &&
+                  cart.map((item, index) => (
+                    <div
+                      key={index}
+                      className="flex mt-4 border-b-[1px] border-gray-400 border-solid mb-2 "
+                    >
                       <img
-                        className="w-16 object-cover mx-4 h-[70px]"
+                        className="w-16 object-cover ml-1 h-[70px]"
                         src={item.productId.image[0]}
                       />
-                      <div className="">
+                      <div className="mx-4 w-[100px] ">
                         <p className="text-orange-500 font-medium hover:text-white cursor-pointer uppercase">
                           {item.productId.name}
                         </p>
@@ -68,10 +88,13 @@ function Cart() {
                           {item.productId.price} * {item.quantity}
                         </p>
                       </div>
-                      <IoIosCloseCircleOutline className={styles.icon_close} />
+                      <IoIosCloseCircleOutline
+                        onClick={() => handleDelete(item.productId._id)}
+                        className={styles.icon_close}
+                      />
                     </div>
-                  </div>
-                ))}
+                  ))}
+              </div>
               <div className="text-center mx-auto border-b-[1px] border-t-[1px] border-gray-400">
                 <p className="font-bold text-gray-500 my-2">
                   <span className="">Subtotal: </span>

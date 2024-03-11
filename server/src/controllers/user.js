@@ -6,13 +6,11 @@ import { getkey, setKey } from "../configs/redis.js";
 
 const getAllUser = async (req, res) => {
   try {
-    // const key = await getkey("id");
-    const user = await userServices.getAllUserService();
+    const user = await userServices.getAllUser();
     res.status(StatusCodes.OK).json({
       status: 200,
       message: "Xử lý thành công",
       content: user,
-      // key,
     });
   } catch (error) {
     console.log(error);
@@ -25,7 +23,6 @@ const getAllUser = async (req, res) => {
 const createCart = async (req, res) => {
   try {
     const id = req.userId;
-    // setKey("id", id);
     const { productId, quantity } = req.body;
     const cart = await userServices.createCart(id, { productId, quantity });
     return res
@@ -65,7 +62,7 @@ const deleteCart = async (req, res) => {
       .status(StatusCodes.OK)
       .json({ status: 200, message: "Xử lý thành công", content: cart });
   } catch (error) {
-    console.log(error);
+    console.log(error.message);
     res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
       .json({ Error: "Server Error" });
@@ -83,7 +80,7 @@ const registerUser = async (req, res) => {
         .status(StatusCodes.BAD_REQUEST)
         .json({ error: errorDetails, customMessage: "Invalid Input" });
     }
-    const user = await userServices.registerService({
+    const user = await userServices.register({
       email,
       username,
       password,
@@ -109,12 +106,10 @@ const loginUser = async (req, res) => {
     //     .status(StatusCodes.BAD_REQUEST)
     //     .json({ error: errorDetails, customMessage: "Invalid Input" });
     // }
-    const { accessToken, refreshToken, user } = await userServices.loginService(
-      {
-        email,
-        password,
-      }
-    );
+    const { accessToken, refreshToken, user } = await userServices.login({
+      email,
+      password,
+    });
     res.cookie("token", accessToken, { httpOnly: true });
     res.status(StatusCodes.OK).json({
       status: 200,
@@ -141,7 +136,7 @@ const updateUser = async (req, res) => {
         .status(StatusCodes.BAD_REQUEST)
         .json({ error: errorDetails, customMessage: "Invalid Input" });
     }
-    const user = await userServices.updateUserService(id, {
+    const user = await userServices.updateUser(id, {
       email,
       password,
       username,
@@ -161,8 +156,8 @@ const updateUser = async (req, res) => {
 const updateAvatar = async (req, res) => {
   try {
     const fileData = req.file;
-    const id = req.query.id;
-    const user = await userServices.updateAvartaService(id, {
+    const id = req.userId;
+    const user = await userServices.updateAvarta(id, {
       image: fileData?.path,
     });
     return res
@@ -192,7 +187,7 @@ const findUser = async (req, res) => {
 const deleteUser = async (req, res) => {
   try {
     const id = req.query.id;
-    const user = await userServices.deleUserService(id);
+    const user = await userServices.deleteUser(id);
     return res
       .status(StatusCodes.OK)
       .json({ status: 200, message: "Xử lý thành công", content: user });
@@ -207,7 +202,7 @@ const deleteUser = async (req, res) => {
 const profileUser = async (req, res) => {
   try {
     const id = req.userId;
-    const user = await userServices.profileService(id);
+    const user = await userServices.profile(id);
     return res
       .status(StatusCodes.OK)
       .json({ status: 200, message: "Xử lý thành công", content: user });

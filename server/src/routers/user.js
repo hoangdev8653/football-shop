@@ -22,7 +22,11 @@ router.route("/dang-nhap").post(userController.loginUser);
 router.route("/update").post(userController.updateUser);
 router
   .route("/update-avarta")
-  .post(uploadCloud.single("image"), userController.updateAvatar);
+  .post(
+    uploadCloud.single("image"),
+    verifyAccessToken,
+    userController.updateAvatar
+  );
 
 router.route("/createCart").post(verifyAccessToken, userController.createCart);
 router.route("/updateCart").put(verifyAccessToken, userController.updateCart);

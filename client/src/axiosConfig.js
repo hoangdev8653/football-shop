@@ -28,6 +28,7 @@ axiosConfig.interceptors.response.use(
     // Any status codes that falls outside the range of 2xx cause this function to trigger
     // Do something with response error
     console.log("Thất bại");
+    console.log(error.message);
     return error;
     // return Promise.reject(error);
   }

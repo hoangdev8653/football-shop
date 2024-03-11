@@ -3,7 +3,7 @@ import bcrypt, { compare, hash, hashSync } from "bcrypt";
 import { generateTokens } from "../Utils/generateTokens.js";
 import { verifyRefreshToken } from "../middlewares/verifyRefreshToken.js";
 
-const getAllUserService = async () => {
+const getAllUser = async () => {
   return await UserModel.find({}, { password: 0 }).populate(
     "cart.productId",
     "-description -slug -categoryId"
@@ -92,7 +92,7 @@ const deleteCart = async (id, productId) => {
   }
 };
 
-const registerService = async ({ email, username, password, phone, role }) => {
+const register = async ({ email, username, password, phone, role }) => {
   const user = await UserModel.findOne({ email });
   if (user) {
     throw { message: "Email đã tồn tại" };
@@ -107,7 +107,7 @@ const registerService = async ({ email, username, password, phone, role }) => {
   });
 };
 
-const updateUserService = async (id, { email, password, username, phone }) => {
+const updateUser = async (id, { email, password, username, phone }) => {
   const user = await UserModel.findById(id);
   if (!user) {
     throw { message: "Tài khoản không tồn tại" };
@@ -119,7 +119,7 @@ const updateUserService = async (id, { email, password, username, phone }) => {
   );
 };
 
-const updateAvartaService = async (id, { image }) => {
+const updateAvarta = async (id, { image }) => {
   try {
     const user = await UserModel.findById(id);
     if (!user) {
@@ -131,7 +131,7 @@ const updateAvartaService = async (id, { image }) => {
   }
 };
 
-const findUserService = async (id) => {
+const findUser = async (id) => {
   const user = await UserModel.findById(id, {
     password: 0,
     authGoogleId: 0,
@@ -146,7 +146,7 @@ const findUserService = async (id) => {
   return await user;
 };
 
-const loginService = async ({ email, password }) => {
+const login = async ({ email, password }) => {
   try {
     const user = await UserModel.findOne({ email });
 
@@ -169,7 +169,7 @@ const loginService = async ({ email, password }) => {
   }
 };
 
-const profileService = async (id) => {
+const profile = async (id) => {
   const user = await UserModel.findById(id, {
     authGoogleId: 0,
     authFacebookId: 0,
@@ -191,7 +191,7 @@ const profileService = async (id) => {
   return user;
 };
 
-const deleUserService = async (id) => {
+const deleteUser = async (id) => {
   try {
     const user = await UserModel.findById(id);
     if (!user) {
@@ -216,16 +216,16 @@ const refreshToken = async (refreshToken) => {
 };
 
 export const userServices = {
-  getAllUserService,
+  getAllUser,
   createCart,
   updateCart,
   deleteCart,
-  registerService,
-  loginService,
-  updateUserService,
-  updateAvartaService,
-  findUserService,
-  profileService,
-  deleUserService,
+  register,
+  login,
+  updateUser,
+  updateAvarta,
+  findUser,
+  profile,
+  deleteUser,
   refreshToken,
 };
