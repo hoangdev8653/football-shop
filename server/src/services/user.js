@@ -47,18 +47,18 @@ const updateCart = async (id, productId, { quantity }) => {
     console.log(error);
   }
 };
-const totalPrice = async (user) => {
-  const cart = user.cart;
-  const mapTotalPrice = cart.map(
-    (item) => item.productId.price * item.quantity
-  );
-  const sumTotal = mapTotalPrice.reduce(
-    (accumulator, currentPrice) => accumulator + currentPrice,
-    0
-  );
-  console.log(sumTotal);
-  return sumTotal;
-};
+// const totalPrice = async (user) => {
+//   const cart = user.cart;
+//   const mapTotalPrice = cart.map(
+//     (item) => item.productId.price * item.quantity
+//   );
+//   const sumTotal = mapTotalPrice.reduce(
+//     (accumulator, currentPrice) => accumulator + currentPrice,
+//     0
+//   );
+//   console.log(sumTotal);
+//   return sumTotal;
+// };
 
 const deleteCart = async (id, productId) => {
   try {
@@ -107,28 +107,20 @@ const register = async ({ email, username, password, phone, role }) => {
   });
 };
 
-const updateUser = async (id, { email, password, username, phone }) => {
+const updateUser = async (id, { email, password, username, phone, image }) => {
   const user = await UserModel.findById(id);
   if (!user) {
     throw { message: "Tài khoản không tồn tại" };
   }
+  const exitsEmail = await UserModel.findOne({ email });
+  if (exitsEmail) {
+    throw new Error("Email đã tồn tại");
+  }
   return await UserModel.findByIdAndUpdate(
     id,
-    { email, password, username, phone },
+    { email, password, username, phone, image },
     { new: true }
   );
-};
-
-const updateAvarta = async (id, { image }) => {
-  try {
-    const user = await UserModel.findById(id);
-    if (!user) {
-      throw new Error({ Error: "Không tìm thấy user" });
-    }
-    return await UserModel.findByIdAndUpdate(id, { image }, { new: true });
-  } catch (error) {
-    console.log(error);
-  }
 };
 
 const findUser = async (id) => {
@@ -223,7 +215,6 @@ export const userServices = {
   register,
   login,
   updateUser,
-  updateAvarta,
   findUser,
   profile,
   deleteUser,

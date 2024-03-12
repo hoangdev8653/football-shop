@@ -1,163 +1,100 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Discount from "../../components/discount";
 import WishList from "../../components/wishList";
 import styles from "./searchProduct.module.scss";
-function searchProduct() {
+import { getProductByKey } from "../../apis/product";
+import { useLocation } from "react-router-dom";
+import Loader from "../../components/logoLoader/logoLoader";
+import product from "../../assets/product_coming-soon.jpg";
+
+function SearchProduct() {
+  const [data, setData] = useState([]);
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const key = searchParams.get("s");
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await getProductByKey(key);
+        setData(response.data.content);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, [key]);
   return (
     <div
       style={{ backgroundColor: "rgba(10, 10, 10, 0.01)" }}
       className="w-full "
     >
-      <div className="max-w-[1050px] mx-auto">
-        <div className="flex justify-between my-4">
-          <div className="flex gap-2 text-gray-400 text-lg ">
-            <a href="/">
-              <p className="cursor-pointer hover:text-black">HOME</p>
-            </a>
-            <span className="">/</span>
-            <a href="/">
-              <p className="cursor-pointer hover:text-black">SHOP</p>
-            </a>
-            <span>/</span>
-
-            <p className="text-black  font-semibold">SEARCH RESULTS FOR " "</p>
-          </div>
-          <div className="text-black flex gap-4">
-            <p>Showing all 10 results</p>
-            <form method="get">
-              <select
-                className="py-[5px] border-2 border-solid border-gray-400"
-                name="orderby"
-              >
-                <option value="selected" selected="selected">
-                  Relevance
-                </option>
-                <option value="popularity">Sort by popularity</option>
-                <option value="rating">Sort by average rating</option>
-                <option value="date">Sort by latest</option>
-                <option value="price">Sort by price: low to high</option>
-                <option value="price-desc">Sort by price: high to low</option>
-              </select>
-            </form>
-          </div>
-        </div>
-        <div className={styles.grid}>
-          <div className={styles.container}>
-            <img
-              src="https://www.sporter.vn/wp-content/uploads/2020/09/Ao-real-madrid-san-khach-mau-ba-0-300x400.jpg"
-              alt="1"
-            />
-            <div className={styles.overlay}>
-              <img
-                src="https://www.sporter.vn/wp-content/uploads/2020/09/Ao-real-madrid-san-khach-mau-ba-5-300x400.jpg"
-                alt="2"
-              />
-            </div>
-            <div className={styles.box_text_item}>
-              <div>
-                <p className="py-2 pl-16 pr-20 hover:opacity-65">
-                  Áo bóng đá Real Madrid sân khách mẫu ba 23/24 hàng Thái Lan
+      {data && data.length > 0 ? (
+        <>
+          <div className="max-w-[1050px] mx-auto">
+            <div className="flex justify-between my-4">
+              <div className="flex gap-2 text-gray-400 text-lg ">
+                <a href="/">
+                  <p className="cursor-pointer hover:text-black">HOME</p>
+                </a>
+                <span className="">/</span>
+                <a href="/">
+                  <p className="cursor-pointer hover:text-black">SHOP</p>
+                </a>
+                <span>/</span>
+                <p className="text-black font-semibold ">
+                  SEARCH RESULTS FOR "{key}"
                 </p>
               </div>
-              <div>
-                <p className="mx-auto text-center">
-                  <del className="text-gray-400 font-semibold">330,000đ</del>
-                </p>
-                <p className="mx-auto text-center">
-                  <ins className="text-orange-500">
-                    <strong>280,000đ</strong>
-                  </ins>
-                </p>
+              <div className="text-black flex gap-4">
+                <p>Showing all {data?.length} results</p>
               </div>
             </div>
-            <Discount pecentDiscount={15} />
-            <WishList className=" absolute right-56 top-2" />
+            <div className={styles.grid}>
+              {data &&
+                data.map((item, index) => (
+                  <a href={`/product/${item.slug}`}>
+                    <div key={index} className={styles.container}>
+                      <img
+                        className="w-[300px] h-[400px]"
+                        src={item.image[0]}
+                        alt={item.slug}
+                      />
+                      <div className={styles.overlay}>
+                        <img
+                          className="w-[300px] h-[400px]"
+                          src={item.image[1] || product}
+                          alt={item.slug}
+                        />
+                      </div>
+                      <div className="  text-orange-500 uppercase">
+                        <p className="py-2 pl-16 pr-20 hover:opacity-65 uppercase">
+                          {item.name}
+                        </p>
+                        <p className="mx-auto text-center">
+                          <del className="text-gray-400">330,000đ</del>
+                        </p>
+                        <p className="mx-auto text-center">
+                          <ins className="text-orange-500">
+                            <strong>{item.price}đ</strong>
+                          </ins>
+                        </p>
+                      </div>
+                      <Discount pecentDiscount={15} />
+                      <WishList className=" absolute right-56 top-2" />
+                    </div>
+                  </a>
+                ))}
+            </div>
           </div>
-          <div className={styles.container}>
-            <img
-              src="https://www.sporter.vn/wp-content/uploads/2020/09/Ao-real-madrid-san-khach-mau-ba-0-300x400.jpg"
-              alt="1"
-            />
-            <div className={styles.overlay}>
-              <img
-                src="https://www.sporter.vn/wp-content/uploads/2020/09/Ao-real-madrid-san-khach-mau-ba-5-300x400.jpg"
-                alt="2"
-              />
-            </div>
-            <div className="  text-orange-500 uppercase">
-              <p className="py-2 pl-16 pr-20 hover:opacity-65">
-                Áo bóng đá Real Madrid sân khách mẫu ba 23/24 hàng Thái Lan
-              </p>
-              <p className="mx-auto text-center">
-                <del className="text-gray-400">330,000đ</del>
-              </p>
-              <p className="mx-auto text-center">
-                <ins className="text-orange-500">
-                  <strong>280,000đ</strong>
-                </ins>
-              </p>
-            </div>
-            <Discount pecentDiscount={15} />
-            <WishList className=" absolute right-56 top-2" />
-          </div>
-          <div className={styles.container}>
-            <img
-              src="https://www.sporter.vn/wp-content/uploads/2020/09/Ao-real-madrid-san-khach-mau-ba-0-300x400.jpg"
-              alt="1"
-            />
-            <div className={styles.overlay}>
-              <img
-                src="https://www.sporter.vn/wp-content/uploads/2020/09/Ao-real-madrid-san-khach-mau-ba-5-300x400.jpg"
-                alt="2"
-              />
-            </div>
-            <div className="  text-orange-500 uppercase">
-              <p className="py-2 pl-16 pr-20 hover:opacity-65">
-                Áo bóng đá Real Madrid sân khách mẫu ba 23/24 hàng Thái Lan
-              </p>
-              <p className="mx-auto text-center">
-                <del className="text-gray-400">330,000đ</del>
-              </p>
-              <p className="mx-auto text-center">
-                <ins className="text-orange-500">
-                  <strong>280,000đ</strong>
-                </ins>
-              </p>
-            </div>
-            <Discount pecentDiscount={15} />
-            <WishList className=" absolute right-56 top-2" />
-          </div>
-          <div className={styles.container}>
-            <img
-              src="https://www.sporter.vn/wp-content/uploads/2020/09/Ao-real-madrid-san-khach-mau-ba-0-300x400.jpg"
-              alt="1"
-            />
-            <div className={styles.overlay}>
-              <img
-                src="https://www.sporter.vn/wp-content/uploads/2020/09/Ao-real-madrid-san-khach-mau-ba-5-300x400.jpg"
-                alt="2"
-              />
-            </div>
-            <div className="  text-orange-500 uppercase">
-              <p className="py-2 pl-16 pr-20 hover:opacity-65">
-                Áo bóng đá Real Madrid sân khách mẫu ba 23/24 hàng Thái Lan
-              </p>
-              <p className="mx-auto text-center">
-                <del className="text-gray-400">330,000đ</del>
-              </p>
-              <p className="mx-auto text-center">
-                <ins className="text-orange-500">
-                  <strong>280,000đ</strong>
-                </ins>
-              </p>
-            </div>
-            <Discount pecentDiscount={15} />
-            <WishList className=" absolute right-56 top-2" />
-          </div>
-        </div>
-      </div>
+        </>
+      ) : (
+        <>
+          <Loader />
+        </>
+      )}
     </div>
   );
 }
 
-export default searchProduct;
+export default SearchProduct;

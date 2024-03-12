@@ -38,6 +38,13 @@ export const getProductFromVn = async () => {
 export const getProductBySlug = async (slug) => {
   return axiosConfig({
     method: "get",
-    url: `product/detail/${slug}`,
+    url: `/product/detail/${slug}`,
+  });
+};
+
+export const getProductByKey = async (key) => {
+  return axiosConfig({
+    method: "get",
+    url: `/product/search/?s=${key}`,
   });
 };

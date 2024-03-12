@@ -4,6 +4,7 @@ import styles from "./modal.module.scss";
 
 function Modal() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [valueSearch, setValueSearch] = useState("");
   const modalRef = useRef();
 
   const handleModalToggle = () => {
@@ -24,11 +25,14 @@ function Modal() {
       document.removeEventListener("mousedown", handleClickOutside);
       document.body.style.overflow = "auto";
     }
-
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isModalOpen]);
+
+  const handleSearch = (value) => {
+    setValueSearch(value);
+  };
 
   return (
     <div className="relative">
@@ -49,9 +53,10 @@ function Modal() {
                 }}
                 className="w-[452px] border-2 border-solid rounded-full px-4 py-3 focus:outline-none placeholder-white placeholder:text-lg text-white font-semibold"
                 type="text"
+                onChange={(e) => handleSearch(e.target.value)}
               />
             </div>
-            <a href={`/search/?s=${""}&post_type=product`}>
+            <a href={`/search/?s=${valueSearch}&post_type=product`}>
               <BsSearch
                 className={`${styles.positionModal} absolute z-50 text-white font-bold text-3xl mt-2 mr-3 cursor-pointer hover:opacity-60`}
               />

@@ -99,13 +99,13 @@ const registerUser = async (req, res) => {
 const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
-    // const { error } = LoginValidation.validate(req.body, { abortEarly: false });
-    // if (error) {
-    //   const errorDetails = convertJoiError(error);
-    //   return res
-    //     .status(StatusCodes.BAD_REQUEST)
-    //     .json({ error: errorDetails, customMessage: "Invalid Input" });
-    // }
+    const { error } = LoginValidation.validate(req.body, { abortEarly: false });
+    if (error) {
+      const errorDetails = convertJoiError(error);
+      return res
+        .status(StatusCodes.BAD_REQUEST)
+        .json({ error: errorDetails, customMessage: "Invalid Input" });
+    }
     const { accessToken, refreshToken, user } = await userServices.login({
       email,
       password,
@@ -126,21 +126,15 @@ const loginUser = async (req, res) => {
 
 const updateUser = async (req, res) => {
   try {
-    const id = req.query.id;
-    const { email, password, username, phone } = req.body;
-    const { error } = UserValidation.validate(req.body);
-    if (error) {
-      console.log("Validation Error:", error);
-      const errorDetails = convertJoiError(error);
-      return res
-        .status(StatusCodes.BAD_REQUEST)
-        .json({ error: errorDetails, customMessage: "Invalid Input" });
-    }
+    const id = req.userId;
+    const fileData = req.file;
+    const { email, password, username, phone, image } = req.body;
     const user = await userServices.updateUser(id, {
       email,
       password,
       username,
       phone,
+      image: fileData?.path,
     });
     return res
       .status(StatusCodes.OK)
@@ -150,22 +144,6 @@ const updateUser = async (req, res) => {
     res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
       .json({ message: "Lỗi Server" });
-  }
-};
-
-const updateAvatar = async (req, res) => {
-  try {
-    const fileData = req.file;
-    const id = req.userId;
-    const user = await userServices.updateAvarta(id, {
-      image: fileData?.path,
-    });
-    return res
-      .status(StatusCodes.OK)
-      .json({ status: 200, message: "Xử lý thành công", content: user });
-  } catch (error) {
-    console.log(error);
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ Error: "Lỗi Server" });
   }
 };
 
@@ -245,7 +223,6 @@ export const userController = {
   registerUser,
   loginUser,
   updateUser,
-  updateAvatar,
   findUser,
   profileUser,
   authGoogle,

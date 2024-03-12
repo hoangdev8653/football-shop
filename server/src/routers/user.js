@@ -19,13 +19,12 @@ router
 
 router.route("/dang-ki").post(userController.registerUser);
 router.route("/dang-nhap").post(userController.loginUser);
-router.route("/update").post(userController.updateUser);
 router
-  .route("/update-avarta")
+  .route("/update")
   .post(
     uploadCloud.single("image"),
     verifyAccessToken,
-    userController.updateAvatar
+    userController.updateUser
   );
 
 router.route("/createCart").post(verifyAccessToken, userController.createCart);

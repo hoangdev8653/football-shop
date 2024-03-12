@@ -63,7 +63,7 @@ function ProductDeatails() {
         window.location.reload();
       }, 2500);
     } catch (error) {
-      console.log("Lỗi: ", error);
+      toast.error(error.message);
     }
   };
 
