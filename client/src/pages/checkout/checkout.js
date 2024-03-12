@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./checkout.module.scss";
 import Logo from "../../assets/logo.png";
 import { IoMdLock } from "react-icons/io";
@@ -7,8 +7,30 @@ import Button from "../../components/button";
 import Footer from "../../templates/footer";
 import { useFormik } from "formik";
 import { checkoutValidate } from "../../validations/checkout";
+import { getLocalStorage } from "../../utils/LocalStorage";
+import { getUserCurrent } from "../../apis/auth";
 
 function Checkout() {
+  const [cart, setCart] = useState([]);
+  const [data, setData] = useState("");
+  const token = getLocalStorage("accessToken");
+  useEffect(() => {
+    if (!token) {
+      return;
+    } else {
+      const fetchData = async () => {
+        try {
+          const response = await getUserCurrent(token);
+          setData(response.data.content);
+          setCart(response.data.content.cart);
+        } catch (error) {
+          console.log(error);
+        }
+      };
+      fetchData();
+    }
+  }, [token]);
+
   const formik = useFormik({
     initialValues: {
       firstname: "",
@@ -236,7 +258,6 @@ function Checkout() {
                 name="notes"
                 id="notes"
                 className="w-full placeholder:font-normal px-2 py-2 font-normal border-solid border-2 border-gray-400 h-[100px]"
-                role="2"
                 cols="5"
                 placeholder="Notes about your order, e.g. special notes for delivery"
               ></textarea>
@@ -251,23 +272,30 @@ function Checkout() {
                   <p className="my-1">PRODUCT</p>
                   <p className="my-1">CART</p>
                 </div>
-                <div className="justify-between font-medium flex border-b-[1px] border-solid border-gray-300">
-                  <p className="my-1 font-normal opacity-60">
-                    Áo bóng đá Liverpool sân khách 23/24 hàng Thái Lan{" "}
-                    <span className="text-black opacity-100 font-bold">
-                      {" "}
-                      × 1{" "}
-                    </span>
-                  </p>
-                  <p className="my-1 pl-4">280,000₫</p>
-                </div>
+                {cart &&
+                  cart.map((item, index) => (
+                    <div className="justify-between font-medium flex border-b-[1px] border-solid border-gray-300">
+                      <p className="my-1 opacity-60 uppercase  font-bold">
+                        {item.productId.name}
+                        <span className="text-black opacity-100 font-bold">
+                          {" "}
+                          × {item.quantity}
+                        </span>
+                      </p>
+                      <p className="my-1 pl-4">
+                        {parseInt(item.productId.price) * item.quantity}
+                        ,000đ
+                      </p>
+                    </div>
+                  ))}
+
                 <div className="font-medium justify-between flex border-b-[1px] border-solid border-gray-300 my-1">
                   <p className="my-1 font-medium">Subtotal</p>
-                  <p className="my-1">280,000₫</p>
+                  <p className="my-1">{data.totalPrice},000₫</p>
                 </div>
                 <div className="font-medium justify-between flex border-b-[1px] border-solid border-gray-300 my-1">
                   <p className="my--1 font-medium">Total</p>
-                  <p className="my-1">280,000₫</p>
+                  <p className="my-1">{data.totalPrice},000₫</p>
                 </div>
                 <div className="border-b-[1px] border-solid border-gray-300">
                   <div className="flex ">

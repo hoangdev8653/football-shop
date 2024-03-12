@@ -57,14 +57,15 @@ function Cart() {
       console.log("Error: ", error);
     }
   };
-
   return (
     <div
       onMouseEnter={handleIconCartHover}
       onMouseLeave={handleIconCartLeave}
       className="relative"
     >
-      <BsCart2 className="text-2xl cursor-pointer hover:opacity-60 " />
+      <a href="/cart">
+        <BsCart2 className="text-2xl cursor-pointer hover:opacity-60 " />
+      </a>
       {isOpen && (
         <div className={styles.fill}>
           <div className={styles.cart}>
@@ -76,18 +77,24 @@ function Cart() {
                       key={index}
                       className="flex mt-4 border-b-[1px] border-gray-400 border-solid mb-2 "
                     >
-                      <img
-                        className="w-16 object-cover ml-1 h-[70px]"
-                        src={item.productId.image[0]}
-                      />
-                      <div className="mx-4 w-[100px] ">
-                        <p className="text-orange-500 font-medium hover:text-white cursor-pointer uppercase">
-                          {item.productId.name}
-                        </p>
-                        <p className="text-gray-300 font-medium mb-1">
-                          {item.productId.price} * {item.quantity}
-                        </p>
-                      </div>
+                      <a
+                        className="flex"
+                        href={`/product/${item.productId.slug}`}
+                      >
+                        <img
+                          className="w-16 object-cover ml-1 h-[70px]"
+                          src={item.productId.image[0]}
+                          alt={item.slug}
+                        />
+                        <div className="mx-4 w-[100px] ">
+                          <p className="text-orange-500 font-medium hover:text-white cursor-pointer uppercase">
+                            {item.productId.name}
+                          </p>
+                          <p className="text-gray-300 font-medium mb-1">
+                            {item.productId.price} * {item.quantity}
+                          </p>
+                        </div>
+                      </a>
                       <IoIosCloseCircleOutline
                         onClick={() => handleDelete(item.productId._id)}
                         className={styles.icon_close}

@@ -176,7 +176,7 @@ const profile = async (id) => {
     authType: 0,
     role: 0,
     refreshToken: 0,
-  }).populate("cart.productId", "-description -slug -categoryId");
+  }).populate("cart.productId", "-description  -categoryId");
   if (!user) throw error("User not found");
   const cart = user.cart;
   const mapTotalPrice = cart.map(

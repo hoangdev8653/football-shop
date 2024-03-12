@@ -1,11 +1,49 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { RiCoupon3Line } from "react-icons/ri";
 import styles from "./cart.module.scss";
 import Button from "../../components/button";
+import { toast } from "react-toastify";
+import { getUserCurrent } from "../../apis/auth";
+import { deleteProduct } from "../../apis/cart";
+import { getLocalStorage } from "../../utils/LocalStorage";
 
-function cart() {
+function Cart() {
+  const [cart, setCart] = useState([]);
+  const [data, setData] = useState("");
+  const token = getLocalStorage("accessToken");
+  useEffect(() => {
+    if (!token) {
+      return;
+    } else {
+      const fetchData = async () => {
+        try {
+          const response = await getUserCurrent(token);
+          setData(response.data.content);
+          setCart(response.data.content.cart);
+        } catch (error) {
+          console.log(error);
+        }
+      };
+      fetchData();
+    }
+  }, [token]);
+
+  const handleDelete = async (productId) => {
+    try {
+      const response = await deleteProduct(productId, token);
+      if (response.error) {
+        toast.error("Thất bại");
+      }
+      toast.success("Xóa sản phẩm thành công");
+      setTimeout(() => {
+        window.location.reload();
+      }, 2500);
+    } catch (error) {
+      console.log("Error: ", error);
+    }
+  };
   return (
     <div className="w-full bg-white">
       <div className="max-w-[1050px] mx-auto text-center justify-center">
@@ -14,9 +52,12 @@ function cart() {
         >
           <span className="text-black cursor-pointer">SHOPPING CART</span>
           <MdOutlineKeyboardArrowRight className="text-orange-500 opacity-60 text-3xl mt-[2px]  " />
-          <span className="text-gray-300 cursor-pointer hover:text-black">
-            CHECKOUT DETAILS
-          </span>
+          <a href="/checkout">
+            <span className="text-gray-300 cursor-pointer hover:text-black">
+              CHECKOUT DETAILS
+            </span>
+          </a>
+
           <MdOutlineKeyboardArrowRight className="text-orange-500 opacity-60 text-3xl mt-[2px] " />
           <span className="text-gray-300">ORDER COMPLETE</span>
         </div>
@@ -40,58 +81,68 @@ function cart() {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>
-                      <a href="/">
-                        <IoIosCloseCircleOutline className="text-3xl opacity-50 hover:opacity-100" />
-                      </a>
-                    </td>
-                    <td>
-                      <a href="/">
-                        <img
-                          className="max-w-[100%] h-auto inline-block align-middle w-[200px]"
-                          src="https://www.sporter.vn/wp-content/uploads/2017/06/Ao-manchester-city-san-khach-2023-1-300x400.png"
-                          alt="thumnail"
-                        />
-                      </a>
-                    </td>
-                    <td>
-                      <a href="/">
-                        <span className="text-orange-400 hover:opacity-60">
-                          Áo bóng đá Man city sân khách 23/24 hàng thái lan
-                        </span>
-                        <p className={styles.price_one_product}>
-                          1 x <span className="font-semibold">280,000đ</span>
-                        </p>
-                      </a>
-                    </td>
-                    <td className={styles.td_price}>
-                      <span>
-                        <strong>280,000đ</strong>
-                      </span>
-                    </td>
-                    <td>
-                      <div className="flex">
-                        <button className="border-[1px] border-solid border-gray-300 px-2 py-2">
-                          -
-                        </button>
-                        <input
-                          type="text"
-                          className="border-solid border-[1px] border-gray-300 text-center w-[40px] focus:outline-none"
-                          value="1"
-                        />
-                        <button className="border-[1px] border-solid border-gray-300 px-2 py-2">
-                          +
-                        </button>
-                      </div>
-                    </td>
-                    <td className={styles.td_subtotal}>
-                      <span>
-                        <strong>280,000đ</strong>
-                      </span>
-                    </td>
-                  </tr>
-                  <tr></tr>
+                  {cart &&
+                    cart.map((item, index) => (
+                      <tr key={index}>
+                        <td>
+                          <IoIosCloseCircleOutline
+                            onClick={() => handleDelete(item.productId._id)}
+                            className="text-3xl opacity-50 hover:opacity-100 cursor-pointer"
+                          />
+                        </td>
+                        <td>
+                          <a href="/">
+                            <img
+                              className="max-w-[100%] h-auto inline-block align-middle w-[200px]"
+                              src={item.productId.image[0]}
+                              alt={item.slug}
+                            />
+                          </a>
+                        </td>
+                        <td>
+                          <a href="/">
+                            <span className="text-orange-400 hover:opacity-60">
+                              Áo bóng đá Man city sân khách 23/24 hàng thái lan
+                              * {item.quantity}
+                            </span>
+                            <p className={styles.price_one_product}>
+                              1 x{" "}
+                              <span className="font-semibold">
+                                {item.productId.price}đ
+                              </span>
+                            </p>
+                          </a>
+                        </td>
+                        <td className={styles.td_price}>
+                          <span>
+                            <strong>{item.productId.price}đ</strong>
+                          </span>
+                        </td>
+                        <td>
+                          <div className="flex">
+                            <button className="border-[1px] border-solid border-gray-300 px-2 py-2">
+                              -
+                            </button>
+                            <input
+                              type="text"
+                              className="border-solid border-[1px] border-gray-300 text-center w-[40px] focus:outline-none"
+                              value="1"
+                            />
+                            <button className="border-[1px] border-solid border-gray-300 px-2 py-2">
+                              +
+                            </button>
+                          </div>
+                        </td>
+                        <td className={styles.td_subtotal}>
+                          <span>
+                            <strong>
+                              {parseInt(item.productId.price) * item.quantity}
+                              ,000đ
+                            </strong>
+                          </span>
+                        </td>
+                      </tr>
+                    ))}
                 </tbody>
               </table>
               <div className="flex my-4 text-white gap-2 font-medium">
@@ -111,11 +162,11 @@ function cart() {
               </p>
               <div className="flex mt-4 justify-between border-b-[1px] border-gray-200 mb-2">
                 <span>subtotal</span>
-                <span className="font-semibold">280,000đ</span>
+                <span className="font-semibold">{data.totalPrice},000đ</span>
               </div>
               <div className="flex  justify-between border-b-[3px] border-gray-200 mb-2">
                 <span>Total</span>
-                <span className="font-semibold">280,000đ</span>
+                <span className="font-semibold">{data.totalPrice},000đ</span>
               </div>
               <Button className="text-white font-semibold bg-orange-500 hover:opacity-70 text-lg w-full my-4">
                 PROCEED TO CHECKOUT
@@ -140,4 +191,4 @@ function cart() {
   );
 }
 
-export default cart;
+export default Cart;
