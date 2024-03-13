@@ -2,14 +2,24 @@ import mongoose from "mongoose";
 
 const Order = mongoose.Schema({
   orderDate: {
-    type: String,
+    type: Date,
+    default: Date.now(),
   },
-  customerID: {
+  userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "user",
   },
+  status: {
+    type: String,
+    default: "Canncel",
+    enum: ["Canncel", "Success"],
+  },
   totalAmount: {
     type: String,
+  },
+  address: {
+    type: String,
+    default: "",
   },
 });
 
