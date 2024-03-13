@@ -8,11 +8,20 @@ import { toast } from "react-toastify";
 import { getUserCurrent } from "../../apis/auth";
 import { deleteProduct } from "../../apis/cart";
 import { getLocalStorage } from "../../utils/LocalStorage";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  deleteQuantity,
+  minusQuantity,
+  plusQuantity,
+} from "../../redux/actions/quantity";
 
 function Cart() {
   const [cart, setCart] = useState([]);
   const [data, setData] = useState("");
+  const [changeQuantity, setChangeQuantity] = useState(0);
   const token = getLocalStorage("accessToken");
+  const soluong = useSelector((state) => state.valueQuantity.value);
+  const dispatch = useDispatch();
   useEffect(() => {
     if (!token) {
       return;
@@ -29,8 +38,19 @@ function Cart() {
       fetchData();
     }
   }, [token]);
+  const handlePlus = () => {
+    dispatch(plusQuantity());
+  };
+  const handleMinus = () => {
+    dispatch(minusQuantity());
+  };
 
-  const handleDelete = async (productId) => {
+  const handleChangeQuantity = (quantity) => {
+    console.log(quantity);
+    setChangeQuantity(quantity);
+  };
+
+  const handleDeleteProduct = async (productId) => {
     try {
       const response = await deleteProduct(productId, token);
       if (response.error) {
@@ -86,7 +106,9 @@ function Cart() {
                       <tr key={index}>
                         <td>
                           <IoIosCloseCircleOutline
-                            onClick={() => handleDelete(item.productId._id)}
+                            onClick={() =>
+                              handleDeleteProduct(item.productId._id)
+                            }
                             className="text-3xl opacity-50 hover:opacity-100 cursor-pointer"
                           />
                         </td>
@@ -120,15 +142,25 @@ function Cart() {
                         </td>
                         <td>
                           <div className="flex">
-                            <button className="border-[1px] border-solid border-gray-300 px-2 py-2">
+                            <button
+                              onClick={handleMinus}
+                              className="border-[1px] border-solid border-gray-300 px-2 py-2"
+                            >
                               -
                             </button>
                             <input
+                              onChange={() => {
+                                handleChangeQuantity(item.quantity);
+                              }}
                               type="text"
                               className="border-solid border-[1px] border-gray-300 text-center w-[40px] focus:outline-none"
-                              value="1"
+                              value={item.quantity}
+                              // value={soluong}
                             />
-                            <button className="border-[1px] border-solid border-gray-300 px-2 py-2">
+                            <button
+                              onClick={handlePlus}
+                              className="border-[1px] border-solid border-gray-300 px-2 py-2"
+                            >
                               +
                             </button>
                           </div>
@@ -146,9 +178,11 @@ function Cart() {
                 </tbody>
               </table>
               <div className="flex my-4 text-white gap-2 font-medium">
-                <Button className="border-solid border-2  bg-orange-500 hover:opacity-80">
-                  CONTINUE SHOPPING
-                </Button>
+                <a href="/checkout">
+                  <Button className="border-solid border-2  bg-orange-500 hover:opacity-80">
+                    CONTINUE SHOPPING
+                  </Button>
+                </a>
                 <Button className="border-solid border-2  bg-green-500 hover:opacity-80">
                   UPDATE CART
                 </Button>
@@ -168,9 +202,11 @@ function Cart() {
                 <span>Total</span>
                 <span className="font-semibold">{data.totalPrice},000đ</span>
               </div>
-              <Button className="text-white font-semibold bg-orange-500 hover:opacity-70 text-lg w-full my-4">
-                PROCEED TO CHECKOUT
-              </Button>
+              <a href="/checkout">
+                <Button className="text-white font-semibold bg-orange-500 hover:opacity-70 text-lg w-full my-4">
+                  PROCEED TO CHECKOUT
+                </Button>
+              </a>
               <div className="flex text-orange-500 gap-1 my-2 border-b-[3px] border-gray-200 ">
                 <RiCoupon3Line className="text-xl mt-1" />
                 <p className="font-bold text-lg mb-2">Coupon</p>

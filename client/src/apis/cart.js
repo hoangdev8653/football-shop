@@ -1,4 +1,3 @@
-import { toast } from "react-toastify";
 import { axiosConfig } from "../axiosConfig";
 
 export const addProduct = async (data, token) => {

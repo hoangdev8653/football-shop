@@ -274,7 +274,10 @@ function Checkout() {
                 </div>
                 {cart &&
                   cart.map((item, index) => (
-                    <div className="justify-between font-medium flex border-b-[1px] border-solid border-gray-300">
+                    <div
+                      key={index}
+                      className="justify-between font-medium flex border-b-[1px] border-solid border-gray-300"
+                    >
                       <p className="my-1 opacity-60 uppercase  font-bold">
                         {item.productId.name}
                         <span className="text-black opacity-100 font-bold">
