@@ -11,7 +11,20 @@ const createOrder = async (req, res) => {
     });
     return res
       .status(StatusCodes.CREATED)
-      .json({ status: 201, message: "Xử lý thành công" });
+      .json({ status: 201, message: "Xử lý thành công", content: order });
+  } catch (error) {
+    console.log(error);
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json("Server Error");
+  }
+};
+
+const getOrderById = async (req, res) => {
+  try {
+    const id = req.userId;
+    const order = await orderServices.getOrderById(id);
+    return res
+      .status(StatusCodes.OK)
+      .json({ status: 200, message: "Xử lý thành công", content: order });
   } catch (error) {
     console.log(error);
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).json("Server Error");
@@ -20,4 +33,5 @@ const createOrder = async (req, res) => {
 
 export const orderController = {
   createOrder,
+  getOrderById,
 };

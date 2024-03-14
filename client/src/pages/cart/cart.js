@@ -9,11 +9,7 @@ import { getUserCurrent } from "../../apis/auth";
 import { deleteProduct } from "../../apis/cart";
 import { getLocalStorage } from "../../utils/LocalStorage";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  deleteQuantity,
-  minusQuantity,
-  plusQuantity,
-} from "../../redux/actions/quantity";
+import { minusQuantity, plusQuantity } from "../../redux/actions/quantity";
 
 function Cart() {
   const [cart, setCart] = useState([]);
@@ -130,14 +126,14 @@ function Cart() {
                             <p className={styles.price_one_product}>
                               1 x{" "}
                               <span className="font-semibold">
-                                {item.productId.price}đ
+                                {item.productId.price}$
                               </span>
                             </p>
                           </a>
                         </td>
                         <td className={styles.td_price}>
                           <span>
-                            <strong>{item.productId.price}đ</strong>
+                            <strong>{item.productId.price}$</strong>
                           </span>
                         </td>
                         <td>
@@ -168,8 +164,7 @@ function Cart() {
                         <td className={styles.td_subtotal}>
                           <span>
                             <strong>
-                              {parseInt(item.productId.price) * item.quantity}
-                              ,000đ
+                              {parseInt(item.productId.price) * item.quantity}$
                             </strong>
                           </span>
                         </td>
@@ -196,11 +191,11 @@ function Cart() {
               </p>
               <div className="flex mt-4 justify-between border-b-[1px] border-gray-200 mb-2">
                 <span>subtotal</span>
-                <span className="font-semibold">{data.totalPrice},000đ</span>
+                <span className="font-semibold">{data.totalPrice}$</span>
               </div>
               <div className="flex  justify-between border-b-[3px] border-gray-200 mb-2">
                 <span>Total</span>
-                <span className="font-semibold">{data.totalPrice},000đ</span>
+                <span className="font-semibold">{data.totalPrice}$</span>
               </div>
               <a href="/checkout">
                 <Button className="text-white font-semibold bg-orange-500 hover:opacity-70 text-lg w-full my-4">

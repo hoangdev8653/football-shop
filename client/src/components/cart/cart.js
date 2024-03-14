@@ -105,7 +105,7 @@ function Cart() {
               <div className="text-center mx-auto border-b-[1px] border-t-[1px] border-gray-400">
                 <p className="font-bold text-gray-500 my-2">
                   <span className="">Subtotal: </span>
-                  <span className="">{data.totalPrice},000₫</span>
+                  <span className="">{data.totalPrice}$</span>
                 </p>
               </div>
 

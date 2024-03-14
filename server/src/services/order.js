@@ -1,13 +1,42 @@
 import orderModel from "../models/order.js";
+import UserModel from "../models/user.js";
 
-const createOrder = async (id, { address, totalAmount }) => {
+const createOrder = async (id, { address }) => {
   try {
-    const user = await orderModel
-      .find()
-      .populate("userId", "totalPrice cart email");
-    console.log(user);
-    // const order = await orderModel.create({ userId: id, address, totalAmount });
-    // return order;
+    const user = await UserModel.findById(id);
+    if (!user) {
+      throw new Error("user not found");
+    }
+    const order = await orderModel.create({
+      userId: user._id,
+      address,
+      totalAmount: user.totalPrice,
+      status: "Success",
+      cart: user.cart,
+    });
+    const userUpdate = await UserModel.findByIdAndUpdate(
+      id,
+      {
+        cart: [],
+        totalprice: 0,
+      },
+      { new: true }
+    );
+
+    console.log(userUpdate);
+    return order;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const getOrderById = async (id) => {
+  try {
+    const userId = await orderModel.find({ userId: id });
+    if (!userId) {
+      throw new Error("Order not found");
+    }
+    return userId;
   } catch (error) {
     console.log(error);
   }
@@ -15,4 +44,5 @@ const createOrder = async (id, { address, totalAmount }) => {
 
 export const orderServices = {
   createOrder,
+  getOrderById,
 };

@@ -9,11 +9,16 @@ import { useFormik } from "formik";
 import { checkoutValidate } from "../../validations/checkout";
 import { getLocalStorage } from "../../utils/LocalStorage";
 import { getUserCurrent } from "../../apis/auth";
+import { usePayPalScriptReducer } from "@paypal/react-paypal-js";
+import Payment from "./payment/payment";
 
 function Checkout() {
   const [cart, setCart] = useState([]);
   const [data, setData] = useState("");
   const token = getLocalStorage("accessToken");
+  // const [{ options, isPending }, dispatch] = usePayPalScriptReducer();
+  // const [currency, setCurrency] = useState(options.currency)
+
   useEffect(() => {
     if (!token) {
       return;
@@ -30,20 +35,17 @@ function Checkout() {
       fetchData();
     }
   }, [token]);
-
   const formik = useFormik({
     initialValues: {
-      firstname: "",
-      lastname: "",
-      company: "",
+      username: "",
       street: "",
-      city: "",
       phonenumber: "",
       email: "",
       notes: "",
-      picked: "",
     },
-    onSubmit: (values) => console.log(values),
+    onSubmit: (values) => {
+      console.log(values);
+    },
     validationSchema: checkoutValidate,
   });
 
@@ -96,19 +98,19 @@ function Checkout() {
             <p className="mt-4 mb-2 text-orange-500">BILLING DETAILS</p>
             <div className="w-full">
               <div className="">
-                <label>First name *</label>
+                <label>User name *</label>
                 <input
                   className="w-full border-[2px] border-solid font-normal border-gray-300 py-1 px-3 my-1 placeholder:font-normal"
-                  placeholder="Please your type first name"
+                  placeholder="Please your type user name"
                   type="text"
-                  name="firstname"
-                  id="firstname"
-                  value={formik.values.firstname}
+                  name="username"
+                  id="username"
+                  value={formik.values.username}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                 />
               </div>
-              {formik.touched.firstname && formik.errors.firstname && (
+              {formik.touched.username && formik.errors.username && (
                 <div
                   style={{
                     color: "red",
@@ -116,49 +118,14 @@ function Checkout() {
                     fontWeight: "500",
                   }}
                 >
-                  {formik.errors.firstname}
+                  {formik.errors.username}
                 </div>
               )}
-              <div className="">
-                <label>Last name *</label>
-                <input
-                  className="w-full border-[2px] border-solid font-normal border-gray-300 py-1 px-3 my-1 placeholder:font-normal"
-                  placeholder="Please your type last name"
-                  type="text"
-                  name="lastname"
-                  id="lastname"
-                  value={formik.values.lastname}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                />
-              </div>
-              {formik.touched.firstname && formik.errors.firstname && (
-                <div
-                  style={{
-                    color: "red",
-                    textAlign: "center",
-                    fontWeight: "500",
-                  }}
-                >
-                  {formik.errors.firstname}
-                </div>
-              )}
-              <div className="">
-                <label>Company name (optional)</label>
-                <input
-                  type="text"
-                  name="company"
-                  id="company"
-                  value={formik.values.company}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  className="w-full border-[2px] border-solid font-normal border-gray-300 py-1 px-3 my-1 placeholder:font-normal"
-                />
-              </div>
+
               <div className="">
                 <label>Street address *</label>
                 <input
-                  className="w-1/2 block border-[2px] border-solid font-normal border-gray-300 py-1 px-3 my-1 placeholder:font-normal"
+                  className="w-full block border-[2px] border-solid font-normal border-gray-300 py-1 px-3 my-1 placeholder:font-normal"
                   placeholder="House number and street name"
                   type="text"
                   name="street"
@@ -172,7 +139,7 @@ function Checkout() {
                 <div
                   style={{
                     color: "red",
-                    textAlign: "left",
+                    textAlign: "center",
                     fontWeight: "500",
                   }}
                 >
@@ -180,27 +147,6 @@ function Checkout() {
                 </div>
               )}
               <div className="">
-                <label>Town / City *</label>
-                <input
-                  type="text"
-                  name="city"
-                  id="city"
-                  value={formik.values.city}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  className="w-full border-[2px] border-solid font-normal border-gray-300 py-1 px-3 my-1 placeholder:font-normal"
-                />
-                {formik.touched.city && formik.errors.city && (
-                  <div
-                    style={{
-                      color: "red",
-                      textAlign: "center",
-                      fontWeight: "500",
-                    }}
-                  >
-                    {formik.errors.city}
-                  </div>
-                )}
                 <label>Phone *</label>
                 <input
                   className="w-full border-[2px] border-solid font-normal border-gray-300 py-1 px-3 my-1 placeholder:font-normal"
@@ -286,64 +232,25 @@ function Checkout() {
                         </span>
                       </p>
                       <p className="my-1 pl-4">
-                        {parseInt(item.productId.price) * item.quantity}
-                        ,000đ
+                        {parseInt(item.productId.price) * item.quantity}$
                       </p>
                     </div>
                   ))}
 
                 <div className="font-medium justify-between flex border-b-[1px] border-solid border-gray-300 my-1">
                   <p className="my-1 font-medium">Subtotal</p>
-                  <p className="my-1">{data.totalPrice},000₫</p>
+                  <p className="my-1">{data.totalPrice}$</p>
                 </div>
-                <div className="font-medium justify-between flex border-b-[1px] border-solid border-gray-300 my-1">
+                <div className="font-medium justify-between mb-8 flex border-b-[1px] border-solid border-gray-300 my-1">
                   <p className="my--1 font-medium">Total</p>
-                  <p className="my-1">{data.totalPrice},000₫</p>
+                  <p className="my-1">{data.totalPrice}$</p>
                 </div>
-                <div className="border-b-[1px] border-solid border-gray-300">
-                  <div className="flex ">
-                    <input
-                      type="radio"
-                      name="picked"
-                      defaultChecked
-                      className="mx-2"
-                      value="1"
-                      onChange={formik.handleChange}
-                    />
-                    <label className="font-semibold mx-2 ">
-                      Thanh toán trước bằng hình thức chuyển khoản
-                    </label>
-                  </div>
-                  <p className=" my-[4px]">
-                    Sau khi bạn đặt hàng thành công, Sporter sẽ liên hệ với bạn
-                    để xác nhận đơn hàng và hướng dẫn chuyển khoản. Sau đó,
-                    chung tôi sẽ tiến hành việc giao hàng trong thời gian sớm
-                    nhất. Mọi chi tiết vui lòng liên hệ: {""}
-                    <span className="text-orange-500 font-medium cursor-pointer hover:opacity-60">
-                      0766 640 006{" "}
-                    </span>
-                  </p>
-                </div>
-                <div className="mt-2">
-                  <div className="flex ">
-                    <input
-                      type="radio"
-                      name="picked"
-                      className="mx-2"
-                      value="2"
-                      onChange={formik.handleChange}
-                    />
-                    <label className="font-semibold mx-2 ">
-                      COD: Thanh toán khi nhận hàng
-                    </label>
-                  </div>
-                </div>
-                <Button
-                  type="submit"
-                  className="bg-orange-500 text-white font-medium hover:bg-orange-700 my-4"
-                >
-                  PLACE ORDER
-                </Button>
+                {Object.keys(formik.errors).length === 0 && (
+                  <Payment
+                    address={formik.values.street}
+                    totalPrice={data.totalPrice}
+                  />
+                )}
                 <p className="my-4">
                   Sau khi hoàn tất đặt hàng. SPorter sẽ gọi điện để tư vấn size
                   và chốt đơn để tránh đơn hàng chọn nhầm Size. Hoặc khách hàng

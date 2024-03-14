@@ -16,6 +16,7 @@ import NotFound from "./pages/notFound";
 import Profile from "./pages/profile/profile";
 import Register from "./components/register";
 import CheckOut from "./pages/checkout/checkout";
+import OrderComplete from "./pages/orderComplete/orderComplete";
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
       <Route path={path.PROFILE} element={<Profile />} />
       <Route path={path.REGISTER} element={<Register />} />
       <Route path={path.CHECKOUT} element={<CheckOut />} />
+      <Route path={path.ORDER_COMPLETE} element={<OrderComplete />} />
       <Route path={path.NOTFOUND} element={<NotFound />} />
     </Routes>
   );

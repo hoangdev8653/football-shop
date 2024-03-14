@@ -21,6 +21,7 @@ const Order = mongoose.Schema({
     type: String,
     default: "",
   },
+  cart: [],
 });
 
 const orderModel = mongoose.model("order", Order);

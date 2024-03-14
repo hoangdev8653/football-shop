@@ -278,10 +278,16 @@ function Club() {
             </p>
             <div className="flex my-4">
               <div className="w-1/2 mx-2">
-                <img src="https://www.sporter.vn/wp-content/uploads/2023/05/Ao-bong-da-man-city-san-nha-1.png" />
+                <img
+                  src="https://www.sporter.vn/wp-content/uploads/2023/05/Ao-bong-da-man-city-san-nha-1.png"
+                  alt={data.slug}
+                />
               </div>
               <div className="w-1/2 mx-2">
-                <img src="https://www.sporter.vn/wp-content/uploads/2023/05/Ao-bong-da-man-city-san-nha-2.png" />
+                <img
+                  src="https://www.sporter.vn/wp-content/uploads/2023/05/Ao-bong-da-man-city-san-nha-2.png"
+                  alt={data.slug}
+                />
               </div>
             </div>
             <p className="text-black text-base font-semibold ml-2 ">
@@ -289,10 +295,16 @@ function Club() {
             </p>
             <div className="flex my-4">
               <div className="w-1/2 mx-2">
-                <img src="https://www.sporter.vn/wp-content/uploads/2017/06/Ao-manchester-city-san-khach-2023-1.png" />
+                <img
+                  src="https://www.sporter.vn/wp-content/uploads/2017/06/Ao-manchester-city-san-khach-2023-1.png"
+                  alt={data.slug}
+                />
               </div>
               <div className="w-1/2 mx-2">
-                <img src="https://www.sporter.vn/wp-content/uploads/2017/06/Ao-manchester-city-san-khach-2023-2.png" />
+                <img
+                  src="https://www.sporter.vn/wp-content/uploads/2017/06/Ao-manchester-city-san-khach-2023-2.png"
+                  alt={data.slug}
+                />
               </div>
             </div>
           </div>
