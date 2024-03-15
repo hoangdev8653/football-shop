@@ -12,6 +12,7 @@ export const path = {
   ORDER_COMPLETE: "/orderComplete",
   SEARCH_PRODUCT: "/search/",
   PROFILE: "/profile",
+  CHANGE_PASSWORD: "/changePassword",
   BLOG: "/blog",
   LOGIN: "/login",
   REGISTER: "/register",

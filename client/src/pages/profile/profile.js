@@ -1,12 +1,17 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import styles from "./profile.module.scss";
 import { Tabs, Tab } from "./Tabs/Tabs";
 import Button from "../../components/button";
 import { getLocalStorage } from "../../utils/LocalStorage";
 import avarta_deafaute from "../../assets/user_deafaute.jpg";
+// import { useFormik } from "formik";
 
 function Profile() {
   const user = getLocalStorage("user");
+  const token = getLocalStorage("accessToken");
+  const [userName, setUserName] = useState(user.username);
+  const [phone, setPhone] = useState(user.phone);
+  const [email, setEmail] = useState(user.email);
   const fileInputRef = useRef(null);
   const avatarImageRef = useRef(null);
 
@@ -19,14 +24,9 @@ function Profile() {
 
       // Update the avatar image source
       avatarImageRef.current.src = fileUrl;
-
-      // Handle the file as needed (e.g., upload it, display it, etc.)
-      console.log("Selected file:", file);
     }
   };
-
   const handleButtonClick = () => {
-    // Trigger the file input when the button is clicked
     fileInputRef.current.click();
   };
 
@@ -57,7 +57,7 @@ function Profile() {
                             <img
                               ref={avatarImageRef}
                               className="w-16 h-16 object-cover rounded-full"
-                              src={user ? user.avarta : avarta_deafaute}
+                              src={user?.avarta ? user.avarta : avarta_deafaute}
                               alt="avarta"
                             />
 
@@ -92,6 +92,10 @@ function Profile() {
                                   type="text"
                                   name="name"
                                   id="name"
+                                  value={userName}
+                                  onChange={(e) => {
+                                    setUserName(e.target.value);
+                                  }}
                                   className="block pl-2 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                 />
                               </div>
@@ -109,6 +113,8 @@ function Profile() {
                                   type="phone"
                                   name="phone"
                                   id="phone"
+                                  value={phone}
+                                  onChange={(e) => setPhone(e.target.value)}
                                   className=" pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                 />
                               </div>
@@ -127,25 +133,20 @@ function Profile() {
                                   name="email"
                                   type="email"
                                   autocomplete="email"
+                                  value={email}
+                                  onChange={(e) => {
+                                    setEmail(e.target.value);
+                                  }}
                                   className=" block pl-2 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                 />
                               </div>
                             </div>
                             <div className="sm:col-span-3">
-                              <label
-                                for="password"
-                                className="text-left block text-sm font-medium leading-6 text-gray-900"
-                              >
-                                Password:
-                              </label>
-                              <div className="mt-2">
-                                <input
-                                  id="password"
-                                  name="password"
-                                  type="password"
-                                  className="block pl-2 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                />
-                              </div>
+                              <a href="/changePassword">
+                                <Button className="text-black bg-blue-600 mt-4 rounded">
+                                  Change Password
+                                </Button>
+                              </a>
                             </div>
                           </div>
                         </div>

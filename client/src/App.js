@@ -14,6 +14,7 @@ import Club from "./pages/club/club";
 import Login from "./components/login";
 import NotFound from "./pages/notFound";
 import Profile from "./pages/profile/profile";
+import ChangePassword from "./pages/profile/changePassword";
 import Register from "./components/register";
 import CheckOut from "./pages/checkout/checkout";
 import OrderComplete from "./pages/orderComplete/orderComplete";
@@ -34,6 +35,7 @@ function App() {
       </Route>
       <Route path={path.LOGIN} element={<Login />} />
       <Route path={path.PROFILE} element={<Profile />} />
+      <Route path={path.CHANGE_PASSWORD} element={<ChangePassword />} />
       <Route path={path.REGISTER} element={<Register />} />
       <Route path={path.CHECKOUT} element={<CheckOut />} />
       <Route path={path.ORDER_COMPLETE} element={<OrderComplete />} />
