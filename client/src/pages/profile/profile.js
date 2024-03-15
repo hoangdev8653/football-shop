@@ -9,9 +9,9 @@ import avarta_deafaute from "../../assets/user_deafaute.jpg";
 function Profile() {
   const user = getLocalStorage("user");
   const token = getLocalStorage("accessToken");
-  const [userName, setUserName] = useState(user.username);
-  const [phone, setPhone] = useState(user.phone);
-  const [email, setEmail] = useState(user.email);
+  const [userName, setUserName] = useState(user?.username);
+  const [phone, setPhone] = useState(user?.phone);
+  const [email, setEmail] = useState(user?.email);
   const fileInputRef = useRef(null);
   const avatarImageRef = useRef(null);
 

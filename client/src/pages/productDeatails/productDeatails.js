@@ -20,6 +20,7 @@ import { addProduct } from "../../apis/cart";
 import Loader from "../../components/logoLoader/logoLoader";
 import { getLocalStorage } from "../../utils/LocalStorage";
 import { toast } from "react-toastify";
+import Comment from "../../components/comment";
 
 function ProductDeatails() {
   const [data, setData] = useState([]);
@@ -223,6 +224,7 @@ function ProductDeatails() {
                 </div>
               </div>
             </div>
+            {/* <Comment /> */}
             <div id="discription">
               <div
                 style={{ backgroundColor: "rgba(0,0,0,0.03)" }}

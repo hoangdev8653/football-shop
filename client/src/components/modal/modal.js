@@ -50,8 +50,9 @@ function Modal() {
                 style={{
                   backgroundColor: "rgba(255,255,255, 0.2)",
                   borderColor: "rgba(255,255,255, 0.09)",
+                  color: "white",
                 }}
-                className="w-[452px] border-2 border-solid rounded-full px-4 py-3 focus:outline-none placeholder-white placeholder:text-lg text-white font-semibold"
+                className="w-[452px]  border-2 border-solid rounded-full px-4 py-3 focus:outline-none placeholder-white placeholder:text-lg  font-semibold"
                 type="text"
                 onChange={(e) => handleSearch(e.target.value)}
               />

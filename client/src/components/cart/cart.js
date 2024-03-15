@@ -12,7 +12,16 @@ function Cart() {
   const [isOpen, setIsOpen] = useState(false);
   const [cart, setCart] = useState([]);
   const [data, setData] = useState("");
+  const [checkCart, setCheckCart] = useState(false);
   const token = getLocalStorage("accessToken");
+
+  useEffect(() => {
+    if (cart && cart.length > 0) {
+      setCheckCart(true);
+    } else {
+      setCheckCart(false);
+    }
+  }, [cart]);
   useEffect(() => {
     if (!token) {
       return;
@@ -102,25 +111,34 @@ function Cart() {
                     </div>
                   ))}
               </div>
-              <div className="text-center mx-auto border-b-[1px] border-t-[1px] border-gray-400">
-                <p className="font-bold text-gray-500 my-2">
-                  <span className="">Subtotal: </span>
-                  <span className="">{data.totalPrice}$</span>
-                </p>
-              </div>
-
-              <div className="mt-2 pb-8">
-                <a href="/cart">
-                  <Button className="bg-gray-400 text-white font-bold block w-full hover:opacity-80 my-1">
-                    VIEW CART
-                  </Button>
-                </a>
-                <a href="/checkout">
-                  <Button className="bg-orange-500 text-white font-bold block w-full hover:opacity-80 my-1">
-                    CHECK OUT
-                  </Button>
-                </a>
-              </div>
+              {data && checkCart === true ? (
+                <>
+                  <div className="text-center mx-auto border-b-[1px] border-t-[1px] border-gray-400">
+                    <p className="font-bold text-gray-500 my-2">
+                      <span className="">Subtotal: </span>
+                      <span className="">{data.totalPrice}$</span>
+                    </p>
+                  </div>
+                  <div className="mt-2 pb-8">
+                    <a href="/cart">
+                      <Button className="bg-gray-400 text-white font-bold block w-full hover:opacity-80 my-1">
+                        VIEW CART
+                      </Button>
+                    </a>
+                    <a href="/checkout">
+                      <Button className="bg-orange-500 text-white font-bold block w-full hover:opacity-80 my-1">
+                        CHECK OUT
+                      </Button>
+                    </a>
+                  </div>
+                </>
+              ) : (
+                <div className="py-8">
+                  <p className="text-gray-400 text-center text-lg">
+                    No products in the cart
+                  </p>
+                </div>
+              )}
             </div>
           </div>
         </div>

@@ -96,6 +96,25 @@ const registerUser = async (req, res) => {
   }
 };
 
+const changePassword = async (req, res) => {
+  try {
+    const id = req.userId;
+    const { password, newPassword } = req.body;
+    const user = await userServices.changePassword(id, {
+      password,
+      newPassword,
+    });
+    return res
+      .status(StatusCodes.OK)
+      .json({ status: 200, message: "Xử lý thành công", content: user });
+  } catch (error) {
+    console.log(error);
+    res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ status: 500, message: "Error Server" });
+  }
+};
+
 const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -120,7 +139,9 @@ const loginUser = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(error);
+    res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ status: 500, message: "Server Error" });
   }
 };
 
@@ -185,7 +206,7 @@ const profileUser = async (req, res) => {
       .status(StatusCodes.OK)
       .json({ status: 200, message: "Xử lý thành công", content: user });
   } catch (error) {
-    console.log(error);
+    console.log(error.message);
     res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
       .json({ Error: "Server Error" });
@@ -222,6 +243,7 @@ export const userController = {
   deleteUser,
   registerUser,
   loginUser,
+  changePassword,
   updateUser,
   findUser,
   profileUser,

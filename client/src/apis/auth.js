@@ -46,6 +46,18 @@ export const updateUser = async (data, token) => {
   });
 };
 
+export const updatePassword = async (data, token) => {
+  return axiosConfig({
+    method: "post",
+    url: `/user/changePassword`,
+    data,
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+
 export const AUTH_API = {
   register,
   login,

@@ -145,7 +145,7 @@ const login = async ({ email, password }) => {
     if (!user) {
       throw new Error("User not found");
     }
-    const checkPassword = bcrypt.compare(password, user.password);
+    const checkPassword = await bcrypt.compare(password, user.password);
     if (!checkPassword) {
       throw Error("Mật khẩu không chính xác");
     }
@@ -161,6 +161,28 @@ const login = async ({ email, password }) => {
   }
 };
 
+const changePassword = async (id, { password, newPassword }) => {
+  try {
+    const user = await UserModel.findById(id);
+    if (!user) {
+      throw new Error("User không tồn tại");
+    }
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+      throw new Error("Mật khẩu không chính xác");
+    }
+    const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+    const newUser = await UserModel.findByIdAndUpdate(
+      id,
+      { password: hashedNewPassword },
+      { new: true }
+    );
+    return newUser;
+  } catch (error) {
+    throw error; // Re-throw the error for the caller to handle
+  }
+};
+
 const profile = async (id) => {
   const user = await UserModel.findById(id, {
     authGoogleId: 0,
@@ -169,7 +191,7 @@ const profile = async (id) => {
     role: 0,
     refreshToken: 0,
   }).populate("cart.productId", "-description  -categoryId");
-  if (!user) throw error("User not found");
+  if (!user) throw new Error("User not found");
   const cart = user.cart;
   const mapTotalPrice = cart.map(
     (item) => item.productId.price * item.quantity
@@ -214,6 +236,7 @@ export const userServices = {
   deleteCart,
   register,
   login,
+  changePassword,
   updateUser,
   findUser,
   profile,

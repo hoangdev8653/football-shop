@@ -26,6 +26,9 @@ router
     verifyAccessToken,
     userController.updateUser
   );
+router
+  .route("/changePassword")
+  .post(verifyAccessToken, userController.changePassword);
 
 router.route("/createCart").post(verifyAccessToken, userController.createCart);
 router.route("/updateCart").put(verifyAccessToken, userController.updateCart);

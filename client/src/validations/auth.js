@@ -17,3 +17,16 @@ export const registerValidate = Yup.object().shape({
     .matches(phoneRegExp, "Phone number is not valid"),
   username: Yup.string().min(3).required("User name is Required"),
 });
+
+export const changePasswordValidate = Yup.object().shape({
+  password: Yup.string()
+    .min(6, "Password at least 6 character ")
+    .required("Password is Required"),
+  newPassword: Yup.string()
+    .min(6, "New Password at least 6 character ")
+    .required("Password is Required"),
+  confirmPassword: Yup.string().oneOf(
+    [Yup.ref("newPassword"), null],
+    "Passwords must match"
+  ),
+});
