@@ -15,6 +15,10 @@ const review = mongoose.Schema({
   comment: {
     type: String,
   },
+  time: {
+    type: Date,
+    default: Date.now(),
+  },
 });
 
 const ReviewModel = mongoose.model("review", review);

@@ -25,16 +25,30 @@ const getReviewByUser = async (req, res) => {
   }
 };
 
+const getReviewsByProduct = async (req, res) => {
+  try {
+    const productId = req.query.productId;
+    const review = await reviewService.getReviewsByProduct(productId);
+    return res
+      .status(StatusCodes.OK)
+      .json({ status: 200, message: "Xử lý thành công", content: review });
+  } catch (error) {
+    console.log(error);
+    res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ status: 500, message: "Server Error" });
+  }
+};
+
 const createReview = async (req, res) => {
   try {
-    const { rating, comment, productId, userId } = req.body;
-    const review = await reviewService.createReview({
+    const id = req.userId;
+    const { rating, comment, productId } = req.body;
+    const review = await reviewService.createReview(id, {
       rating,
       comment,
       productId,
-      userId,
     });
-    console.log(review);
     return res
       .status(StatusCodes.CREATED)
       .json({ status: 201, message: "Xử lý thành công", content: review });
@@ -75,6 +89,7 @@ const deleteReview = async (req, res) => {
 
 export const reviewController = {
   getAllReview,
+  getReviewsByProduct,
   createReview,
   updateReview,
   deleteReview,
