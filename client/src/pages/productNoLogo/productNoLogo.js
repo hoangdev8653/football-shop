@@ -91,9 +91,9 @@ function ProductNoLogo() {
                         {item.name}
                       </p>
                       <p className="mb-2 mt-1 text-xs">
-                        <del className="text-gray-400 mx-2">330,000đ</del>
+                        <del className="text-gray-400 mx-2">330.000$</del>
                         <ins className="mx-2 text-white">
-                          <strong>{item.price}đ</strong>
+                          <strong>{item.price}$</strong>
                         </ins>
                       </p>
                     </div>

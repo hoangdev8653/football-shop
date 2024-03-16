@@ -11,7 +11,10 @@ const getAllUser = async () => {
 };
 
 const createCart = async (id, { productId, quantity }) => {
-  const user = await UserModel.findById(id);
+  const user = await UserModel.findById(id).populate(
+    "cart.productId",
+    "-slug -categoryId"
+  );
   if (!user) {
     throw new Error("User not found");
   }
@@ -24,7 +27,6 @@ const createCart = async (id, { productId, quantity }) => {
   } else {
     cart.push({ productId, quantity });
   }
-
   const updateCart = await user.save();
   return updateCart;
 };
@@ -141,7 +143,6 @@ const findUser = async (id) => {
 const login = async ({ email, password }) => {
   try {
     const user = await UserModel.findOne({ email });
-
     if (!user) {
       throw new Error("User not found");
     }

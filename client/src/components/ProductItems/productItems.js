@@ -65,9 +65,9 @@ function productItems({ itemToShow = 5, data }) {
                     {item.name}
                   </p>
                   <p className="mb-6 mt-1 text-xs">
-                    <del className="text-gray-400 mx-2">{item.price}đ</del>
+                    <del className="text-gray-400 mx-2">250.000$</del>
                     <ins className="mx-2 text-white">
-                      <strong>280,000đ</strong>
+                      <strong>{item.price}$</strong>
                     </ins>
                   </p>
                 </div>

@@ -1,12 +1,17 @@
 import orderModel from "../models/order.js";
 import UserModel from "../models/user.js";
+import ProductModel from "../models/product.js";
 
 const createOrder = async (id, { address }) => {
   try {
-    const user = await UserModel.findById(id);
-    if (!user) {
-      throw new Error("user not found");
+    const user = await UserModel.findById(id).populate(
+      "cart.productId",
+      "-description -stockQuality -slug -categoryId"
+    );
+    if (user.cart.length <= 0) {
+      throw new Error("Cart null");
     }
+    console.log(user.cart);
     const order = await orderModel.create({
       userId: user._id,
       address,
@@ -14,7 +19,7 @@ const createOrder = async (id, { address }) => {
       status: "Success",
       cart: user.cart,
     });
-    const userUpdate = await UserModel.findByIdAndUpdate(
+    await UserModel.findByIdAndUpdate(
       id,
       {
         cart: [],
@@ -31,9 +36,6 @@ const createOrder = async (id, { address }) => {
 const getOrderById = async (id) => {
   try {
     const userId = await orderModel.find({ userId: id });
-    if (!userId) {
-      throw new Error("Order not found");
-    }
     return userId;
   } catch (error) {
     console.log(error);

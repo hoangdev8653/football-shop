@@ -42,7 +42,7 @@ function Profile() {
               <Tab label="Thông tin tài khoản">
                 <div className="py-1">
                   <p className="text-gray-700 ">
-                    <form className="mx-4">
+                    <form className="mx-4 max-w-[40rem]">
                       <div className="">
                         <div className=" pb-́4 mb-2">
                           <div className="mt-2 flex items-center justify-center gap-x-3">
@@ -192,31 +192,48 @@ function Profile() {
                 </div>
               </Tab>
               <Tab label="Lịch Sử đặt hàng">
-                <div className="py-4">
-                  <h2 className="text-lg font-medium mb-2">Tab 2 Content</h2>
-                  <table class="table-auto">
+                <div className="py-4 w-full">
+                  <table className="table-auto w-full">
                     <thead>
-                      <tr>
-                        <th>Song</th>
-                        <th>Artist</th>
-                        <th>Year</th>
+                      <tr className="text-gray-600">
+                        <th>Product</th>
+                        <th>Price</th>
+                        <th>Status</th>
+                        <th>Info</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr>
-                        <td>The Sliding Mr. Bones (Next Stop, Pottersville)</td>
-                        <td>Malcolm Lockyer</td>
-                        <td>1961</td>
+                        <td className="flex items-center">
+                          <img
+                            className="h-[50px] w-[50px] object-cover"
+                            src="https://tailwindui.com/img/ecommerce-images/order-history-page-02-product-02.jpg"
+                            alt="text"
+                          />
+                          <p className="mx-[10px] font-semibold">
+                            Áo Real Sân nhà mùa giải 2023/2024{" "}
+                            <span className="text-red-500">* 3</span>
+                          </p>
+                        </td>
+                        <td>200.000$</td>
+                        <td> Delivered Jan 25, 2021</td>
+                        <td>600.000$</td>
                       </tr>
                       <tr>
                         <td>Witchy Woman</td>
                         <td>The Eagles</td>
                         <td>1972</td>
+                        <td>
+                          <a href="/">Info</a>
+                        </td>
                       </tr>
                       <tr>
                         <td>Shining Star</td>
                         <td>Earth, Wind, and Fire</td>
                         <td>1975</td>
+                        <td>
+                          <a href="/">Info</a>
+                        </td>
                       </tr>
                     </tbody>
                   </table>

@@ -92,9 +92,9 @@ function ProductClb() {
                       {item.name}
                     </p>
                     <p className="flex justify-center text-center">
-                      <del className="text-gray-400 mx-1">150,000đ</del>
+                      <del className="text-gray-400 mx-1">150.000$</del>
                       <ins className="font-medium text-white mx-1">
-                        <strong>{item.price}đ</strong>
+                        <strong>{item.price}$</strong>
                       </ins>
                     </p>
 

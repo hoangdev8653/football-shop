@@ -72,11 +72,11 @@ function SearchProduct() {
                           {item.name}
                         </p>
                         <p className="mx-auto text-center">
-                          <del className="text-gray-400">330,000đ</del>
+                          <del className="text-gray-400">330.000$</del>
                         </p>
                         <p className="mx-auto text-center">
                           <ins className="text-orange-500">
-                            <strong>{item.price}đ</strong>
+                            <strong>{item.price}$</strong>
                           </ins>
                         </p>
                       </div>

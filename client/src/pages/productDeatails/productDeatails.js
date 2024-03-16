@@ -134,12 +134,12 @@ function ProductDeatails() {
                 <p className="text-xl flex gap-4">
                   <del className="opacity-30">
                     <span>
-                      330,000
-                      <span>đ</span>
+                      330
+                      <span>$</span>
                     </span>
                   </del>
                   <ins className="text-orange-500 font-semibold">
-                    <span>{data.price}đ</span>
+                    <span>{data.price}$</span>
                   </ins>
                 </p>
                 <p className="my-2">
@@ -160,24 +160,22 @@ function ProductDeatails() {
                   Hàng VN giá{" "}
                   <span>
                     <strong className="text-red-500">
-                      Khuyến mãi còn 100.000 VNĐ /1 bộ{" "}
+                      Khuyến mãi còn 100$ /1 bộ{" "}
                     </strong>
                   </span>
                   -
                   <span className="text-red-500">
-                    <strong>Từ 5 bộ trở lên: 95.000VNĐ / 1 bộ</strong>
+                    <strong>Từ 5 bộ trở lên: 95$ / 1 bộ</strong>
                   </span>
                   <p>
                     Hàng Thái Lan giá{" "}
                     <span className="text-red-500">
-                      <strong>
-                        Khuyến mãi còn 280.000 VNĐ /1 áo - 350.000 VNĐ /1 bộ
-                      </strong>
+                      <strong>Khuyến mãi còn 280$ /1 áo - 350$ /1 bộ</strong>
                     </span>
                     -
                     <span className="text-red-500">
                       <strong>
-                        Từ 5 bộ trở lên: 270,000VNĐ/ 1 áo - 340,000VNĐ/ 1 bộ
+                        Từ 5 bộ trở lên: 270$/ 1 áo - 340$/ 1 bộ
                         <img src={BannerIn} alt="banner-keu-goi-in" />
                       </strong>
                     </span>
