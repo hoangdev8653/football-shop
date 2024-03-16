@@ -179,7 +179,7 @@ const changePassword = async (id, { password, newPassword }) => {
     );
     return newUser;
   } catch (error) {
-    throw error; // Re-throw the error for the caller to handle
+    throw error;
   }
 };
 

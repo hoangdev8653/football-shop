@@ -18,12 +18,10 @@ const createOrder = async (id, { address }) => {
       id,
       {
         cart: [],
-        totalprice: 0,
+        totalPrice: 0,
       },
       { new: true }
     );
-
-    console.log(userUpdate);
     return order;
   } catch (error) {
     console.log(error);
