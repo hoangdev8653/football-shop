@@ -1,10 +1,11 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "./profile.module.scss";
 import { Tabs, Tab } from "./Tabs/Tabs";
 import Button from "../../components/button";
 import { getLocalStorage } from "../../utils/LocalStorage";
 import avarta_deafaute from "../../assets/user_deafaute.jpg";
-// import { useFormik } from "formik";
+import { getHistoryOrder } from "../../apis/auth";
+import formatDate from "../../utils/formatDate";
 
 function Profile() {
   const user = getLocalStorage("user");
@@ -14,6 +15,25 @@ function Profile() {
   const [email, setEmail] = useState(user?.email);
   const fileInputRef = useRef(null);
   const avatarImageRef = useRef(null);
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await getHistoryOrder(token);
+        setData(response.data.content);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, []);
+  // console.log(data);
+  const item = data?.map((item) => item.cart);
+  const cart = item?.map((cart) => cart[0].productId);
+  console.log(cart);
+
+  // console.log(item.length);
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -41,8 +61,8 @@ function Profile() {
             <Tabs>
               <Tab label="Thông tin tài khoản">
                 <div className="py-1">
-                  <p className="text-gray-700 ">
-                    <form className="mx-4 max-w-[40rem]">
+                  <p className="text-gray-700">
+                    <form className="max-w-[40rem] mx-auto">
                       <div className="">
                         <div className=" pb-́4 mb-2">
                           <div className="mt-2 flex items-center justify-center gap-x-3">
@@ -196,45 +216,43 @@ function Profile() {
                   <table className="table-auto w-full">
                     <thead>
                       <tr className="text-gray-600">
-                        <th>Product</th>
-                        <th>Price</th>
-                        <th>Status</th>
-                        <th>Info</th>
+                        <th className="text-center">Sản phẩm</th>
+                        <th className="text-center">Địa chỉ nhận hàng</th>
+                        <th className="text-center">Tổng tiền</th>
+                        <th className="text-center">Trạng thái </th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td className="flex items-center">
-                          <img
-                            className="h-[50px] w-[50px] object-cover"
-                            src="https://tailwindui.com/img/ecommerce-images/order-history-page-02-product-02.jpg"
-                            alt="text"
-                          />
-                          <p className="mx-[10px] font-semibold">
-                            Áo Real Sân nhà mùa giải 2023/2024{" "}
-                            <span className="text-red-500">* 3</span>
-                          </p>
-                        </td>
-                        <td>200.000$</td>
-                        <td> Delivered Jan 25, 2021</td>
-                        <td>600.000$</td>
-                      </tr>
-                      <tr>
-                        <td>Witchy Woman</td>
-                        <td>The Eagles</td>
-                        <td>1972</td>
-                        <td>
-                          <a href="/">Info</a>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>Shining Star</td>
-                        <td>Earth, Wind, and Fire</td>
-                        <td>1975</td>
-                        <td>
-                          <a href="/">Info</a>
-                        </td>
-                      </tr>
+                      {data &&
+                        data.map((item, index) => (
+                          <tr key={index}>
+                            <td className=" items-center">
+                              {item.cart.map((item, idx) => (
+                                <div key={idx} className="flex items-center">
+                                  <img
+                                    className="h-[50px] w-[50px] object-cover my-1"
+                                    src={item.productId.image[0]}
+                                    alt={item.productId.name}
+                                  />
+                                  <div className="block">
+                                    <p className="mx-[10px] font-semibold uppercase">
+                                      {item.productId.name}
+                                    </p>
+                                    <p className="text-red-500 mx-2">
+                                      {item.productId.price}$ * {item.quantity}
+                                    </p>
+                                  </div>
+                                </div>
+                              ))}
+                            </td>
+                            <td className="text-center">{item.address}</td>
+                            <td className="text-center">{item.totalAmount}$</td>
+                            <td className="text-center">
+                              <p>{item.status}</p>
+                              <p> {formatDate(item.orderDate)}</p>
+                            </td>
+                          </tr>
+                        ))}
                     </tbody>
                   </table>
                 </div>

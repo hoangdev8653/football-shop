@@ -21,7 +21,12 @@ const Order = mongoose.Schema({
     type: String,
     default: "",
   },
-  cart: [],
+  cart: [
+    {
+      productId: { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
+      quantity: Number,
+    },
+  ],
 });
 
 const orderModel = mongoose.model("order", Order);

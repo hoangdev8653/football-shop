@@ -35,7 +35,10 @@ const createOrder = async (id, { address }) => {
 
 const getOrderById = async (id) => {
   try {
-    const userId = await orderModel.find({ userId: id });
+    const userId = await orderModel.find({ userId: id }).populate({
+      path: "cart.productId",
+      select: "name price image",
+    });
     return userId;
   } catch (error) {
     console.log(error);

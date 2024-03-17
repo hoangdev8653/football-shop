@@ -1,7 +1,7 @@
 import { axiosConfig } from "../axiosConfig";
 
 const register = async (data) => {
-  return axiosConfig({
+  return await axiosConfig({
     method: "post",
     url: "/register",
     data,
@@ -9,7 +9,7 @@ const register = async (data) => {
 };
 
 const login = async (data) => {
-  return axiosConfig({
+  return await axiosConfig({
     method: "post",
     url: "/user/dang-nhap",
     data,
@@ -17,7 +17,7 @@ const login = async (data) => {
 };
 
 export const getUserCurrent = async (token) => {
-  return axiosConfig({
+  return await axiosConfig({
     method: "get",
     url: "/user/ca-nhan",
     headers: {
@@ -28,14 +28,14 @@ export const getUserCurrent = async (token) => {
 };
 
 export const getUserById = async (id) => {
-  return axiosConfig({
+  return await axiosConfig({
     method: "get",
     url: `/user/findOne?id=${id}`,
   });
 };
 
 export const updateUser = async (data, token) => {
-  return axiosConfig({
+  return await axiosConfig({
     method: "post",
     url: `/user/update`,
     data,
@@ -47,10 +47,21 @@ export const updateUser = async (data, token) => {
 };
 
 export const updatePassword = async (data, token) => {
-  return axiosConfig({
+  return await axiosConfig({
     method: "post",
     url: `/user/changePassword`,
     data,
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+};
+
+export const getHistoryOrder = async (token) => {
+  return await axiosConfig({
+    method: "get",
+    url: `/order/getOrderById`,
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
