@@ -149,10 +149,9 @@ const updateUser = async (req, res) => {
   try {
     const id = req.userId;
     const fileData = req.file;
-    const { email, password, username, phone, image } = req.body;
+    const { email, username, phone, image } = req.body;
     const user = await userServices.updateUser(id, {
       email,
-      password,
       username,
       phone,
       image: fileData?.path,

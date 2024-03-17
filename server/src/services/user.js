@@ -109,20 +109,26 @@ const register = async ({ email, username, password, phone, role }) => {
   });
 };
 
-const updateUser = async (id, { email, password, username, phone, image }) => {
-  const user = await UserModel.findById(id);
-  if (!user) {
-    throw { message: "Tài khoản không tồn tại" };
+const updateUser = async (id, { email, username, phone, image }) => {
+  try {
+    const user = await UserModel.findById(id);
+    if (!user) {
+      throw { message: "Tài khoản không tồn tại" };
+    }
+    const exitsEmail = await UserModel.findOne({ email });
+    if (user.id !== id && exitsEmail) {
+      throw new Error("Email đã tồn tại");
+    }
+    const updateUser = await UserModel.findByIdAndUpdate(
+      id,
+      { email, username, phone, image },
+      { new: true }
+    );
+    return updateUser;
+  } catch (error) {
+    console.log(error);
+    throw error;
   }
-  const exitsEmail = await UserModel.findOne({ email });
-  if (exitsEmail) {
-    throw new Error("Email đã tồn tại");
-  }
-  return await UserModel.findByIdAndUpdate(
-    id,
-    { email, password, username, phone, image },
-    { new: true }
-  );
 };
 
 const findUser = async (id) => {
@@ -144,13 +150,13 @@ const login = async ({ email, password }) => {
   try {
     const user = await UserModel.findOne({ email });
     if (!user) {
-      throw new Error("User not found");
+      throw new Error("Email chưa tồn tại");
     }
     const checkPassword = await bcrypt.compare(password, user.password);
     if (!checkPassword) {
       throw Error("Mật khẩu không chính xác");
     }
-    const { accessToken, refreshToken } = generateTokens(user.id);
+    const { accessToken, refreshToken } = generateTokens(user?.id);
     await UserModel.findByIdAndUpdate(
       user.id,
       { refreshToken: refreshToken },

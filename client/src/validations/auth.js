@@ -30,3 +30,11 @@ export const changePasswordValidate = Yup.object().shape({
     "Passwords must match"
   ),
 });
+
+export const updateUserValidate = Yup.object().shape({
+  email: Yup.string().email("Invalid email").required("Email is Required"),
+  phone: Yup.string()
+    .required("Phone number is Required")
+    .matches(phoneRegExp, "Phone number is not valid"),
+  username: Yup.string().min(3).required("User name is Required"),
+});

@@ -3,14 +3,13 @@ import styles from "./checkout.module.scss";
 import Logo from "../../assets/logo.png";
 import { IoMdLock } from "react-icons/io";
 import { MdOutlineNavigateNext } from "react-icons/md";
-import Button from "../../components/button";
 import Footer from "../../templates/footer";
 import { useFormik } from "formik";
 import { checkoutValidate } from "../../validations/checkout";
 import { getLocalStorage } from "../../utils/LocalStorage";
 import { getUserCurrent } from "../../apis/auth";
-import { usePayPalScriptReducer } from "@paypal/react-paypal-js";
 import Payment from "./payment/payment";
+import { redirect } from "react-router-dom";
 
 function Checkout() {
   const [cart, setCart] = useState([]);
@@ -18,7 +17,6 @@ function Checkout() {
   const token = getLocalStorage("accessToken");
   // const [{ options, isPending }, dispatch] = usePayPalScriptReducer();
   // const [currency, setCurrency] = useState(options.currency)
-
   useEffect(() => {
     if (!token) {
       return;
@@ -48,7 +46,9 @@ function Checkout() {
     },
     validationSchema: checkoutValidate,
   });
-
+  // if (cart.length <= 0) {
+  //   return redirect("/cart");
+  // }
   return (
     <div className={styles.checkout}>
       <div className="max-w-[1050px] mx-auto">

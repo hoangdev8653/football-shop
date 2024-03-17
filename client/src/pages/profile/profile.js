@@ -2,20 +2,62 @@ import React, { useEffect, useRef, useState } from "react";
 import styles from "./profile.module.scss";
 import { Tabs, Tab } from "./Tabs/Tabs";
 import Button from "../../components/button";
-import { getLocalStorage } from "../../utils/LocalStorage";
+import { getLocalStorage, setLocalStorage } from "../../utils/LocalStorage";
 import avarta_deafaute from "../../assets/user_deafaute.jpg";
-import { getHistoryOrder } from "../../apis/auth";
+import { getHistoryOrder, updateUser } from "../../apis/auth";
 import formatDate from "../../utils/formatDate";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import { useFormik } from "formik";
+import { updateUserValidate } from "../../validations/auth";
 
 function Profile() {
   const user = getLocalStorage("user");
   const token = getLocalStorage("accessToken");
-  const [userName, setUserName] = useState(user?.username);
-  const [phone, setPhone] = useState(user?.phone);
-  const [email, setEmail] = useState(user?.email);
   const fileInputRef = useRef(null);
   const avatarImageRef = useRef(null);
   const [data, setData] = useState([]);
+  const navigate = useNavigate();
+  const formik = useFormik({
+    initialValues: {
+      username: user?.username,
+      email: user?.email,
+      phone: user?.phone,
+      image: user?.image, // Add new field for avatar
+    },
+    validationSchema: updateUserValidate,
+    onSubmit: async (values) => {
+      try {
+        const formData = new FormData();
+        formData.append("email", values.email);
+        formData.append("username", values.username);
+        formData.append("phone", values.phone);
+        if (values.avatar) {
+          formData.append("image", values.image);
+        }
+        const response = await updateUser(values, token);
+        if (response.status === 200) {
+          const updatedUser = {
+            id: response.data.content._id,
+            email: response.data.content.email,
+            avarta: response.data.content.image,
+            phone: response.data.content.phone,
+            username: response.data.content.username,
+          };
+          setLocalStorage("user", updatedUser);
+          toast.success("Cập nhật thành công");
+          setTimeout(() => {
+            navigate("/");
+          }, 3000);
+        } else {
+          toast.error("Cập Nhật Thất bại");
+        }
+      } catch (error) {
+        console.log(error.message);
+        toast.error("Cập Nhật Thất bại");
+      }
+    },
+  });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -27,25 +69,17 @@ function Profile() {
       }
     };
     fetchData();
-  }, []);
-  // console.log(data);
-  const item = data?.map((item) => item.cart);
-  const cart = item?.map((cart) => cart[0].productId);
-  console.log(cart);
-
-  // console.log(item.length);
+  });
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
-
     if (file) {
-      // Assuming you have a URL.createObjectURL function to create a URL for the selected file
+      formik.setFieldValue("image", file); // Set avatar file in formik values
       const fileUrl = URL.createObjectURL(file);
-
-      // Update the avatar image source
       avatarImageRef.current.src = fileUrl;
     }
   };
+
   const handleButtonClick = () => {
     fileInputRef.current.click();
   };
@@ -62,25 +96,28 @@ function Profile() {
               <Tab label="Thông tin tài khoản">
                 <div className="py-1">
                   <p className="text-gray-700">
-                    <form className="max-w-[40rem] mx-auto">
+                    <form
+                      onSubmit={formik.handleSubmit}
+                      className="max-w-[40rem] mx-auto"
+                    >
                       <div className="">
                         <div className=" pb-́4 mb-2">
                           <div className="mt-2 flex items-center justify-center gap-x-3">
                             <input
                               type="file"
+                              name="image"
                               accept="image/*"
+                              value={formik.image}
                               onChange={handleFileChange}
                               ref={fileInputRef}
                               style={{ display: "none" }}
                             />
-
                             <img
                               ref={avatarImageRef}
                               className="w-16 h-16 object-cover rounded-full"
                               src={user?.avarta ? user.avarta : avarta_deafaute}
                               alt="avarta"
                             />
-
                             <button
                               type="button"
                               onClick={handleButtonClick}
@@ -101,24 +138,32 @@ function Profile() {
 
                           <div className="mt-4 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                             <div className="sm:col-span-3">
-                              <label
-                                htmlFor="name"
-                                className="block text-left text-sm font-medium leading-6 text-gray-900"
-                              >
+                              <label className="block text-left text-sm font-medium leading-6 text-gray-900">
                                 User name:
                               </label>
                               <div className="mt-2">
                                 <input
                                   type="text"
-                                  name="name"
-                                  id="name"
-                                  value={userName}
-                                  onChange={(e) => {
-                                    setUserName(e.target.value);
-                                  }}
+                                  name="username"
+                                  id="username"
+                                  value={formik.values.username}
+                                  onChange={formik.handleChange}
+                                  onBlur={formik.handleBlur}
                                   className="block pl-2 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                 />
                               </div>
+                              {formik.touched.username &&
+                                formik.errors.username && (
+                                  <div
+                                    style={{
+                                      color: "red",
+                                      marginBottom: "8px",
+                                      textAlign: "center",
+                                    }}
+                                  >
+                                    {formik.errors.username}
+                                  </div>
+                                )}
                             </div>
 
                             <div className="sm:col-span-3">
@@ -133,11 +178,23 @@ function Profile() {
                                   type="phone"
                                   name="phone"
                                   id="phone"
-                                  value={phone}
-                                  onChange={(e) => setPhone(e.target.value)}
+                                  value={formik.values.phone}
+                                  onChange={formik.handleChange}
+                                  onBlur={formik.handleBlur}
                                   className=" pl-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                 />
                               </div>
+                              {formik.touched.phone && formik.errors.phone && (
+                                <div
+                                  style={{
+                                    color: "red",
+                                    marginBottom: "8px",
+                                    textAlign: "center",
+                                  }}
+                                >
+                                  {formik.errors.phone}
+                                </div>
+                              )}
                             </div>
 
                             <div className="sm:col-span-3">
@@ -152,14 +209,23 @@ function Profile() {
                                   id="email"
                                   name="email"
                                   type="email"
-                                  autocomplete="email"
-                                  value={email}
-                                  onChange={(e) => {
-                                    setEmail(e.target.value);
-                                  }}
+                                  value={formik.values.email}
+                                  onChange={formik.handleChange}
+                                  onBlur={formik.handleBlur}
                                   className=" block pl-2 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                 />
                               </div>
+                              {formik.touched.email && formik.errors.email && (
+                                <div
+                                  style={{
+                                    color: "red",
+                                    marginBottom: "8px",
+                                    textAlign: "center",
+                                  }}
+                                >
+                                  {formik.errors.email}
+                                </div>
+                              )}
                             </div>
                             <div className="sm:col-span-3">
                               <a href="/changePassword">
@@ -190,7 +256,6 @@ function Profile() {
                           </p>
                         </div>
                       </div>
-
                       <div className="mt-6 flex items-center justify-end gap-x-6">
                         <a href="/">
                           <Button

@@ -40,7 +40,7 @@ export const updateUser = async (data, token) => {
     url: `/user/update`,
     data,
     headers: {
-      "Content-Type": "application/json",
+      "Content-Type": "multipart/form-data",
       Authorization: `Bearer ${token}`,
     },
   });
