@@ -197,19 +197,31 @@ const profile = async (id) => {
     authType: 0,
     role: 0,
     refreshToken: 0,
-  }).populate("cart.productId", "-description  -categoryId");
+  }).populate("cart.productId", " -categoryId");
+
   if (!user) throw new Error("User not found");
+
   const cart = user.cart;
-  const mapTotalPrice = cart.map(
-    (item) => item.productId.price * item.quantity
+
+  const priceCart = cart.map(
+    (item) => parseInt(item.productId.price) * item.quantity
   );
-  const sumTotal = mapTotalPrice.reduce(
+
+  const totalPrice = priceCart.reduce(
     (accumulator, currentPrice) => accumulator + currentPrice,
     0
   );
-  user.totalPrice = sumTotal;
-  await user.save();
-  return user;
+
+  // Update the user object with the modified cart array
+  user.cart = cart;
+  user.totalPrice = totalPrice;
+
+  // Save the updated user object
+  const userUpdate = await user.save();
+
+  // Logging the updated user object for debugging purposes
+
+  return userUpdate;
 };
 
 const deleteUser = async (id) => {

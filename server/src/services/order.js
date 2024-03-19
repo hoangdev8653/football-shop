@@ -1,6 +1,5 @@
 import orderModel from "../models/order.js";
 import UserModel from "../models/user.js";
-import ProductModel from "../models/product.js";
 
 const createOrder = async (id, { address }) => {
   try {
@@ -11,7 +10,6 @@ const createOrder = async (id, { address }) => {
     if (user.cart.length <= 0) {
       throw new Error("Cart null");
     }
-    console.log(user.cart);
     const order = await orderModel.create({
       userId: user._id,
       address,

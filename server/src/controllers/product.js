@@ -37,11 +37,12 @@ const getProductByKey = async (req, res) => {
     const { products, productsLength } = await productService.getProductByKey({
       name: regex,
     });
+
     return res.status(StatusCodes.OK).json({
       status: 200,
       message: "Xử lý thành công",
-      content: products,
-      total: productsLength,
+      content: products ? products : null,
+      total: productsLength ? productsLength : null,
     });
   } catch (error) {
     console.log(error);

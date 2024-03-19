@@ -24,7 +24,7 @@ const getProductByKey = async ({ name }) => {
   const products = await ProductModel.find({ name });
   const productsLength = products.length;
   if (!products || products.length === 0) {
-    throw new Error("Product không tồn tại");
+    return { error: true, message: "Không tìm thấy sản phẩm" };
   }
   return { products, productsLength };
 };

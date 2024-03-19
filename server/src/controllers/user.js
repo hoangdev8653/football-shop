@@ -170,7 +170,7 @@ const updateUser = async (req, res) => {
 const findUser = async (req, res) => {
   try {
     const id = req.query.id;
-    const user = await userServices.findUserService(id);
+    const user = await userServices.findUser(id);
     return res
       .status(StatusCodes.OK)
       .json({ status: 200, message: "Xử lý thành công", content: user });

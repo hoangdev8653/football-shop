@@ -4,7 +4,6 @@ import WishList from "../../components/wishList";
 import styles from "./searchProduct.module.scss";
 import { getProductByKey } from "../../apis/product";
 import { useLocation } from "react-router-dom";
-import Loader from "../../components/logoLoader/logoLoader";
 import product from "../../assets/product_coming-soon.jpg";
 
 function SearchProduct() {
@@ -24,6 +23,7 @@ function SearchProduct() {
     };
     fetchData();
   }, [key]);
+  console.log(data);
   return (
     <div
       style={{ backgroundColor: "rgba(10, 10, 10, 0.01)" }}
@@ -90,7 +90,9 @@ function SearchProduct() {
         </>
       ) : (
         <>
-          <Loader />
+          <div className="py-8 mx-auto text-center">
+            No products were found matching your selection.
+          </div>
         </>
       )}
     </div>

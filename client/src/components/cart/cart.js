@@ -32,19 +32,19 @@ function Cart() {
           setData(response.data.content);
           setCart(response.data.content.cart);
         } catch (error) {
-          console.log(error);
+          console.log(error.message);
         }
       };
       fetchData();
     }
   }, [token]);
-
   const quantity = cart?.map((item, index) => {
     return item.quantity;
   });
   const totalQuantity = quantity.reduce((value, currentValue) => {
     return value + currentValue;
   }, 0);
+  console.log(cart);
   const handleIconCartHover = () => {
     setIsOpen(true);
   };
@@ -111,7 +111,7 @@ function Cart() {
                     </div>
                   ))}
               </div>
-              {data && checkCart === true ? (
+              {cart && checkCart === true ? (
                 <>
                   <div className="text-center mx-auto border-b-[1px] border-t-[1px] border-gray-400">
                     <p className="font-bold text-gray-500 my-2">

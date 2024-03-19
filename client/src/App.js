@@ -12,7 +12,7 @@ import SearchProduct from "./pages/searchProduct/searchProduct";
 import Club from "./pages/club/club";
 
 import Login from "./components/login";
-import NotFound from "./pages/notFound";
+import NotFound from "./pages/404";
 import Profile from "./pages/profile/profile";
 import ChangePassword from "./pages/profile/changePassword";
 import Register from "./components/register";
