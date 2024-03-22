@@ -1,150 +1,111 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import Ratting from "../components/rating";
+import Button from "../components/button";
+import user from "../assets/user_deafaute.jpg";
+import { AiTwotoneLike } from "react-icons/ai";
+import { getReviewsByProduct } from "../apis/reviews";
+import FormatDate from "../utils/formatDate";
+function Comment({ data }) {
+  const productId = data._id;
+  const [like, setLike] = useState(false);
 
-function comment() {
+  const handleLikeComment = () => {
+    setLike(!like);
+    console.log(like);
+  };
+
+  const [content, setContent] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await getReviewsByProduct(productId);
+        if (response.status === 200) {
+          setContent(response.data.content);
+        }
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+    fetchData();
+  }, []);
   return (
-    <section class="relative flex items-center justify-center min-h-screen antialiased bg-red-500 min-w-screen">
-      <div class="container px-0 mx-auto sm:px-5">
-        <div class="flex-col w-full py-4 mx-auto bg-white border-b-2 border-r-2 border-gray-200 sm:px-4 sm:py-4 md:px-4 sm:rounded-lg sm:shadow-sm md:w-2/3">
-          <div class="flex flex-row">
-            <img
-              class="object-cover w-12 h-12 border-2 border-gray-300 rounded-full"
-              alt="Noob master's avatar"
-              src="https://images.unsplash.com/photo-1517070208541-6ddc4d3efbcb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&faces=1&faceindex=1&facepad=2.5&w=500&h=500&q=80"
-            />
-            <div class="flex-col mt-1">
-              <div class="flex items-center flex-1 px-4 font-bold leading-tight">
-                Noob master
-                <span class="ml-2 text-xs font-normal text-gray-500">
-                  2 weeks ago
-                </span>
-              </div>
-              <div class="flex-1 px-2 ml-2 text-sm font-medium leading-loose text-gray-600">
-                Wow!!! how you did you create this?
-              </div>
-              <button class="inline-flex items-center px-1 pt-2 ml-1 flex-column">
-                <svg
-                  class="w-5 h-5 ml-2 text-gray-600 cursor-pointer fill-current hover:text-gray-900"
-                  viewBox="0 0 95 78"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M29.58 0c1.53.064 2.88 1.47 2.879 3v11.31c19.841.769 34.384 8.902 41.247 20.464 7.212 12.15 5.505 27.83-6.384 40.273-.987 1.088-2.82 1.274-4.005.405-1.186-.868-1.559-2.67-.814-3.936 4.986-9.075 2.985-18.092-3.13-24.214-5.775-5.78-15.377-8.782-26.914-5.53V53.99c-.01 1.167-.769 2.294-1.848 2.744-1.08.45-2.416.195-3.253-.62L.85 30.119c-1.146-1.124-1.131-3.205.032-4.312L27.389.812c.703-.579 1.49-.703 2.19-.812zm-3.13 9.935L7.297 27.994l19.153 18.84v-7.342c-.002-1.244.856-2.442 2.034-2.844 14.307-4.882 27.323-1.394 35.145 6.437 3.985 3.989 6.581 9.143 7.355 14.715 2.14-6.959 1.157-13.902-2.441-19.964-5.89-9.92-19.251-17.684-39.089-17.684-1.573 0-3.004-1.429-3.004-3V9.936z"
-                    fill-rule="nonzero"
-                  />
-                </svg>
-              </button>
-              <button class="inline-flex items-center px-1 -ml-1 flex-column">
-                <svg
-                  class="w-5 h-5 text-gray-600 cursor-pointer hover:text-gray-700"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"
-                  ></path>
-                </svg>
-              </button>
+    <div className="comment">
+      {content && content.length > 0 ? (
+        <>
+          <div
+            style={{ backgroundColor: "#fffbf8", border: "1px solid #f9ede5" }}
+            className="w-full flex items-center p-4"
+          >
+            <div className="mx-4">
+              <p className="text-red-500 text-2xl ">
+                <span className="font-semibold">4.7</span> trên 5
+              </p>
+              <Ratting />
+            </div>
+            <div className=" flex justify-center text-center gap-2 mx-2">
+              <Button className="border-[1px] border-solid border-gray-300 py-1 px-4">
+                Tất cả {content.length}
+              </Button>
+              <Button className="border-[1px] border-solid border-gray-300 py-0 px-4">
+                5 Sao (200)
+              </Button>
+              <Button className="border-[1px] border-solid border-gray-300 py-0 px-4">
+                4 Sao (100)
+              </Button>
+              <Button className="border-[1px] border-solid border-gray-300 py-0 px-4">
+                3 sao (50)
+              </Button>
+              <Button className="border-[1px] border-solid border-gray-300 py-0 px-4">
+                2 sao (40)
+              </Button>
+              <Button className="border-[1px] border-solid border-gray-300 py-0 px-4">
+                1 sao (20)
+              </Button>
             </div>
           </div>
-          <hr class="my-2 ml-16 border-gray-200" />
-          <div class="flex flex-row pt-1 md-10 md:ml-16">
-            <img
-              class="w-12 h-12 border-2 border-gray-300 rounded-full"
-              alt="Emily's avatar"
-              src="https://images.unsplash.com/photo-1581624657276-5807462d0a3a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&fit=facearea&faces=1&faceindex=1&facepad=2.5&w=500&h=500&q=80"
-            />
-            <div class="flex-col mt-1">
-              <div class="flex items-center flex-1 px-4 font-bold leading-tight">
-                Emily
-                <span class="ml-2 text-xs font-normal text-gray-500">
-                  5 days ago
-                </span>
+          <section class="relative flex items-center justify-center antialiased  min-w-screen">
+            <div className="w-full bg-white m-2">
+              <div className=" mt-2">
+                {content &&
+                  content.map((item, index) => (
+                    <div
+                      key={index}
+                      className="flex border-b-[1px] border-gray-400 mt-2"
+                    >
+                      <img
+                        className="rounded-full w-[50px] h-[50px] object-cover"
+                        src={item.userId.image || user}
+                        alt="avarta"
+                      />
+                      <div className="block mt-1 mx-2 ">
+                        <p className="text-base">{item.userId.username}</p>
+                        <Ratting rating={item.rating} />
+                        <p className="text-xs">{FormatDate(item.time)}</p>
+                        <p className="my-1">{item.comment}</p>
+                        <div className="flex opacity-60 gap-1 mb-2">
+                          <AiTwotoneLike
+                            style={like ? { color: "red" } : { color: "gray" }}
+                            onClick={handleLikeComment}
+                            className="text-xl cursor-pointer"
+                          />
+                          <span className="text-sm">{like ? 2 + 1 : 2}</span>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
               </div>
-              <div class="flex-1 px-2 ml-2 text-sm font-medium leading-loose text-gray-600">
-                I created it using TailwindCSS
-              </div>
-              <button class="inline-flex items-center px-1 pt-2 ml-1 flex-column">
-                <svg
-                  class="w-5 h-5 ml-2 text-gray-600 cursor-pointer fill-current hover:text-gray-900"
-                  viewBox="0 0 95 78"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M29.58 0c1.53.064 2.88 1.47 2.879 3v11.31c19.841.769 34.384 8.902 41.247 20.464 7.212 12.15 5.505 27.83-6.384 40.273-.987 1.088-2.82 1.274-4.005.405-1.186-.868-1.559-2.67-.814-3.936 4.986-9.075 2.985-18.092-3.13-24.214-5.775-5.78-15.377-8.782-26.914-5.53V53.99c-.01 1.167-.769 2.294-1.848 2.744-1.08.45-2.416.195-3.253-.62L.85 30.119c-1.146-1.124-1.131-3.205.032-4.312L27.389.812c.703-.579 1.49-.703 2.19-.812zm-3.13 9.935L7.297 27.994l19.153 18.84v-7.342c-.002-1.244.856-2.442 2.034-2.844 14.307-4.882 27.323-1.394 35.145 6.437 3.985 3.989 6.581 9.143 7.355 14.715 2.14-6.959 1.157-13.902-2.441-19.964-5.89-9.92-19.251-17.684-39.089-17.684-1.573 0-3.004-1.429-3.004-3V9.936z"
-                    fill-rule="nonzero"
-                  />
-                </svg>
-              </button>
-              <button class="inline-flex items-center px-1 -ml-1 flex-column">
-                <svg
-                  class="w-5 h-5 text-gray-600 cursor-pointer hover:text-gray-700"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  <path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z" />
-                </svg>
-              </button>
             </div>
-          </div>
+          </section>
+        </>
+      ) : (
+        <div className="mx-4 mt-4">
+          <p className="text-orange-500 font-bold text-lg">Reviews</p>
+          <p>There are no reviews yet.</p>
         </div>
-
-        <div class="flex-col w-full py-4 mx-auto mt-3 bg-white border-b-2 border-r-2 border-gray-200 sm:px-4 sm:py-4 md:px-4 sm:rounded-lg sm:shadow-sm md:w-2/3">
-          <div class="flex flex-row md-10">
-            <img
-              class="w-12 h-12 border-2 border-gray-300 rounded-full"
-              alt="Anonymous's avatar"
-              src="https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&faces=1&faceindex=1&facepad=2.5&w=500&h=500&q=80"
-            />
-            <div class="flex-col mt-1">
-              <div class="flex items-center flex-1 px-4 font-bold leading-tight">
-                Anonymous
-                <span class="ml-2 text-xs font-normal text-gray-500">
-                  3 days ago
-                </span>
-              </div>
-              <div class="flex-1 px-2 ml-2 text-sm font-medium leading-loose text-gray-600">
-                Very cool! I'll have to learn more about Tailwind.
-              </div>
-              <button class="inline-flex items-center px-1 pt-2 ml-1 flex-column">
-                <svg
-                  class="w-5 h-5 ml-2 text-gray-600 cursor-pointer fill-current hover:text-gray-900"
-                  viewBox="0 0 95 78"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M29.58 0c1.53.064 2.88 1.47 2.879 3v11.31c19.841.769 34.384 8.902 41.247 20.464 7.212 12.15 5.505 27.83-6.384 40.273-.987 1.088-2.82 1.274-4.005.405-1.186-.868-1.559-2.67-.814-3.936 4.986-9.075 2.985-18.092-3.13-24.214-5.775-5.78-15.377-8.782-26.914-5.53V53.99c-.01 1.167-.769 2.294-1.848 2.744-1.08.45-2.416.195-3.253-.62L.85 30.119c-1.146-1.124-1.131-3.205.032-4.312L27.389.812c.703-.579 1.49-.703 2.19-.812zm-3.13 9.935L7.297 27.994l19.153 18.84v-7.342c-.002-1.244.856-2.442 2.034-2.844 14.307-4.882 27.323-1.394 35.145 6.437 3.985 3.989 6.581 9.143 7.355 14.715 2.14-6.959 1.157-13.902-2.441-19.964-5.89-9.92-19.251-17.684-39.089-17.684-1.573 0-3.004-1.429-3.004-3V9.936z"
-                    fill-rule="nonzero"
-                  />
-                </svg>
-              </button>
-              <button class="inline-flex items-center px-1 -ml-1 flex-column">
-                <svg
-                  class="w-5 h-5 text-gray-600 cursor-pointer hover:text-gray-700"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"
-                  ></path>
-                </svg>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+      )}
+    </div>
   );
 }
 
-export default comment;
+export default Comment;

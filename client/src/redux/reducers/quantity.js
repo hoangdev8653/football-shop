@@ -16,7 +16,7 @@ export const valueQuantity = (state = initState, action) => {
       return {
         ...state,
         plus: true,
-        value: state.value + 1,
+        value: parseInt(state.value + 1),
       };
 
     case MINUS_QUANTITY:

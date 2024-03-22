@@ -44,7 +44,7 @@ function Cart() {
   const totalQuantity = quantity.reduce((value, currentValue) => {
     return value + currentValue;
   }, 0);
-  console.log(cart);
+
   const handleIconCartHover = () => {
     setIsOpen(true);
   };

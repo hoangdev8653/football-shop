@@ -69,8 +69,12 @@ function Profile() {
       }
     };
     fetchData();
+  }, []);
+  // console.log(data);
+  const item = data.map((item) => {
+    return item;
   });
-
+  console.log(item.cart);
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -100,7 +104,7 @@ function Profile() {
                       onSubmit={formik.handleSubmit}
                       className="max-w-[40rem] mx-auto"
                     >
-                      <div className="">
+                      <div className="mx-4">
                         <div className=" pb-́4 mb-2">
                           <div className="mt-2 flex items-center justify-center gap-x-3">
                             <input
@@ -256,7 +260,7 @@ function Profile() {
                           </p>
                         </div>
                       </div>
-                      <div className="mt-6 flex items-center justify-end gap-x-6">
+                      <div className="mt-6 flex items-center justify-end gap-x-4 mx-4">
                         <a href="/">
                           <Button
                             type="button"
@@ -277,8 +281,8 @@ function Profile() {
                 </div>
               </Tab>
               <Tab label="Lịch Sử đặt hàng">
-                <div className="py-4 w-full">
-                  <table className="table-auto w-full">
+                <div className="py-4 w-full max-h-[600px] overflow-y-auto">
+                  <table className="table-auto w-full ">
                     <thead>
                       <tr className="text-gray-600">
                         <th className="text-center">Sản phẩm</th>
@@ -315,6 +319,18 @@ function Profile() {
                             <td className="text-center">
                               <p>{item.status}</p>
                               <p> {formatDate(item.orderDate)}</p>
+                            </td>
+                            <td className="text-center">
+                              <div className="flex justify-center gap-2">
+                                <button className="border-solid px-[7px] py-2 bg-red-500 text-white font-semibold hover:bg-red-700">
+                                  Đánh Giá
+                                </button>
+                                <a href={`/product/${item.slug}`}>
+                                  <button className="border-solid px-[7px] py-2 bg-white text-black hover:bg-gray-300 border-[1px] border-gray-300">
+                                    Mua Lại
+                                  </button>
+                                </a>
+                              </div>
                             </td>
                           </tr>
                         ))}

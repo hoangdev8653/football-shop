@@ -35,7 +35,7 @@ const getOrderById = async (id) => {
   try {
     const userId = await orderModel.find({ userId: id }).populate({
       path: "cart.productId",
-      select: "name price image",
+      select: "name price image slug",
     });
     return userId;
   } catch (error) {

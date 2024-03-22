@@ -15,17 +15,14 @@ const createCart = async (id, { productId, quantity }) => {
     "cart.productId",
     "-slug -categoryId"
   );
-  if (!user) {
-    throw new Error("User not found");
-  }
   const cart = user.cart;
   const productIndex = cart.findIndex(
-    (product) => product.productId.toString() === productId
+    (product) => product.productId._id.toString() === productId
   );
-  if (productIndex !== -1) {
-    cart[productIndex].quantity += quantity;
-  } else {
+  if (productIndex === -1) {
     cart.push({ productId, quantity });
+  } else {
+    cart[productIndex].quantity += quantity;
   }
   const updateCart = await user.save();
   return updateCart;
