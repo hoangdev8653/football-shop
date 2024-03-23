@@ -12,25 +12,17 @@ export const addProduct = async (data, token) => {
   });
 };
 
-export const deleteProduct = async (productId, token) => {
+export const deleteProduct = async (productId) => {
   return await axiosConfig({
     url: `/user/deleteCart?productId=${productId}`,
     method: "delete",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
   });
 };
 
-export const createCheckout = async (address, token) => {
+export const createCheckout = async (address) => {
   return await axiosConfig({
     url: "/order/create",
     method: "post",
     data: address,
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
   });
 };

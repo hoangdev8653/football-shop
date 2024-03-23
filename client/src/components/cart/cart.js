@@ -3,7 +3,6 @@ import { BsCart2 } from "react-icons/bs";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import styles from "./cart.module.scss";
 import Button from "../../components/button";
-import { getLocalStorage } from "../../utils/LocalStorage";
 import { getUserCurrent } from "../../apis/auth";
 import { deleteProduct } from "../../apis/cart";
 import { toast } from "react-toastify";
@@ -13,7 +12,6 @@ function Cart() {
   const [cart, setCart] = useState([]);
   const [data, setData] = useState("");
   const [checkCart, setCheckCart] = useState(false);
-  const token = getLocalStorage("accessToken");
 
   useEffect(() => {
     if (cart && cart.length > 0) {
@@ -23,21 +21,17 @@ function Cart() {
     }
   }, [cart]);
   useEffect(() => {
-    if (!token) {
-      return;
-    } else {
-      const fetchData = async () => {
-        try {
-          const response = await getUserCurrent(token);
-          setData(response.data.content);
-          setCart(response.data.content.cart);
-        } catch (error) {
-          console.log(error.message);
-        }
-      };
-      fetchData();
-    }
-  }, [token]);
+    const fetchData = async () => {
+      try {
+        const response = await getUserCurrent();
+        setData(response.data.content);
+        setCart(response.data.content.cart);
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+    fetchData();
+  }, []);
   const quantity = cart?.map((item, index) => {
     return item.quantity;
   });
@@ -54,7 +48,7 @@ function Cart() {
 
   const handleDelete = async (productId) => {
     try {
-      const response = await deleteProduct(productId, token);
+      const response = await deleteProduct(productId);
       if (response.error) {
         toast.error("Thất bại");
       }

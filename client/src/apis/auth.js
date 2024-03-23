@@ -16,14 +16,10 @@ const login = async (data) => {
   });
 };
 
-export const getUserCurrent = async (token) => {
+export const getUserCurrent = async () => {
   return await axiosConfig({
     method: "get",
     url: "/user/ca-nhan",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
   });
 };
 

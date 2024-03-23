@@ -7,7 +7,6 @@ import Button from "../../components/button";
 import { toast } from "react-toastify";
 import { getUserCurrent } from "../../apis/auth";
 import { deleteProduct } from "../../apis/cart";
-import { getLocalStorage } from "../../utils/LocalStorage";
 // import { useSelector, useDispatch } from "react-redux";
 // import { minusQuantity, plusQuantity } from "../../redux/actions/quantity";
 
@@ -15,26 +14,21 @@ function Cart() {
   const [cart, setCart] = useState([]);
   const [data, setData] = useState("");
   // const [changeQuantity, setChangeQuantity] = useState(0);
-  const token = getLocalStorage("accessToken");
   // const soluong = useSelector((state) => state.valueQuantity.value);
 
   // const dispatch = useDispatch();
   useEffect(() => {
-    if (!token) {
-      return;
-    } else {
-      const fetchData = async () => {
-        try {
-          const response = await getUserCurrent(token);
-          setData(response.data.content);
-          setCart(response.data.content.cart);
-        } catch (error) {
-          console.log(error);
-        }
-      };
-      fetchData();
-    }
-  }, [token]);
+    const fetchData = async () => {
+      try {
+        const response = await getUserCurrent();
+        setData(response.data.content);
+        setCart(response.data.content.cart);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, []);
   // const handlePlus = () => {
   //   dispatch(plusQuantity());
   // };
@@ -49,7 +43,7 @@ function Cart() {
 
   const handleDeleteProduct = async (productId) => {
     try {
-      const response = await deleteProduct(productId, token);
+      const response = await deleteProduct(productId);
       if (response.error) {
         toast.error("Thất bại");
       }

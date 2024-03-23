@@ -6,7 +6,6 @@ import { MdOutlineNavigateNext } from "react-icons/md";
 import Footer from "../../templates/footer";
 import { useFormik } from "formik";
 import { checkoutValidate } from "../../validations/checkout";
-import { getLocalStorage } from "../../utils/LocalStorage";
 import { getUserCurrent } from "../../apis/auth";
 import Payment from "./payment/payment";
 import { redirect } from "react-router-dom";
@@ -14,25 +13,20 @@ import { redirect } from "react-router-dom";
 function Checkout() {
   const [cart, setCart] = useState([]);
   const [data, setData] = useState("");
-  const token = getLocalStorage("accessToken");
   // const [{ options, isPending }, dispatch] = usePayPalScriptReducer();
   // const [currency, setCurrency] = useState(options.currency)
   useEffect(() => {
-    if (!token) {
-      return;
-    } else {
-      const fetchData = async () => {
-        try {
-          const response = await getUserCurrent(token);
-          setData(response.data.content);
-          setCart(response.data.content.cart);
-        } catch (error) {
-          console.log(error);
-        }
-      };
-      fetchData();
-    }
-  }, [token]);
+    const fetchData = async () => {
+      try {
+        const response = await getUserCurrent();
+        setData(response.data.content);
+        setCart(response.data.content.cart);
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+    fetchData();
+  }, []);
   const formik = useFormik({
     initialValues: {
       username: "",
