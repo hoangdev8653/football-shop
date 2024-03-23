@@ -8,16 +8,17 @@ import { toast } from "react-toastify";
 import { getUserCurrent } from "../../apis/auth";
 import { deleteProduct } from "../../apis/cart";
 import { getLocalStorage } from "../../utils/LocalStorage";
-import { useSelector, useDispatch } from "react-redux";
-import { minusQuantity, plusQuantity } from "../../redux/actions/quantity";
+// import { useSelector, useDispatch } from "react-redux";
+// import { minusQuantity, plusQuantity } from "../../redux/actions/quantity";
 
 function Cart() {
   const [cart, setCart] = useState([]);
   const [data, setData] = useState("");
-  const [changeQuantity, setChangeQuantity] = useState(0);
+  // const [changeQuantity, setChangeQuantity] = useState(0);
   const token = getLocalStorage("accessToken");
-  const soluong = useSelector((state) => state.valueQuantity.value);
-  const dispatch = useDispatch();
+  // const soluong = useSelector((state) => state.valueQuantity.value);
+
+  // const dispatch = useDispatch();
   useEffect(() => {
     if (!token) {
       return;
@@ -34,17 +35,17 @@ function Cart() {
       fetchData();
     }
   }, [token]);
-  const handlePlus = () => {
-    dispatch(plusQuantity());
-  };
-  const handleMinus = () => {
-    dispatch(minusQuantity());
-  };
+  // const handlePlus = () => {
+  //   dispatch(plusQuantity());
+  // };
+  // const handleMinus = () => {
+  //   dispatch(minusQuantity());
+  // };
 
-  const handleChangeQuantity = (quantity) => {
-    console.log(quantity);
-    setChangeQuantity(quantity);
-  };
+  // const handleChangeQuantity = (quantity) => {
+  //   console.log(quantity);
+  //   setChangeQuantity(quantity);
+  // };
 
   const handleDeleteProduct = async (productId) => {
     try {
@@ -141,22 +142,22 @@ function Cart() {
                             <td>
                               <div className="flex">
                                 <button
-                                  onClick={handleMinus}
+                                  // onClick={handleMinus}
                                   className="border-[1px] border-solid border-gray-300 px-2 py-2"
                                 >
                                   -
                                 </button>
                                 <input
-                                  onChange={() => {
-                                    handleChangeQuantity(item.quantity);
-                                  }}
+                                  // onChange={() => {
+                                  //   handleChangeQuantity(item.quantity);
+                                  // }}
                                   type="text"
                                   className="border-solid border-[1px] border-gray-300 text-center w-[40px] focus:outline-none"
                                   value={item.quantity}
                                   // value={soluong}
                                 />
                                 <button
-                                  onClick={handlePlus}
+                                  // onClick={handlePlus}
                                   className="border-[1px] border-solid border-gray-300 px-2 py-2"
                                 >
                                   +

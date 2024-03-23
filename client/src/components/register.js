@@ -4,16 +4,34 @@ import { CiLock } from "react-icons/ci";
 import { MdOutlineEmail, MdOutlineLocalPhone } from "react-icons/md";
 import { useFormik } from "formik";
 import { registerValidate } from "../validations/auth";
+import { AUTH_API } from "../apis/auth";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 function Register() {
+  const navigate = useNavigate();
+
   const formik = useFormik({
     initialValues: {
       email: "",
       password: "",
       username: "",
-      phonenumber: "",
+      phone: "",
     },
-    onSubmit: (values) => console.log(values),
+    onSubmit: async (values) => {
+      try {
+        const response = await AUTH_API.register(values);
+        if (response.status === 201) {
+          toast.success("Đăng kí thành công");
+          setTimeout(() => {
+            navigate("/login");
+          }, 3000);
+        }
+      } catch (error) {
+        console.log(error);
+        toast.error("Đăng kí thất bại");
+      }
+    },
     validationSchema: registerValidate,
   });
 
@@ -110,20 +128,20 @@ function Register() {
               <MdOutlineLocalPhone className="text-2xl mt-[12px] mx-2" />
               <input
                 className="text-base text-black block w-full h-[48px] pl-2 focus:outline-none "
-                type="number"
-                id="phonenumber"
-                name="phonenumber"
-                value={formik.values.phonenumber}
+                type="text"
+                id="phone"
+                name="phone"
+                value={formik.values.phone}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
               />
             </p>
           </div>
-          {formik.touched.phonenumber && formik.errors.phonenumber && (
+          {formik.touched.phone && formik.errors.phone && (
             <div
               style={{ color: "red", marginBottom: "8px", textAlign: "center" }}
             >
-              {formik.errors.phonenumber}
+              {formik.errors.phone}
             </div>
           )}
           <button

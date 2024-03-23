@@ -31,6 +31,7 @@
     "passport": "^0.7.0",
     "passport-facebook": "^3.0.0",
     "passport-google-plus-token": "^2.1.0",
+    "react-stars": "^2.2.5",
     "redis": "^4.6.13"
   },
   "devDependencies": {

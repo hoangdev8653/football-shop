@@ -3,7 +3,7 @@ import { axiosConfig } from "../axiosConfig";
 const register = async (data) => {
   return await axiosConfig({
     method: "post",
-    url: "/register",
+    url: "/user/dang-ki",
     data,
   });
 };
