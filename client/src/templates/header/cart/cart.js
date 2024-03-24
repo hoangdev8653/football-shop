@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import { BsCart2 } from "react-icons/bs";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import styles from "./cart.module.scss";
-import Button from "../../components/button";
-import { getUserCurrent } from "../../apis/auth";
-import { deleteProduct } from "../../apis/cart";
+import Button from "../../../components/button";
+import { getUserCurrent } from "../../../apis/auth";
+import { deleteProduct } from "../../../apis/cart";
 import { toast } from "react-toastify";
 
 function Cart() {

@@ -4,10 +4,21 @@ import ModalSearch from "./modal/modal";
 import Logo from "../../assets/logo.png";
 import { IoMdMenu } from "react-icons/io";
 import styles from "./header.module.scss";
-import Cart from "../../components/cart/cart";
+import Cart from "./cart/cart";
 import Avarta from "./avarta";
+import { BsCart2 } from "react-icons/bs";
+import { IoMdClose } from "react-icons/io";
+import { useState } from "react";
 
 function Header() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleOpenMenu = () => {
+    setIsOpen(true);
+  };
+  const handleCloseMenu = () => {
+    setIsOpen(false);
+  };
   return (
     <div className="w-full h-auto">
       <div className="bg-black text-right ">
@@ -29,9 +40,80 @@ function Header() {
           </a>
         </div>
       </div>
-      <div className="w-full flex justify-between">
+      <div className="w-full relative flex justify-between h-full ">
         <div className={styles.menu_mobile}>
-          <IoMdMenu />
+          <IoMdMenu onClick={handleOpenMenu} />
+          {isOpen ? (
+            <>
+              <div className="w-full absolute left-0 top-0 mt-[60px] z-50">
+                <div className="text-center w-full  py-4 my-4">
+                  <a href="/">
+                    <p className="text-white font-bold opacity-80 hover:opacity-100">
+                      ÁO BÓNG ĐÁ THÁI LAN
+                    </p>
+                  </a>
+                </div>
+                <div className="text-center w-full  py-4 my-4">
+                  <a href="/ao-bong-da-clb/">
+                    <p className="text-white font-bold opacity-80 hover:opacity-100">
+                      ÁO BÓNG ĐÁ CÂU LẠC BỘ
+                    </p>
+                  </a>
+                </div>
+                <div className="text-center w-full  py-4 my-4">
+                  <a href="/ao-bong-da-doi-tuyen">
+                    <p className="text-white font-bold opacity-80 hover:opacity-100">
+                      ÁO BÓNG ĐÁ ĐỘI TUYỂN
+                    </p>
+                  </a>
+                </div>
+                <div className="text-center w-full  py-4 my-4">
+                  <a href="/ao-bong-da-khong-logo">
+                    <p className="text-white font-bold opacity-80 hover:opacity-100">
+                      ÁO BÓNG ĐÁ KHÔNG LOGO
+                    </p>
+                  </a>
+                </div>
+                <div className="text-center w-full  py-4 my-4">
+                  <a href="/">
+                    <p className="text-white font-bold opacity-80 hover:opacity-100">
+                      ĐỒ THỂ THAO
+                    </p>
+                  </a>
+                </div>
+                <div className="text-center w-full py-4 my-4">
+                  <a href="/login">
+                    <p className="text-white font-bold opacity-80 hover:opacity-100">
+                      LOGIN
+                    </p>
+                  </a>
+                </div>
+                <div className="text-center w-full py-4 my-4">
+                  <a className="flex text-center justify-center gap-2" href="/">
+                    <span className="text-white font-bold opacity-80 hover:opacity-100 ">
+                      0<ins>đ</ins>
+                    </span>
+                    <BsCart2 className="text-white" />
+                  </a>
+                </div>
+                <div className="absolute top-0 right-0">
+                  <IoMdClose
+                    onClick={handleCloseMenu}
+                    className="text-white opacity-60 text-2xl cursor-pointer hover:opacity-100 w-10 h-10"
+                  />
+                </div>
+              </div>
+              <div
+                onClick={handleCloseMenu}
+                style={isOpen ? { overflowY: "hidden" } : { overflowY: "auto" }}
+                className={`${styles.overlay} ${
+                  isOpen ? "overflow-y-hidden" : "overflow-y-auto"
+                }`}
+              ></div>
+            </>
+          ) : (
+            <></>
+          )}
         </div>
         <div>
           <a

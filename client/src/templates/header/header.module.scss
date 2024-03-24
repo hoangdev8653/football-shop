@@ -26,6 +26,18 @@
     display: flex;
 }
 
+    .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        overflow-y: hidden;
+        z-index: 30;
+      }
+
+
 @media screen and (max-width : 860px){
     .socal_media {
         display: none;
@@ -33,9 +45,7 @@
     .menu_mobile{
         opacity: 1;
         cursor: pointer;
-        &:hover {
-            opacity: 0.6;
-        }
+        
     }
     .nav_header {
         display: none;
@@ -50,9 +60,6 @@
     .menu_mobile{
         opacity: 1;
         cursor: pointer;
-        &:hover {
-            opacity: 0.6;
-        }
     }
     .nav_header {
         display: none;

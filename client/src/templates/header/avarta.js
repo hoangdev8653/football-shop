@@ -27,7 +27,7 @@ function Avarta() {
     }
   };
   return (
-    <div>
+    <div className="">
       <div
         onMouseEnter={handleAvartaHover}
         onMouseLeave={handleAvartaLeave}
