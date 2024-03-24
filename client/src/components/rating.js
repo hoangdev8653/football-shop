@@ -1,7 +1,6 @@
 import ReactStars from "react-star-ratings";
 
 function Rating({ rating }) {
-  console.log(rating);
   return (
     <div className="">
       <ReactStars

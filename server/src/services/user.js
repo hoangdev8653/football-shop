@@ -245,6 +245,24 @@ const refreshToken = async (refreshToken) => {
   return newToken;
 };
 
+const logOut = async (id) => {
+  try {
+    const exitsUser = await UserModel.findById(id);
+    if (!exitsUser) {
+      throw new Error("User Not Found");
+    }
+    const newUser = await UserModel.findByIdAndUpdate(
+      id,
+      { refreshToken: "" },
+      { new: true }
+    );
+    return newUser;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
 export const userServices = {
   getAllUser,
   createCart,
@@ -258,4 +276,5 @@ export const userServices = {
   profile,
   deleteUser,
   refreshToken,
+  logOut,
 };

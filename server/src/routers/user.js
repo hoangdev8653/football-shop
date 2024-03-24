@@ -32,6 +32,7 @@ router
 
 router.route("/createCart").post(verifyAccessToken, userController.createCart);
 router.route("/updateCart").put(verifyAccessToken, userController.updateCart);
+router.route("/logout").post(verifyAccessToken, userController.logOut);
 
 router
   .route("/deleteCart")

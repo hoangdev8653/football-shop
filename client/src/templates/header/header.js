@@ -1,16 +1,13 @@
 import { FaFacebookF, FaInstagram, FaYoutube } from "react-icons/fa";
 import { MdOutlineMailOutline, MdOutlinePhone } from "react-icons/md";
-import ModalSearch from "../../components/modal/modal";
+import ModalSearch from "./modal/modal";
 import Logo from "../../assets/logo.png";
-import UserDeafaute from "../../assets/user_deafaute.jpg";
 import { IoMdMenu } from "react-icons/io";
 import styles from "./header.module.scss";
 import Cart from "../../components/cart/cart";
-import { getLocalStorage } from "../../utils/LocalStorage";
+import Avarta from "./avarta";
 
 function Header() {
-  const user = getLocalStorage("user");
-
   return (
     <div className="w-full h-auto">
       <div className="bg-black text-right ">
@@ -46,14 +43,7 @@ function Header() {
         </div>
         <div className="flex gap-4 mr-4 justify-center my-auto items-center">
           <ModalSearch />
-          <a href={user ? "/profile" : "/login"}>
-            <img
-              className={styles.avarta}
-              src={user?.avarta || UserDeafaute}
-              alt="avarta"
-            />
-          </a>
-          {/* modal cart */}
+          <Avarta />
           <Cart />
         </div>
       </div>

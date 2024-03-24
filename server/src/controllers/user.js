@@ -237,6 +237,21 @@ const refreshToken = async (req, res) => {
   }
 };
 
+const logOut = async (req, res) => {
+  try {
+    const id = req.userId;
+    const user = await userServices.logOut(id);
+    return res
+      .status(StatusCodes.OK)
+      .json({ message: "Xử lý thành công", status: 200, content: user });
+  } catch (error) {
+    console.log(error.message);
+    res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ message: "Server Error", status: 500 });
+  }
+};
+
 export const userController = {
   getAllUser,
   deleteUser,
@@ -252,4 +267,5 @@ export const userController = {
   createCart,
   updateCart,
   deleteCart,
+  logOut,
 };

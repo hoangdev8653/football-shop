@@ -16,6 +16,12 @@ const login = async (data) => {
   });
 };
 
+export const logout = async () => {
+  return await axiosConfig({
+    method: "post",
+    url: "user/logout",
+  });
+};
 export const getUserCurrent = async () => {
   return await axiosConfig({
     method: "get",

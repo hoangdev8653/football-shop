@@ -25,16 +25,6 @@
     line-height: 1rem;
     display: flex;
 }
-.avarta {
-    width: 50px;
-    height: 50px;
-    border-radius: 9999px;
-    cursor: pointer;
-    object-fit: cover;
-    &:hover {
-        opacity: 0.6;
-    }
-}
 
 @media screen and (max-width : 860px){
     .socal_media {
@@ -50,9 +40,7 @@
     .nav_header {
         display: none;
     }
-    .avarta {
-        display: none;
-    }
+   
 }
 
 @media only screen and (max-width: 520px) {
