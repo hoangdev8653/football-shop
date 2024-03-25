@@ -13,7 +13,7 @@ const validateToken = async (req, res, next) => {
       if (err.name === "JsonWebTokenError") {
         console.log("Token is invalid or has expired:");
       }
-      console.error("Error: ", err);
+      console.error("Error:", err.name);
       res
         .status(StatusCodes.UNAUTHORIZED)
         .json({ error: "Token is invalid or has expired" });

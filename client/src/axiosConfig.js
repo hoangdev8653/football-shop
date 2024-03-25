@@ -30,6 +30,12 @@ axiosConfig.interceptors.response.use(
       originalRequest._retry = true;
       try {
         const refreshToken = getLocalStorage("refreshToken");
+        if (!refreshToken) {
+          // Handle case when refreshToken is missing
+          console.error("Refresh token is missing");
+          // Redirect to login page or handle in any other way
+          return Promise.reject(error);
+        }
         const response = await axios.post(
           "http://localhost:3007/user/refresh-token",
           {
@@ -37,6 +43,12 @@ axiosConfig.interceptors.response.use(
           }
         );
         const accessToken = response.data.newToken.accessToken;
+        if (!accessToken) {
+          // Handle case when refreshToken is missing
+          console.error("accessToken token is missing");
+          // Redirect to login page or handle in any other way
+          return Promise.reject(error);
+        }
         setLocalStorage("accessToken", accessToken);
         originalRequest.headers.Authorization = `Bearer ${accessToken}`;
         return axios(originalRequest);

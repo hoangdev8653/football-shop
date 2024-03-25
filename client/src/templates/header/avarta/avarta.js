@@ -1,8 +1,12 @@
 import React, { useState } from "react";
-import { getLocalStorage, clearLocalStorage } from "../../utils/LocalStorage";
-import UserDeafaute from "../../assets/user_deafaute.jpg";
-import { logout } from "../../apis/auth";
+import {
+  getLocalStorage,
+  clearLocalStorage,
+} from "../../../utils/LocalStorage";
+import UserDeafaute from "../../../assets/user_deafaute.jpg";
+import { logout } from "../../../apis/auth";
 import { useNavigate } from "react-router-dom";
+import styles from "./avarta.module.scss";
 
 function Avarta() {
   const [isOpen, setIsOpen] = useState(false);
@@ -27,7 +31,7 @@ function Avarta() {
     }
   };
   return (
-    <div className="">
+    <div className={styles.avarta}>
       <div
         onMouseEnter={handleAvartaHover}
         onMouseLeave={handleAvartaLeave}

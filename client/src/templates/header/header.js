@@ -5,13 +5,15 @@ import Logo from "../../assets/logo.png";
 import { IoMdMenu } from "react-icons/io";
 import styles from "./header.module.scss";
 import Cart from "./cart/cart";
-import Avarta from "./avarta";
+import Avarta from "./avarta/avarta";
 import { BsCart2 } from "react-icons/bs";
 import { IoMdClose } from "react-icons/io";
 import { useState } from "react";
+import { getLocalStorage } from "../../utils/LocalStorage";
 
 function Header() {
   const [isOpen, setIsOpen] = useState(false);
+  const user = getLocalStorage("user");
 
   const handleOpenMenu = () => {
     setIsOpen(true);
@@ -82,19 +84,22 @@ function Header() {
                   </a>
                 </div>
                 <div className="text-center w-full py-4 my-4">
-                  <a href="/login">
+                  <a href={user ? "/profile" : "/login"}>
                     <p className="text-white font-bold opacity-80 hover:opacity-100">
-                      LOGIN
+                      {user ? <span>PROFILE</span> : <span>LOGIN</span>}
                     </p>
                   </a>
                 </div>
-                <div className="text-center w-full py-4 my-4">
+                <div className="text-center w-full py-4 my-4 relative">
                   <a className="flex text-center justify-center gap-2" href="/">
                     <span className="text-white font-bold opacity-80 hover:opacity-100 ">
                       0<ins>đ</ins>
                     </span>
                     <BsCart2 className="text-white" />
                   </a>
+                  <div className="absolute left-[50%] ml-2 mb-4 ">
+                    <div className={styles.quantity}>{1}</div>
+                  </div>
                 </div>
                 <div className="absolute top-0 right-0">
                   <IoMdClose

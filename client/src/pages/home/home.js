@@ -118,14 +118,14 @@ function Home() {
                 TPHCM mà bạn không thể bỏ qua…
               </p>
               <div className="flex text-center text-xs gap-4 justify-center font-semibold my-4">
-                <a href="/">
-                  <span className="hover:opacity-80">CÂU LẠC BỘ</span>
+                <a href="/ao-bong-da-clb/">
+                  <span className="hover:opacity-60">CÂU LẠC BỘ</span>
                 </a>
-                <a href="/">
-                  <span className="hover:opacity-80">DỘI TUYỂN</span>
+                <a href="/ao-bong-da-doi-tuyen">
+                  <span className="hover:opacity-60">ĐỘI TUYỂN</span>
                 </a>
-                <a href="/">
-                  <span className="hover:opacity-80">HÀNG THÁI LAN</span>
+                <a href="/ao-bong-da-khong-logo">
+                  <span className="hover:opacity-60">KHÔNG LOGO</span>
                 </a>
               </div>
             </div>

@@ -25,6 +25,30 @@
     line-height: 1rem;
     display: flex;
 }
+.quantity {
+    content: attr(data-icon-label);
+    position: absolute;
+    font-style: normal;
+    font-family: Arial, Sans-serif !important;
+    top: -30px;
+    right: -30px;
+    font-weight: bolder;
+    background-color: #d26e4b;
+    box-shadow: 1px 1px 3px 0px rgba(0,0,0,0.3);
+    font-size: 11px;
+    padding-left: 2px;
+    padding-right: 2px;
+    opacity: .9;
+    line-height: 17px;
+    letter-spacing: -.5px;
+    height: 17px;
+    min-width: 17px;
+    border-radius: 99px;
+    color: #fff;
+    text-align: center;
+    z-index: 1;
+    transition: transform .2s;
+}
 
     .overlay {
         position: fixed;

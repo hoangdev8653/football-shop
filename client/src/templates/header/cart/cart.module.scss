@@ -1,3 +1,8 @@
+.wrapperCart {
+    display: block;
+    position: relative;
+}
+
 .cart {
     position: absolute;
     margin-top: 0.25rem;
@@ -23,11 +28,11 @@
     }
 }
 .quantity {
+    top: -40px;
     content: attr(data-icon-label);
     position: absolute;
     font-style: normal;
     font-family: Arial, Sans-serif !important;
-    top: -30px;
     right: -30px;
     font-weight: bolder;
     background-color: #d26e4b;
@@ -48,6 +53,9 @@
 }
 
 @media screen and (max-width :900px) {
+    .wrapperCart {
+        display: none;
+    }
     .cart {
         display: none;
     }

@@ -64,7 +64,7 @@ function Cart() {
     <div
       onMouseEnter={handleIconCartHover}
       onMouseLeave={handleIconCartLeave}
-      className="relative"
+      className={styles.wrapperCart}
     >
       <a href="/cart">
         <BsCart2 className="text-2xl cursor-pointer hover:opacity-60 " />

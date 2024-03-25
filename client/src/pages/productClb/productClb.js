@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Banner from "../../assets/Banner-bong-da-clb.png";
+import BannerMobile from "../../assets/Banner_Bong-da-clb_thailan.webp";
 import Section from "../../components/section/section";
 import ProductItems from "../../components/ProductItems/productItems";
 import { BsCart2 } from "react-icons/bs";
@@ -31,15 +32,20 @@ function ProductClb() {
 
   return (
     <div className="productClub w-full">
-      <div className="bg-gray-800">
-        <div className="max-w-[1050px] mx-auto text-white text-2xl font-bold uppercase py-4 text-center">
+      <div className="bg-gray-800 ">
+        <div className={styles.title}>
           QUẦN ÁO BÓNG ĐÁ ĐẸP NHẤT MÙA GIẢI MỚI 23/24 HÀNG VIỆT NAM VÀ THÁI LAN{" "}
         </div>
       </div>
       <div className="w-full relative mb-8">
-        <img className="bg-cover w-full" src={Banner} alt="banner" />
+        <img className={styles.banner} src={Banner} alt="banner" />
+        <img
+          className={styles.bannerMobile}
+          src={BannerMobile}
+          alt="bannerMobile"
+        />
         <div className={styles.box_text}>
-          <div className="text-center text-white ">
+          <div className="text-center text-white">
             <p className="text-2xl pt-4 py-2 font-bold">
               ÁO BÓNG ĐÁ MÙA GIẢI MỚI
             </p>
