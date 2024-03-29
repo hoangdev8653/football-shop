@@ -3,7 +3,6 @@ import Button from "../../components/button";
 import { getLocalStorage } from "../../utils/LocalStorage";
 import { getHistoryOrder } from "../../apis/auth";
 import formatDate from "../../utils/formatDate";
-import ModalReviews from "../../components/modalReviews";
 
 function HistoryOrder() {
   const token = getLocalStorage("accessToken");
@@ -61,20 +60,6 @@ function HistoryOrder() {
                     <td className="text-center">
                       <p>{item.status}</p>
                       <p> {formatDate(item.orderDate)}</p>
-                    </td>
-                    <td className="text-center">
-                      <div className="flex justify-center gap-2">
-                        {/* <button className="border-solid px-[7px] py-2 bg-red-500 text-white font-semibold hover:bg-red-700">
-                          Đánh Giá
-                          
-                        </button> */}
-                        <ModalReviews />
-                        <a href={`/product/${item.slug}`}>
-                          <button className="border-solid px-[7px] py-2 bg-white text-black hover:bg-gray-300 border-[1px] border-gray-300">
-                            Mua Lại
-                          </button>
-                        </a>
-                      </div>
                     </td>
                   </tr>
                 ))}

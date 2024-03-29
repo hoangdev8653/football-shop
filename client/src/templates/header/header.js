@@ -55,14 +55,14 @@ function Header() {
                     </p>
                   </a>
                 </div>
-                <div className="text-center w-full  py-4 my-4">
+                <div className="text-center w-full py-4 my-4">
                   <a href="/ao-bong-da-clb/">
                     <p className="text-white font-bold opacity-80 hover:opacity-100">
                       ÁO BÓNG ĐÁ CÂU LẠC BỘ
                     </p>
                   </a>
                 </div>
-                <div className="text-center w-full  py-4 my-4">
+                <div className="text-center w-full py-4 my-4">
                   <a href="/ao-bong-da-doi-tuyen">
                     <p className="text-white font-bold opacity-80 hover:opacity-100">
                       ÁO BÓNG ĐÁ ĐỘI TUYỂN
@@ -76,7 +76,7 @@ function Header() {
                     </p>
                   </a>
                 </div>
-                <div className="text-center w-full  py-4 my-4">
+                <div className="text-center w-full py-4 my-4">
                   <a href="/">
                     <p className="text-white font-bold opacity-80 hover:opacity-100">
                       ĐỒ THỂ THAO
@@ -92,14 +92,12 @@ function Header() {
                 </div>
                 <div className="text-center w-full py-4 my-4 relative">
                   <a className="flex text-center justify-center gap-2" href="/">
-                    <span className="text-white font-bold opacity-80 hover:opacity-100 ">
-                      0<ins>đ</ins>
-                    </span>
-                    <BsCart2 className="text-white" />
+                    <a href="/cart">
+                      <span className="text-white font-bold opacity-80 hover:opacity-100 ">
+                        Giỏ hàng
+                      </span>
+                    </a>
                   </a>
-                  <div className="absolute left-[50%] ml-2 mb-4 ">
-                    <div className={styles.quantity}>{1}</div>
-                  </div>
                 </div>
                 <div className="absolute top-0 right-0">
                   <IoMdClose
