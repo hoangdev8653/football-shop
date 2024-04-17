@@ -4,7 +4,7 @@ import { CiLock } from "react-icons/ci";
 import { MdOutlineEmail, MdOutlineLocalPhone } from "react-icons/md";
 import { useFormik } from "formik";
 import { registerValidate } from "../validations/auth";
-import { AUTH_API } from "../apis/auth";
+import { register } from "../apis/auth";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
@@ -20,7 +20,7 @@ function Register() {
     },
     onSubmit: async (values) => {
       try {
-        const response = await AUTH_API.register(values);
+        const response = await register(values);
         if (response.status === 201) {
           toast.success("Đăng kí thành công");
           setTimeout(() => {

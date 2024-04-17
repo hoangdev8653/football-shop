@@ -5,7 +5,7 @@ import Google from "../assets/google-search-3.png";
 import { useFormik } from "formik";
 import { toast } from "react-toastify";
 import { loginValidate } from "../validations/auth";
-import { AUTH_API } from "../apis/auth";
+import { login } from "../apis/auth";
 import { setLocalStorage } from "../utils/LocalStorage";
 import { useNavigate } from "react-router-dom";
 
@@ -19,7 +19,7 @@ function Login() {
     validationSchema: loginValidate,
     onSubmit: async (values) => {
       try {
-        const data = await AUTH_API.login(values);
+        const data = await login(values);
         if (data.response?.status === 500) {
           toast.error("Mật khẩu không đúng");
         } else if (data?.status === 200) {

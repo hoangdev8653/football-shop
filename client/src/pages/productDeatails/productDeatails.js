@@ -17,7 +17,6 @@ import { addProduct } from "../../apis/cart";
 import Loader from "../../components/logoLoader/logoLoader";
 import { getLocalStorage } from "../../utils/LocalStorage";
 import { toast } from "react-toastify";
-// import Comment from "../../components/comment";
 import Expandable from "./expandable/index";
 
 function ProductDeatails() {
@@ -27,10 +26,6 @@ function ProductDeatails() {
   const dispatch = useDispatch();
   const { slug } = useParams();
   const token = getLocalStorage("accessToken");
-
-  // console.log(id);
-  // const plus = useSelector((state) => state.valueQuantity.plus);
-  // const minus = useSelector((state) => state.valueQuantity.minus);
 
   useEffect(() => {
     const fetchData = async () => {

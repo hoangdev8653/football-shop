@@ -27,7 +27,6 @@ const createReview = async (id, { rating, comment, productId }) => {
 };
 
 const updateReview = async (id, { rating, comment }) => {
-  console.log(id);
   const exitsReview = await ReviewModel.findById(id);
   if (!exitsReview) {
     throw new Error("Review không tồn tại");

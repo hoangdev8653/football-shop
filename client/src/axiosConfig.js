@@ -1,6 +1,10 @@
 import axios from "axios";
 import { BASE_URL } from "./utils/constants";
-import { getLocalStorage, setLocalStorage } from "./utils/LocalStorage";
+import {
+  getLocalStorage,
+  setLocalStorage,
+  clearLocalStorage,
+} from "./utils/LocalStorage";
 
 export const axiosConfig = axios.create({
   baseURL: BASE_URL,
@@ -55,6 +59,7 @@ axiosConfig.interceptors.response.use(
       } catch (error) {
         // refreshToken is Required
         console.log(error.message);
+        clearLocalStorage();
       }
     }
 

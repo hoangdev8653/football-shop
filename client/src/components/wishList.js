@@ -10,9 +10,9 @@ function wishList({ className }) {
     className
   );
   return (
-    <a href="" title="Add to WishList">
+    <p href="/" title="Add to WishList">
       <CiHeart className={className1} />
-    </a>
+    </p>
   );
 }
 

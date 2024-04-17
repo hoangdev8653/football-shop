@@ -1,6 +1,6 @@
 import { axiosConfig } from "../axiosConfig";
 
-const register = async (data) => {
+export const register = async (data) => {
   return await axiosConfig({
     method: "post",
     url: "/user/dang-ki",
@@ -8,7 +8,7 @@ const register = async (data) => {
   });
 };
 
-const login = async (data) => {
+export const login = async (data) => {
   return await axiosConfig({
     method: "post",
     url: "/user/dang-nhap",
@@ -69,9 +69,4 @@ export const getHistoryOrder = async (token) => {
       Authorization: `Bearer ${token}`,
     },
   });
-};
-
-export const AUTH_API = {
-  register,
-  login,
 };

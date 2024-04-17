@@ -17,7 +17,7 @@ function HistoryOrder() {
       }
     };
     fetchData();
-  }, []);
+  }, [token]);
 
   return (
     <div className="py-4 w-full max-h-[600px] overflow-y-auto">
