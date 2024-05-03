@@ -7,7 +7,6 @@ const Club = mongoose.Schema({
   },
   banner: {
     type: String,
-    // default: "",
   },
 
   stadium: {

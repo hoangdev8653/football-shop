@@ -1,9 +1,20 @@
 import ReviewModel from "../models/reviews.js";
 
 const getAllReview = async () => {
-  return await ReviewModel.find({})
+  const reviews = await ReviewModel.find({})
     .populate("userId", "username image")
     .populate("productId", "name");
+  const rvLastet = reviews.sort((a, b) => b.time - a.time);
+  const rating = reviews.map((item) => {
+    return item.rating;
+  });
+  const totalRating = rating.reduce(
+    (accumulator, currentValue) => accumulator + currentValue,
+    0
+  );
+  const ratingLength = rating.length;
+  const averageRating = parseFloat(totalRating / ratingLength);
+  return { rvLastet, ratingLength, averageRating };
 };
 
 const getReviewsByProduct = async (productId) => {
@@ -11,7 +22,17 @@ const getReviewsByProduct = async (productId) => {
     const reviews = await ReviewModel.find({ productId: productId })
       .populate("userId", "username image")
       .populate("productId", "name");
-    return reviews;
+    const rvLastet = reviews.sort((a, b) => b.time - a.time);
+    const rating = reviews.map((item) => {
+      return item.rating;
+    });
+    const totalRating = rating.reduce(
+      (accumulator, currentValue) => accumulator + currentValue,
+      0
+    );
+    const ratingLength = rating.length;
+    const averageRating = parseFloat(totalRating / ratingLength);
+    return { rvLastet, ratingLength, averageRating };
   } catch (error) {
     console.log(error.message);
     return [];

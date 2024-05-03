@@ -1,7 +1,16 @@
 .positionModal {
-  top: 24rem;
+  top: 10rem;
   right: 24rem;
   display: block;
+  // position: fixed;
+}
+.positionresults {
+  top: 13rem;
+  right: 51rem;
+  display: block;
+  margin-bottom: 8px;
+  // padding-bottom: 8px;
+  // position: fixed;
 }
 .overlay {
   position: fixed;
@@ -16,13 +25,14 @@
 @media screen and (max-width: 860px) {
   .positionModal {
     top: 18rem;
-    right: -80px;
+    right: 0px;
   }
 }
 
 @media only screen and (max-width: 520px) {
   .positionModal {
-    top: 18rem;
-    right: -80px;
+    top: 14rem;
+    right:  0px;
+    // width: 80%;  
   }
 }

@@ -3,10 +3,15 @@ import { reviewService } from "../services/reviews.js";
 
 const getAllReview = async (req, res) => {
   try {
-    const review = await reviewService.getAllReview();
-    return res
-      .status(StatusCodes.OK)
-      .json({ status: 200, message: "Xử lý thành công", content: review });
+    const { rvLastet, ratingLength, averageRating } =
+      await reviewService.getAllReview();
+    return res.status(StatusCodes.OK).json({
+      status: 200,
+      message: "Xử lý thành công",
+      content: rvLastet,
+      ratingLength,
+      averageRating,
+    });
   } catch (error) {
     console.log(error);
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ Error: "Lỗi Server" });
@@ -28,10 +33,15 @@ const getReviewByUser = async (req, res) => {
 const getReviewsByProduct = async (req, res) => {
   try {
     const productId = req.query.productId;
-    const review = await reviewService.getReviewsByProduct(productId);
-    return res
-      .status(StatusCodes.OK)
-      .json({ status: 200, message: "Xử lý thành công", content: review });
+    const { rvLastet, ratingLength, averageRating } =
+      await reviewService.getReviewsByProduct(productId);
+    return res.status(StatusCodes.OK).json({
+      status: 200,
+      message: "Xử lý thành công",
+      content: rvLastet,
+      ratingLength,
+      averageRating,
+    });
   } catch (error) {
     console.log(error);
     res

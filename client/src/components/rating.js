@@ -1,15 +1,12 @@
-import ReactStars from "react-star-ratings";
+import { Rate } from "antd";
+function Rating({ rating, disabled, onRateChange }) {
+  const handleChange = (value) => {
+    onRateChange(value); // Truyền giá trị số sao lên component cha
+  };
 
-function Rating({ rating }) {
   return (
     <div className="">
-      <ReactStars
-        count={5}
-        numberOfStars={rating}
-        starEmptyColor="red" // Đặt màu cho sao trống
-        starRatedColor="red" // Đặt màu cho sao đã được chọn
-        size={12} // Đặt kích thước của các sao
-      />
+      <Rate value={rating} disabled={disabled} onChange={handleChange} />
     </div>
   );
 }

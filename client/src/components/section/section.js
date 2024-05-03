@@ -24,7 +24,7 @@ function Section() {
           <b className="block flex-1 h-[2px] bg-current font-bold mt-5 opacity-30"></b>
           <p className=" flex mx-2 my-2">
             <CiStar className="text-orange-500 text-2xl" />
-            <span className="text-lg font-bold">
+            <span className="text-lg font-bold justify-center text-center">
               CLICK CHUỘT VÀO LOGO CLB ĐỂ XEM CHI TIẾT ÁO ĐẤU
             </span>
           </p>
