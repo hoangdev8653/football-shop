@@ -1,7 +1,8 @@
 import UserModel from "../models/user.js";
-import bcrypt, { compare, hash, hashSync } from "bcrypt";
+import bcrypt from "bcrypt";
 import { generateTokens } from "../Utils/generateTokens.js";
 import { verifyRefreshToken } from "../middlewares/verifyRefreshToken.js";
+import ProductModel from "../models/product.js";
 
 const getAllUser = async () => {
   return await UserModel.find({}, { password: 0 }).populate(
@@ -15,6 +16,7 @@ const createCart = async (id, { productId, quantity }) => {
     "cart.productId",
     "-slug -categoryId"
   );
+
   const cart = user.cart;
   const productIndex = cart.findIndex(
     (product) => product.productId._id.toString() === productId
@@ -24,6 +26,14 @@ const createCart = async (id, { productId, quantity }) => {
   } else {
     cart[productIndex].quantity += quantity;
   }
+  const product = await ProductModel.findById(productId);
+  const quantityAfter = product.stockQuality - quantity;
+  await ProductModel.findByIdAndUpdate(
+    productId,
+    { stockQuality: quantityAfter },
+    { new: true }
+  );
+
   const updateCart = await user.save();
   return updateCart;
 };
@@ -46,21 +56,9 @@ const updateCart = async (id, productId, { quantity }) => {
     console.log(error);
   }
 };
-// const totalPrice = async (user) => {
-//   const cart = user.cart;
-//   const mapTotalPrice = cart.map(
-//     (item) => item.productId.price * item.quantity
-//   );
-//   const sumTotal = mapTotalPrice.reduce(
-//     (accumulator, currentPrice) => accumulator + currentPrice,
-//     0
-//   );
-//   console.log(sumTotal);
-//   return sumTotal;
-// };
-
 const deleteCart = async (id, productId) => {
   try {
+    const product = await ProductModel.findById(productId);
     const existingUser = await UserModel.findById(id);
     if (!existingUser) {
       throw new Error("User not found");
@@ -69,19 +67,17 @@ const deleteCart = async (id, productId) => {
     const productIndex = cart.findIndex(
       (product) => product.productId.toString() === productId
     );
-
+    const quantityAfter =
+      product.stockQuality + existingUser.cart[productIndex].quantity;
+    await ProductModel.findByIdAndUpdate(
+      productId,
+      { stockQuality: quantityAfter },
+      { new: true }
+    );
     if (productIndex !== -1) {
-      // Xóa sản phẩm khỏi mảng cart
       cart.splice(productIndex, 1);
-
-      // Cập nhật user sau khi xóa sản phẩm
       const updatedUser = await existingUser.save();
-
-      // Tính toán lại totalPrice và cập nhật user
-      // const newTotalPrice = await totalPrice(updatedUser);
-      // updatedUser.totalPrice = newTotalPrice;
       await updatedUser.save();
-
       return updatedUser;
     } else {
       console.log("Product not found in user's cart");
@@ -208,16 +204,9 @@ const profile = async (id) => {
     (accumulator, currentPrice) => accumulator + currentPrice,
     0
   );
-
-  // Update the user object with the modified cart array
   user.cart = cart;
   user.totalPrice = totalPrice;
-
-  // Save the updated user object
   const userUpdate = await user.save();
-
-  // Logging the updated user object for debugging purposes
-
   return userUpdate;
 };
 
@@ -243,6 +232,21 @@ const refreshToken = async (refreshToken) => {
     { new: true }
   );
   return newToken;
+};
+
+const forgotPassword = async ({ email }) => {
+  try {
+    const user = await UserModel.findOne({ email });
+    if (!user) {
+      throw new Error("User Not Found");
+    }
+    const { accessToken } = generateTokens(user.id);
+    console.log(accessToken);
+    return user;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
 };
 
 const logOut = async (id) => {

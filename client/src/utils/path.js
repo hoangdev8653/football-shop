@@ -13,6 +13,8 @@ export const path = {
   SEARCH_PRODUCT: "/search/",
   PROFILE: "/profile",
   CHANGE_PASSWORD: "/changePassword",
+  FORGOT_PASSWORD: "/forgot-password",
+  RESET_PASSWORD: "/reset-password",
   BLOG: "/blog",
   LOGIN: "/login",
   REGISTER: "/register",

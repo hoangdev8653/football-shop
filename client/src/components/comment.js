@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Ratting from "../components/rating";
 import Button from "../components/button";
-import user from "../assets/user_deafaute.jpg";
+import avartaDeafault from "../assets/user_deafaute.jpg";
 import { AiTwotoneLike } from "react-icons/ai";
 import { getReviewsByProduct, createReview } from "../apis/reviews";
 import FormatDate from "../utils/formatDate";
@@ -16,6 +16,8 @@ function Comment({ data }) {
   const [rating, setRating] = useState(0);
   const [content, setContent] = useState([]);
   const [comment, setComment] = useState("");
+  const [totalRating, setTotalRating] = useState(0);
+  const [averageRating, setAverageRating] = useState(0);
   const user = getLocalStorage("user");
 
   const handleLikeComment = () => {
@@ -56,6 +58,9 @@ function Comment({ data }) {
         const response = await getReviewsByProduct(productId);
         if (response.status === 200) {
           setContent(response.data.content);
+
+          setTotalRating(response.data.ratingLength);
+          setAverageRating(response.data.averageRating);
         }
       } catch (error) {
         console.log(error.message);
@@ -73,9 +78,13 @@ function Comment({ data }) {
           >
             <div className="mx-4">
               <p className="text-red-500 text-2xl ">
-                <span className="font-semibold">4.7</span> trên 5
+                <span className="font-semibold">{averageRating}</span> trên 5
               </p>
-              <Ratting rating={4} disabled={true} />
+              <Ratting
+                allowHalf={averageRating}
+                rating={averageRating}
+                disabled={true}
+              />
             </div>
             <div className=" flex justify-center text-center gap-2 mx-2">
               <Button className="border-[1px] border-solid border-gray-300 py-1 px-4">
@@ -103,7 +112,7 @@ function Comment({ data }) {
               <span style={{ top: "20%", left: "3%" }} className="absolute">
                 <img
                   className="w-9 h-9 rounded-3xl"
-                  src={user.avarta}
+                  src={user?.avarta || avartaDeafault}
                   alt="ảnh lỗi"
                 />
               </span>
@@ -138,7 +147,7 @@ function Comment({ data }) {
               </button>
             </div>
           </div>
-          <section class="relative flex items-center justify-center antialiased  min-w-screen">
+          <section className="relative flex items-center justify-center antialiased  min-w-screen">
             <div className="w-full bg-white m-2">
               <div className=" mt-2">
                 {content &&

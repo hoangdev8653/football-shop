@@ -215,6 +215,10 @@ function ProductDeatails() {
                     </Button>
                   )}
                 </div>
+                <div className="flex gap-1 ">
+                  <p className="opacity-80 text-gray-500">Số lượng: </p>
+                  <span className="font-semibold">{data.stockQuality}</span>
+                </div>
                 <div className="flex mt-8 ml-4 gap-4 font-semibold ">
                   <Button className="text-white bg-red-700 hover:bg-red-900">
                     TƯ VẤN NGAY

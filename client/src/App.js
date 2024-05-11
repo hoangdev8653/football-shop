@@ -18,8 +18,12 @@ import ChangePassword from "./pages/profile/changePassword";
 import Register from "./components/register";
 import CheckOut from "./pages/checkout/checkout";
 import OrderComplete from "./pages/orderComplete/orderComplete";
+import ForgotPassword from "./pages/forgotPassword";
+import ResetPassword from "./pages/resetPassword";
+import io from "socket.io-client";
 
 function App() {
+  const socket = io.connect("http:/localhost:3007");
   return (
     <Routes>
       <Route path={path.PUBLIC_LAYOUT} element={<Layout />}>
@@ -39,6 +43,8 @@ function App() {
       <Route path={path.REGISTER} element={<Register />} />
       <Route path={path.CHECKOUT} element={<CheckOut />} />
       <Route path={path.ORDER_COMPLETE} element={<OrderComplete />} />
+      <Route path={path.FORGOT_PASSWORD} element={<ForgotPassword />} />
+      <Route path={path.RESET_PASSWORD} element={<ResetPassword />} />
       <Route path={path.NOTFOUND} element={<NotFound />} />
     </Routes>
   );

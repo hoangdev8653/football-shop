@@ -237,6 +237,21 @@ const refreshToken = async (req, res) => {
   }
 };
 
+const forgotPassword = async (req, res) => {
+  try {
+    const { email } = req.body;
+    const user = await userServices.forgotPassword({ email });
+    return res
+      .status(StatusCodes.OK)
+      .json({ status: 200, message: "Xử lý thành công", content: user });
+  } catch (error) {
+    console.log(error);
+    res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ status: 500, message: "Server Error" });
+  }
+};
+
 const logOut = async (req, res) => {
   try {
     const id = req.userId;

@@ -1,12 +1,17 @@
 import { Rate } from "antd";
-function Rating({ rating, disabled, onRateChange }) {
+function Rating({ rating, disabled, onRateChange, allowHalf }) {
   const handleChange = (value) => {
-    onRateChange(value); // Truyền giá trị số sao lên component cha
+    onRateChange(value);
   };
 
   return (
     <div className="">
-      <Rate value={rating} disabled={disabled} onChange={handleChange} />
+      <Rate
+        value={rating}
+        disabled={disabled}
+        onChange={handleChange}
+        allowHalf={allowHalf}
+      />
     </div>
   );
 }
