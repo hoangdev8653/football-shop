@@ -23,7 +23,7 @@ import ResetPassword from "./pages/resetPassword";
 import io from "socket.io-client";
 
 function App() {
-  const socket = io.connect("http:/localhost:3007");
+  // const socket = io.connect("http:/localhost:3007");
   return (
     <Routes>
       <Route path={path.PUBLIC_LAYOUT} element={<Layout />}>

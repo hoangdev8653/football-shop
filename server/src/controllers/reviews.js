@@ -35,6 +35,7 @@ const getReviewsByProduct = async (req, res) => {
     const productId = req.query.productId;
     const { rvLastet, ratingLength, averageRating } =
       await reviewService.getReviewsByProduct(productId);
+
     return res.status(StatusCodes.OK).json({
       status: 200,
       message: "Xử lý thành công",

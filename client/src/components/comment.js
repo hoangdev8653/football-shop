@@ -6,11 +6,8 @@ import { AiTwotoneLike } from "react-icons/ai";
 import { getReviewsByProduct, createReview } from "../apis/reviews";
 import FormatDate from "../utils/formatDate";
 import { getLocalStorage } from "../utils/LocalStorage";
-import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
 
 function Comment({ data }) {
-  const navigate = useNavigate();
   const productId = data._id;
   const [like, setLike] = useState(false);
   const [rating, setRating] = useState(0);
@@ -40,10 +37,9 @@ function Comment({ data }) {
         comment,
       });
       if (respone.data.status === 201) {
-        toast.success("Đăng nhập thành công");
         setTimeout(() => {
-          navigate("/");
-        }, 3000);
+          window.location.reload();
+        }, 1000);
       } else {
         console.log("Call api thất bại");
       }
@@ -58,7 +54,6 @@ function Comment({ data }) {
         const response = await getReviewsByProduct(productId);
         if (response.status === 200) {
           setContent(response.data.content);
-
           setTotalRating(response.data.ratingLength);
           setAverageRating(response.data.averageRating);
         }
@@ -68,6 +63,7 @@ function Comment({ data }) {
     };
     fetchData();
   }, []);
+  console.log(content);
   return (
     <div className="comment">
       {content && content.length > 0 ? (
@@ -78,10 +74,14 @@ function Comment({ data }) {
           >
             <div className="mx-4">
               <p className="text-red-500 text-2xl ">
-                <span className="font-semibold">{averageRating}</span> trên 5
+                <span className="font-semibold">
+                  {Math.round((averageRating + Number.EPSILON) * 10) / 10}
+                </span>{" "}
+                {""}
+                trên 5
               </p>
               <Ratting
-                allowHalf={averageRating}
+                allowHalf={true}
                 rating={averageRating}
                 disabled={true}
               />
@@ -113,7 +113,7 @@ function Comment({ data }) {
                 <img
                   className="w-9 h-9 rounded-3xl"
                   src={user?.avarta || avartaDeafault}
-                  alt="ảnh lỗi"
+                  alt="avarta"
                 />
               </span>
               <input
@@ -184,7 +184,51 @@ function Comment({ data }) {
       ) : (
         <div className="mx-4 mt-4">
           <p className="text-orange-500 font-bold text-lg">Reviews</p>
-          <p>There are no reviews yet.</p>
+          <p>There are no reviews yet. Be the first to do it. </p>
+          <div className="my-2 flex">
+            <div className="w-full cursor-pointer relative max-w-xl ">
+              <span style={{ top: "20%", left: "3%" }} className="absolute">
+                <img
+                  className="w-9 h-9 rounded-3xl"
+                  src={user?.avarta || avartaDeafault}
+                  alt="avarta"
+                />
+              </span>
+              <input
+                onChange={(e) => {
+                  handleCommentText(e);
+                }}
+                style={{
+                  border: "1px solid #e8e8e9",
+                  padding: "6px 150px 10px 60px",
+                }}
+                className="text-gray-700 w-full cursor-pointer bg-white h-[60px] rounded text-sm outline-none"
+                type="text"
+                placeholder="Nhận xét về sản phẩm?"
+              />
+              <span
+                style={{ right: "3%", transform: " translateY(-50%)" }}
+                className="top-1/2 m-auto flex absolute"
+              >
+                <span className="cursor-pointer inline-flex relative text-left text-base">
+                  <Ratting
+                    allowHalf={false}
+                    rating={rating}
+                    onRateChange={handleChangeRatting}
+                  />
+                </span>
+              </span>
+            </div>
+            <div className="mt-2 ml-4">
+              <button
+                onClick={commentApi}
+                type="submit"
+                className="text-white bg-blue-500 px-3 py-2 rounded font-semibold hover:opacity-80"
+              >
+                Comment
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </div>

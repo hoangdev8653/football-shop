@@ -2,27 +2,29 @@ import React, { useState, useRef, useEffect } from "react";
 import { BsSearch } from "react-icons/bs";
 import styles from "./modal.module.scss";
 import { getProductByKey } from "../../../apis/product";
+import { useDebounce } from "../../../hooks/useDebounce";
 function Modal() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [valueSearch, setValueSearch] = useState("");
+  const debounceSearch = useDebounce(valueSearch);
   const [data, setData] = useState([]);
   const modalRef = useRef();
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const data = await getProductByKey(valueSearch);
-  //       if (data) {
-  //         console.log(data);
-  //       } else {
-  //         console.log("Thất bại");
-  //       }
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
-  //   fetchData();
-  // }, [valueSearch]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await getProductByKey(debounceSearch);
+        if (response.status === 200) {
+          setData(response.data.content);
+        } else {
+          console.log("Thất bại");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, [debounceSearch]);
 
   const handleModalToggle = () => {
     setIsModalOpen(!isModalOpen);
@@ -51,30 +53,6 @@ function Modal() {
     setValueSearch(value);
     console.log(value);
   };
-  const elol = document.getElementById("list_results");
-  const handleShowResults = (searchValue) => {
-    const searchResults = data.filter((item) =>
-      item.name.toLowerCase().includes(searchValue.toLowerCase())
-    );
-    if (searchResults.length > 0) {
-      let renderUi = "";
-      searchResults.forEach((item) => {
-        renderUi += `<li>${item.name}</li>`;
-      });
-    } else {
-      elol.innerHTML = "Không tìm thấy sản phẩm";
-    }
-  };
-
-  function useDebounce(callback, delay) {
-    let timeoutId;
-    return () => {
-      clearTimeout(timeoutId);
-      timeoutId = setTimeout(() => {
-        callback();
-      }, delay);
-    };
-  }
 
   return (
     <div className="relative">
@@ -105,38 +83,30 @@ function Modal() {
             </a>
             <div className={`${styles.positionresults} absolute z-50 w-full`}>
               <div className="w-[452px] text-white max-h-[20rem] overflow-y-auto">
-                <div className="w-full flex mt-2 mb-4 items-center cursor-pointer">
-                  <img
-                    className="w-[40px] h-[40px] rounded-full"
-                    src="https://www.sporter.vn/wp-content/uploads/2020/09/Ao-bong-da-real-madrid-san-khach-mau-ba-0-280x280.jpg"
-                    alt="text"
-                  />
-                  <p className="mx-4 text-3xl">
-                    Áo bóng đá Real Madrid sân khách mẫu ba 23/24 hàng Thái Lan
-                  </p>
-                  <p className="font-medium text-2xl">
-                    <del className="font-normal text-gray-300 mx-1">
-                      <span>300.000$</span>
-                    </del>
-                    <span>200.000$</span>
-                  </p>
-                </div>
-                <div className="w-full flex mt-2 items-center">
-                  <img
-                    className="w-[40px] h-[40px] rounded-full"
-                    src="https://www.sporter.vn/wp-content/uploads/2020/09/Ao-bong-da-real-madrid-san-khach-mau-ba-0-280x280.jpg"
-                    alt="text"
-                  />
-                  <p className="mx-4 text-3xl">
-                    Áo bóng đá Real Madrid sân khách mẫu ba 23/24 hàng Thái Lan
-                  </p>
-                  <p className="font-medium text-2xl">
-                    <del className="font-normal text-gray-300 mx-1">
-                      <span>300.000$</span>
-                    </del>
-                    <span>200.000$</span>
-                  </p>
-                </div>
+                {data.map((item, index) => (
+                  <>
+                    <a href={`/product/${item.slug}`}>
+                      <div
+                        key={index}
+                        className="w-full flex mt-2 mb-4 items-center cursor-pointer hover:opacity-75"
+                      >
+                        <img
+                          className="w-[50px] h-[50px] rounded-full object-cover"
+                          src={item.image[0]}
+                          alt={item.slug}
+                        />
+
+                        <p className="mx-4 text-3xl">{item.name}</p>
+                        <p className="font-medium text-2xl">
+                          <del className="font-normal text-gray-300 mx-1">
+                            <span>300.000$</span>
+                          </del>
+                          <span>{item.price}$</span>
+                        </p>
+                      </div>
+                    </a>
+                  </>
+                ))}
               </div>
             </div>
           </div>
