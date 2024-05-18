@@ -2,7 +2,7 @@ import "dotenv/config";
 import express from "express";
 import cors from "cors";
 import { connectDB } from "./configs/connectDb.js";
-// import { connectRedis } from "./configs/redis.js";
+import { connectRedis } from "./configs/redis.js";
 import { routers } from "./routers/index.js";
 import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
@@ -13,26 +13,25 @@ import http from "http";
 
 const port = process.env.PORT;
 connectDB();
-// connectRedis();
+connectRedis();
 
 const app = express();
-// const server = http.createServer(app);
-// const io = new Server(server, {
-//   cors: {
-//     origin: "http://localhost:3007",
-//     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
-//   },
-// });
+const server = http.createServer(app);
+const io = new Server(server, {
+  cors: {
+    origin: "http://localhost:3000/",
+  },
+});
 
-// // Xử lý các sự kiện kết nối từ phía máy khách
-// io.on("connection", (socket) => {
-//   console.log("New client connected");
+// Xử lý các sự kiện kết nối từ phía máy khách
+io.on("connection", (socket) => {
+  console.log("New client connected");
 
-//   // Xử lý các sự kiện khác tại đây
-//   socket.on("disconnect", () => {
-//     console.log("Client disconnected");
-//   });
-// });
+  // Xử lý các sự kiện khác tại đây
+  socket.on("disconnect", () => {
+    console.log("Client disconnected");
+  });
+});
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

@@ -8,7 +8,6 @@ export const getReviewsByProduct = async (productId) => {
 };
 
 export const createReview = async (data, token) => {
-  console.log(data);
   return axiosConfig({
     method: "post",
     url: "/review/create",

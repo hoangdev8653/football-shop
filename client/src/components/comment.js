@@ -1,69 +1,56 @@
 import React, { useEffect, useState } from "react";
-import Ratting from "../components/rating";
+import Rating from "../components/rating";
 import Button from "../components/button";
-import avartaDeafault from "../assets/user_deafaute.jpg";
+import avatarDefault from "../assets/user_deafaute.jpg";
 import { AiTwotoneLike } from "react-icons/ai";
-import { getReviewsByProduct, createReview } from "../apis/reviews";
 import FormatDate from "../utils/formatDate";
 import { getLocalStorage } from "../utils/LocalStorage";
+import { reviewStore } from "../store/reviewStore";
 
 function Comment({ data }) {
   const productId = data._id;
+  const {
+    createReview,
+    getReviewsByProduct,
+    data: content,
+    averageRating,
+  } = reviewStore();
+
   const [like, setLike] = useState(false);
   const [rating, setRating] = useState(0);
-  const [content, setContent] = useState([]);
   const [comment, setComment] = useState("");
-  const [totalRating, setTotalRating] = useState(0);
-  const [averageRating, setAverageRating] = useState(0);
   const user = getLocalStorage("user");
+  const [filterStar, setFilterStar] = useState(0);
 
   const handleLikeComment = () => {
     setLike(!like);
-    console.log(like);
   };
-
-  const handleChangeRatting = (value) => {
+  const handleChangeRating = (value) => {
     setRating(value);
   };
   const handleCommentText = (e) => {
     setComment(e.target.value);
   };
-
   const commentApi = async () => {
     try {
-      const respone = await createReview({
-        productId,
-        rating,
-        comment,
-      });
-      if (respone.data.status === 201) {
-        setTimeout(() => {
-          window.location.reload();
-        }, 1000);
-      } else {
-        console.log("Call api thất bại");
-      }
+      await createReview({ productId, rating, comment });
     } catch (error) {
-      console.log("Error: ", error);
+      console.log(error.message);
     }
   };
+  const handleFilterStar = (star) => {
+    setFilterStar(star);
+  };
+
+  const filteredComments =
+    filterStar === 0
+      ? content
+      : content.filter((item) => item.rating === filterStar);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await getReviewsByProduct(productId);
-        if (response.status === 200) {
-          setContent(response.data.content);
-          setTotalRating(response.data.ratingLength);
-          setAverageRating(response.data.averageRating);
-        }
-      } catch (error) {
-        console.log(error.message);
-      }
-    };
-    fetchData();
-  }, []);
-  console.log(content);
+    getReviewsByProduct(productId);
+  }, [productId]);
+
   return (
     <div className="comment">
       {content && content.length > 0 ? (
@@ -73,53 +60,46 @@ function Comment({ data }) {
             className="w-full flex items-center p-4"
           >
             <div className="mx-4">
-              <p className="text-red-500 text-2xl ">
+              <p className="text-red-500 text-2xl">
                 <span className="font-semibold">
                   {Math.round((averageRating + Number.EPSILON) * 10) / 10}
                 </span>{" "}
-                {""}
                 trên 5
               </p>
-              <Ratting
-                allowHalf={true}
-                rating={averageRating}
-                disabled={true}
-              />
+              <Rating allowHalf={true} rating={averageRating} disabled={true} />
             </div>
-            <div className=" flex justify-center text-center gap-2 mx-2">
-              <Button className="border-[1px] border-solid border-gray-300 py-1 px-4">
+            <div className="flex justify-center text-center gap-2 mx-2">
+              <Button
+                onClick={() => handleFilterStar(0)}
+                className="border-[1px] border-solid border-gray-300 py-1 px-4"
+              >
                 Tất cả {content.length}
               </Button>
-              <Button className="border-[1px] border-solid border-gray-300 py-0 px-4">
-                5 Sao (1)
-              </Button>
-              <Button className="border-[1px] border-solid border-gray-300 py-0 px-4">
-                4 Sao (0)
-              </Button>
-              <Button className="border-[1px] border-solid border-gray-300 py-0 px-4">
-                3 sao (0)
-              </Button>
-              <Button className="border-[1px] border-solid border-gray-300 py-0 px-4">
-                2 sao (1)
-              </Button>
-              <Button className="border-[1px] border-solid border-gray-300 py-0 px-4">
-                1 sao (0)
-              </Button>
+              {[5, 4, 3, 2, 1].map((star) => (
+                <Button
+                  key={star}
+                  onClick={() => handleFilterStar(star)}
+                  className="border-[1px] border-solid border-gray-300 py-0 px-4"
+                >
+                  <span>
+                    {star} Sao (
+                    {content.filter((item) => item.rating === star).length})
+                  </span>
+                </Button>
+              ))}
             </div>
           </div>
           <div className="my-2 flex">
-            <div className="w-full cursor-pointer relative max-w-xl ">
+            <div className="w-full cursor-pointer relative max-w-xl">
               <span style={{ top: "20%", left: "3%" }} className="absolute">
                 <img
                   className="w-9 h-9 rounded-3xl"
-                  src={user?.avarta || avartaDeafault}
-                  alt="avarta"
+                  src={user?.avatar || avatarDefault}
+                  alt="avatar"
                 />
               </span>
               <input
-                onChange={(e) => {
-                  handleCommentText(e);
-                }}
+                onChange={handleCommentText}
                 style={{
                   border: "1px solid #e8e8e9",
                   padding: "6px 150px 10px 60px",
@@ -129,11 +109,11 @@ function Comment({ data }) {
                 placeholder="Nhận xét về sản phẩm?"
               />
               <span
-                style={{ right: "3%", transform: " translateY(-50%)" }}
+                style={{ right: "3%", transform: "translateY(-50%)" }}
                 className="top-1/2 m-auto flex absolute"
               >
                 <span className="cursor-pointer inline-flex relative text-left text-base">
-                  <Ratting rating={rating} onRateChange={handleChangeRatting} />
+                  <Rating rating={rating} onRateChange={handleChangeRating} />
                 </span>
               </span>
             </div>
@@ -147,36 +127,35 @@ function Comment({ data }) {
               </button>
             </div>
           </div>
-          <section className="relative flex items-center justify-center antialiased  min-w-screen">
+          <section className="relative flex items-center justify-center antialiased min-w-screen">
             <div className="w-full bg-white m-2">
-              <div className=" mt-2">
-                {content &&
-                  content.map((item, index) => (
-                    <div
-                      key={index}
-                      className="flex border-b-[1px] border-gray-400 mt-2"
-                    >
-                      <img
-                        className="rounded-full w-[50px] h-[50px] object-cover"
-                        src={item.userId.image || user}
-                        alt="avarta"
-                      />
-                      <div className="block mt-1 mx-2 ">
-                        <p className="text-base">{item.userId.username}</p>
-                        <Ratting disabled={true} rating={item.rating} />
-                        <p className="text-xs">{FormatDate(item.time)}</p>
-                        <p className="my-1">{item.comment}</p>
-                        <div className="flex opacity-60 gap-1 mb-2">
-                          <AiTwotoneLike
-                            style={like ? { color: "red" } : { color: "gray" }}
-                            onClick={handleLikeComment}
-                            className="text-xl cursor-pointer"
-                          />
-                          <span className="text-sm">{like ? 2 + 1 : 2}</span>
-                        </div>
+              <div className="mt-2">
+                {filteredComments.map((item, index) => (
+                  <div
+                    key={index}
+                    className="flex border-b-[1px] border-gray-400 mt-2"
+                  >
+                    <img
+                      className="rounded-full w-[50px] h-[50px] object-cover"
+                      src={item.userId.image || avatarDefault}
+                      alt="avatar"
+                    />
+                    <div className="block mt-1 mx-2">
+                      <p className="text-base">{item.userId.username}</p>
+                      <Rating disabled={true} rating={item.rating} />
+                      <p className="text-xs">{FormatDate(item.time)}</p>
+                      <p className="my-1">{item.comment}</p>
+                      <div className="flex opacity-60 gap-1 mb-2">
+                        <AiTwotoneLike
+                          style={like ? { color: "red" } : { color: "gray" }}
+                          onClick={handleLikeComment}
+                          className="text-xl cursor-pointer"
+                        />
+                        <span className="text-sm">{like ? 3 : 2}</span>
                       </div>
                     </div>
-                  ))}
+                  </div>
+                ))}
               </div>
             </div>
           </section>
@@ -184,20 +163,18 @@ function Comment({ data }) {
       ) : (
         <div className="mx-4 mt-4">
           <p className="text-orange-500 font-bold text-lg">Reviews</p>
-          <p>There are no reviews yet. Be the first to do it. </p>
+          <p>There are no reviews yet. Be the first to do it.</p>
           <div className="my-2 flex">
-            <div className="w-full cursor-pointer relative max-w-xl ">
+            <div className="w-full cursor-pointer relative max-w-xl">
               <span style={{ top: "20%", left: "3%" }} className="absolute">
                 <img
                   className="w-9 h-9 rounded-3xl"
-                  src={user?.avarta || avartaDeafault}
-                  alt="avarta"
+                  src={user?.avatar || avatarDefault}
+                  alt="avatar"
                 />
               </span>
               <input
-                onChange={(e) => {
-                  handleCommentText(e);
-                }}
+                onChange={handleCommentText}
                 style={{
                   border: "1px solid #e8e8e9",
                   padding: "6px 150px 10px 60px",
@@ -207,14 +184,14 @@ function Comment({ data }) {
                 placeholder="Nhận xét về sản phẩm?"
               />
               <span
-                style={{ right: "3%", transform: " translateY(-50%)" }}
+                style={{ right: "3%", transform: "translateY(-50%)" }}
                 className="top-1/2 m-auto flex absolute"
               >
                 <span className="cursor-pointer inline-flex relative text-left text-base">
-                  <Ratting
+                  <Rating
                     allowHalf={false}
                     rating={rating}
-                    onRateChange={handleChangeRatting}
+                    onRateChange={handleChangeRating}
                   />
                 </span>
               </span>

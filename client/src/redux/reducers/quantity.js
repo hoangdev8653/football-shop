@@ -2,6 +2,7 @@ import {
   MINUS_QUANTITY,
   PLUS_QUANTITY,
   DELETE_QUANTITY,
+  SET_QUANTITY,
 } from "../actions/quantity";
 
 const initState = {
@@ -31,7 +32,12 @@ export const valueQuantity = (state = initState, action) => {
         ...state,
         plus: false,
         minus: false,
-        value: "",
+        value: 0,
+      };
+    case SET_QUANTITY:
+      return {
+        ...state,
+        value: action.payload,
       };
     default:
       return state;

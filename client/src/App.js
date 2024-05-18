@@ -20,10 +20,10 @@ import CheckOut from "./pages/checkout/checkout";
 import OrderComplete from "./pages/orderComplete/orderComplete";
 import ForgotPassword from "./pages/forgotPassword";
 import ResetPassword from "./pages/resetPassword";
-import io from "socket.io-client";
+import { io } from "socket.io-client";
 
 function App() {
-  // const socket = io.connect("http:/localhost:3007");
+  const socket = io.connect();
   return (
     <Routes>
       <Route path={path.PUBLIC_LAYOUT} element={<Layout />}>

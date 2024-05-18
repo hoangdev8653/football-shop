@@ -9,26 +9,15 @@ import { MdOutlineNavigateNext } from "react-icons/md";
 import Slider from "react-slick";
 import { FaAngleDown } from "react-icons/fa";
 import styles from "./home.module.scss";
-import { getAllBlog } from "../../apis/blog";
-import { getProductClub } from "../../apis/product";
 
+import { blogStore } from "../../store/blogStore";
+import { productStore } from "../../store/productStore";
 function Home() {
-  const [dataBlog, setDataBlog] = useState("");
-  const [dataProductClub, setDataProductClub] = useState("");
+  const blog = blogStore();
+  const productClub = productStore();
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const blogResponse = await getAllBlog();
-        setDataBlog(blogResponse.data.content);
-
-        const productResponse = await getProductClub();
-        setDataProductClub(productResponse.data.content);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchData();
+    blog.getAllBlog();
+    productClub.getProductClub();
   }, []);
 
   var settings = {
@@ -146,7 +135,7 @@ function Home() {
             <b className="block flex-1 h-[2px] bg-current font-bold mt-5 opacity-30"></b>
           </div>
         </div>
-        <ProductItems data={dataProductClub} />
+        <ProductItems data={productClub.data} />
         <div
           style={{
             backgroundImage:
@@ -173,8 +162,8 @@ function Home() {
             </div>
           </div>
           <Slider {...settings}>
-            {dataBlog &&
-              dataBlog.map((item, index) => (
+            {blog.data &&
+              blog.data.map((item, index) => (
                 <div key={index} className="w-1/4 cursor-pointer mb-4 ">
                   <a href="/blog">
                     <img

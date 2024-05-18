@@ -46,10 +46,6 @@ const User = mongoose.Schema(
       type: Number,
       default: 0,
     },
-    refreshToken: {
-      type: String,
-      default: "",
-    },
     passwordResetToken: {
       type: String,
       default: undefined,

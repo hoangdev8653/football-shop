@@ -5,12 +5,11 @@ import Google from "../assets/google-search-3.png";
 import { useFormik } from "formik";
 import { toast } from "react-toastify";
 import { loginValidate } from "../validations/auth";
-import { login } from "../apis/auth";
-import { setLocalStorage } from "../utils/LocalStorage";
 import { useNavigate } from "react-router-dom";
-
+import { userStore } from "../store/userStore";
 function Login() {
   const navigate = useNavigate();
+  const { login, user } = userStore();
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -19,23 +18,8 @@ function Login() {
     validationSchema: loginValidate,
     onSubmit: async (values) => {
       try {
-        const data = await login(values);
-        if (data.response?.status === 500) {
-          toast.error("Mật khẩu không đúng");
-        } else if (data?.status === 200) {
-          const user = {
-            id: data.data.content._id,
-            email: data.data.content.email,
-            avarta: data.data.content.image,
-            phone: data.data.content.phone,
-            username: data.data.content.username,
-          };
-          const token = data.data?.accessToken;
-          const refreshToken = data.data?.refreshToken;
-          console.log(data?.data);
-          setLocalStorage("user", user);
-          setLocalStorage("accessToken", token);
-          setLocalStorage("refreshToken", refreshToken);
+        await login(values);
+        if (user !== null) {
           toast.success("Đăng nhập thành công");
           setTimeout(() => {
             navigate("/");
@@ -43,6 +27,7 @@ function Login() {
         }
       } catch (error) {
         console.log(error);
+        toast.error("Đăng nhập thất bại");
       }
     },
   });

@@ -4,12 +4,12 @@ import { CiLock } from "react-icons/ci";
 import { MdOutlineEmail, MdOutlineLocalPhone } from "react-icons/md";
 import { useFormik } from "formik";
 import { registerValidate } from "../validations/auth";
-import { register } from "../apis/auth";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-
+import { userStore } from "../store/userStore";
 function Register() {
   const navigate = useNavigate();
+  const { register } = userStore();
 
   const formik = useFormik({
     initialValues: {
@@ -18,21 +18,20 @@ function Register() {
       username: "",
       phone: "",
     },
+    validationSchema: registerValidate,
     onSubmit: async (values) => {
       try {
-        const response = await register(values);
-        if (response.status === 201) {
-          toast.success("Đăng kí thành công");
-          setTimeout(() => {
-            navigate("/login");
-          }, 3000);
-        }
+        await register(values);
+        toast.success("Đăng kí thành công");
+        setTimeout(() => {
+          navigate("/login");
+        }, 3000);
       } catch (error) {
-        console.log(error);
-        toast.error("Đăng kí thất bại");
+        if (error.response.status === 500) {
+          toast.error("Mật khẩu không đúng");
+        }
       }
     },
-    validationSchema: registerValidate,
   });
 
   return (

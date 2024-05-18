@@ -1,15 +1,10 @@
 import styles from "./blog.module.scss";
-import { useEffect, useState } from "react";
-import { getAllBlog } from "../../apis/blog";
-
+import { useEffect } from "react";
+import { blogStore } from "../../store/blogStore";
 function Blog() {
-  const [data, setData] = useState("");
+  const { data, getAllBlog } = blogStore();
   useEffect(() => {
-    const fetchData = async () => {
-      const response = await getAllBlog();
-      setData(response.data.content);
-    };
-    fetchData();
+    getAllBlog();
   }, []);
 
   return (

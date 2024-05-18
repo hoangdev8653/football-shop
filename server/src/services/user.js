@@ -1,8 +1,9 @@
 import UserModel from "../models/user.js";
-import bcrypt from "bcrypt";
+import bcrypt, { hashSync } from "bcrypt";
 import { generateTokens } from "../Utils/generateTokens.js";
 import { verifyRefreshToken } from "../middlewares/verifyRefreshToken.js";
 import ProductModel from "../models/product.js";
+import { setKey, getkey } from "../configs/redis.js";
 
 const getAllUser = async () => {
   return await UserModel.find({}, { password: 0 }).populate(
@@ -16,7 +17,6 @@ const createCart = async (id, { productId, quantity }) => {
     "cart.productId",
     "-slug -categoryId"
   );
-
   const cart = user.cart;
   const productIndex = cart.findIndex(
     (product) => product.productId._id.toString() === productId
@@ -28,12 +28,20 @@ const createCart = async (id, { productId, quantity }) => {
   }
   const product = await ProductModel.findById(productId);
   const quantityAfter = product.stockQuality - quantity;
-  await ProductModel.findByIdAndUpdate(
+
+  const productUpdate = await ProductModel.findByIdAndUpdate(
     productId,
     { stockQuality: quantityAfter },
     { new: true }
   );
-
+  if (!productUpdate) {
+    throw new Error("Failed to update product stock");
+  }
+  await setKey(
+    `product:${productUpdate.slug}`,
+    JSON.stringify(productUpdate),
+    3600
+  );
   const updateCart = await user.save();
   return updateCart;
 };
@@ -136,6 +144,8 @@ const findUser = async (id) => {
   if (!user) {
     throw { Error: "Không tồn tại user" };
   }
+  getkey(`refreshToken_${id}`);
+
   return await user;
 };
 
@@ -150,11 +160,7 @@ const login = async ({ email, password }) => {
       throw Error("Mật khẩu không chính xác");
     }
     const { accessToken, refreshToken } = generateTokens(user?.id);
-    await UserModel.findByIdAndUpdate(
-      user.id,
-      { refreshToken: refreshToken },
-      { new: true }
-    );
+    setKey(`refreshToken_${user.id}`, refreshToken);
     return { accessToken, refreshToken, user };
   } catch (error) {
     console.log(error);
@@ -189,7 +195,6 @@ const profile = async (id) => {
     authFacebookId: 0,
     authType: 0,
     role: 0,
-    refreshToken: 0,
   }).populate("cart.productId", " -categoryId");
 
   if (!user) throw new Error("User not found");
@@ -226,11 +231,7 @@ const deleteUser = async (id) => {
 const refreshToken = async (refreshToken) => {
   const { userId } = await verifyRefreshToken(refreshToken);
   const newToken = generateTokens(userId);
-  await UserModel.findByIdAndUpdate(
-    userId,
-    { refreshToken: newToken.refreshToken },
-    { new: true }
-  );
+  setKey(`refreshToken_${userId}`, newToken.refreshToken);
   return newToken;
 };
 
@@ -255,12 +256,8 @@ const logOut = async (id) => {
     if (!exitsUser) {
       throw new Error("User Not Found");
     }
-    const newUser = await UserModel.findByIdAndUpdate(
-      id,
-      { refreshToken: "" },
-      { new: true }
-    );
-    return newUser;
+    deleteKey(`refreshToken_${id}`);
+    return exitsUser;
   } catch (error) {
     console.log(error);
     throw error;
