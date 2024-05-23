@@ -1,19 +1,35 @@
 import { create } from "zustand";
-import { addProduct, createCheckout, deleteProduct } from "../apis/cart";
-
+import { addProduct, deleteProduct } from "../apis/cart";
+import { getUserCurrent } from "../apis/auth";
 export const cartStore = create((set) => ({
-  data: null,
+  data: [],
   error: null,
   isLoading: false,
+  totalValue: 0,
+  totalPrice: 0,
 
-  addProduct: async (data) => {
+  fetchCart: async () => {
     try {
       set({ isLoading: true });
-      await addProduct(data);
-      set({ isLoading: false });
+      const response = await getUserCurrent();
+      set({ data: response.data.content.cart, isLoading: false });
+    } catch (error) {
+      set({ error: error.message, isLoading: false });
+    }
+  },
+
+  addProduct: async (productData, token) => {
+    try {
+      set({ isLoading: true });
+      const response = await addProduct(productData, token);
+      set((state) => ({
+        data: response.data.content.cart, // Update cart data with the new data from response
+        isLoading: false,
+        error: null,
+      }));
     } catch (error) {
       console.log(error);
-      set({ error: error.message });
+      set({ error: error.message, isLoading: false });
     }
   },
 
@@ -21,19 +37,14 @@ export const cartStore = create((set) => ({
     try {
       set({ isLoading: true });
       await deleteProduct(productId);
+      set((state) => ({
+        data: state.data.filter((item) => item.productId._id !== productId),
+        isLoading: false,
+        error: null,
+      }));
     } catch (error) {
       console.log(error);
-      set({ error: error.message });
-    }
-  },
-  createCheckout: async (address) => {
-    try {
-      set({ isLoading: true });
-      await createCheckout(address);
-      set({ isLoading: false });
-    } catch (error) {
-      console.log(error);
-      set({ error: error.message });
+      set({ error: error.message, isLoading: false });
     }
   },
 }));

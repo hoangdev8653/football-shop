@@ -1,37 +1,31 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
 import Discount from "../../components/discount";
 import BannerIn from "../../assets/Banner-keu-goi-in.png";
 import image_comming_soon from "../../assets/product_coming-soon.jpg";
 import Button from "../../components/button";
 import styles from "./productDeatail.module.scss";
-import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-import {
-  deleteQuantity,
-  minusQuantity,
-  plusQuantity,
-} from "../../redux/actions/quantity";
-import { getProductBySlug } from "../../apis/product";
-import { addProduct } from "../../apis/cart";
+import { quantityStore } from "../../store/quantityStore";
 import Loader from "../../components/logoLoader/logoLoader";
 import { getLocalStorage } from "../../utils/LocalStorage";
 import { toast } from "react-toastify";
 import Expandable from "./expandable/index";
+import { cartStore } from "../../store/cartStore";
+import { productStore } from "../../store/productStore";
 
 function ProductDeatails() {
-  const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const soluong = useSelector((state) => state.valueQuantity.value);
-  const dispatch = useDispatch();
+  const { value, increment, decrement, deleteQuantity } = quantityStore();
+  const { getProductBySlug, data } = productStore();
+  const { addProduct } = cartStore();
   const { slug } = useParams();
   const token = getLocalStorage("accessToken");
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await getProductBySlug(slug);
-        setData(response.data.content);
+        await getProductBySlug(slug);
       } catch (error) {
         console.log(error);
       } finally {
@@ -43,15 +37,12 @@ function ProductDeatails() {
 
   const handleSubmit = async () => {
     const productId = data?._id;
-    const quantity = soluong;
+    const quantity = value;
     try {
       if (!token) {
         throw new Error("Token is not Valid");
       }
-      const response = await addProduct({ productId, quantity }, token);
-      if (!response) {
-        toast.error("Thất bại");
-      }
+      await addProduct({ productId, quantity }, token);
       toast.success("Thêm sản phẩm vào giỏ hàng thành công");
       setTimeout(() => {
         window.location.reload();
@@ -59,17 +50,6 @@ function ProductDeatails() {
     } catch (error) {
       toast.error(error.message);
     }
-  };
-
-  const handlePlus = () => {
-    dispatch(plusQuantity());
-  };
-  const handleMinus = () => {
-    dispatch(minusQuantity());
-  };
-
-  const handleDelete = (soluong) => {
-    dispatch(deleteQuantity());
   };
 
   var settings = {
@@ -80,6 +60,7 @@ function ProductDeatails() {
     slidesToShow: 1,
     slidesToScroll: 1,
   };
+
   return (
     <div className="product-deatail">
       {loading ? (
@@ -180,25 +161,25 @@ function ProductDeatails() {
                 <div className="my-4 flex gap-4">
                   <div className="flex">
                     <button
-                      onClick={handleMinus}
+                      onClick={decrement}
                       className="border-[1px] border-solid border-gray-300 px-2 py-2"
                     >
                       -
                     </button>
                     <input
-                      onChange={() => handleDelete(soluong)}
+                      onChange={deleteQuantity}
                       type="text"
                       className="border-solid border-[1px] border-gray-300 text-center w-[50px] focus:outline-none"
-                      value={soluong}
+                      value={value}
                     />
                     <button
-                      onClick={handlePlus}
+                      onClick={increment}
                       className="border-[1px] border-solid border-gray-300 px-2 py-2"
                     >
                       +
                     </button>
                   </div>
-                  {soluong === "" && typeof soluong === "string" ? (
+                  {value === "" && typeof value === "string" ? (
                     <Button
                       disabled={true}
                       onClick={handleSubmit}

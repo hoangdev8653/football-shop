@@ -3,16 +3,21 @@ import { BsCart2 } from "react-icons/bs";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import styles from "./cart.module.scss";
 import Button from "../../../components/button";
-import { getUserCurrent } from "../../../apis/auth";
-import { deleteProduct } from "../../../apis/cart";
 import { toast } from "react-toastify";
+import { cartStore } from "../../../store/cartStore";
 
 function Cart() {
   const [isOpen, setIsOpen] = useState(false);
-  const [cart, setCart] = useState([]);
-  const [data, setData] = useState("");
+  const {
+    data: cart,
+    fetchCart,
+    deleteProduct,
+  } = cartStore((state) => ({
+    data: state.data,
+    fetchCart: state.fetchCart,
+    deleteProduct: state.deleteProduct,
+  }));
   const [checkCart, setCheckCart] = useState(false);
-
   useEffect(() => {
     if (cart && cart.length > 0) {
       setCheckCart(true);
@@ -21,45 +26,39 @@ function Cart() {
     }
   }, [cart]);
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await getUserCurrent();
-        setData(response.data.content);
-        setCart(response.data.content.cart);
-      } catch (error) {
-        console.log(error.message);
-      }
-    };
-    fetchData();
+    fetchCart();
   }, []);
-  const quantity = cart?.map((item, index) => {
-    return item.quantity;
-  });
-  const totalQuantity = quantity.reduce((value, currentValue) => {
-    return value + currentValue;
-  }, 0);
-
+  const quantity = cart?.map((item) => item.quantity);
+  const totalQuantity = quantity.reduce(
+    (value, curentValue) => value + curentValue,
+    0
+  );
+  const priceOneProduct = cart?.map(
+    (item) => item.quantity * item.productId.price
+  );
+  const totalPrice = priceOneProduct.reduce(
+    (value, currentValue) => value + currentValue,
+    0
+  );
   const handleIconCartHover = () => {
     setIsOpen(true);
   };
+
   const handleIconCartLeave = () => {
     setIsOpen(false);
   };
 
   const handleDelete = async (productId) => {
     try {
-      const response = await deleteProduct(productId);
-      if (response.error) {
-        toast.error("Thất bại");
-      }
+      console.log(cart);
+      await deleteProduct(productId);
+      console.log(cart);
       toast.success("Xóa sản phẩm thành công");
-      setTimeout(() => {
-        window.location.reload();
-      }, 2500);
     } catch (error) {
-      console.log("Error: ", error);
+      toast.error("Thất bại");
     }
   };
+
   return (
     <div
       onMouseEnter={handleIconCartHover}
@@ -110,7 +109,7 @@ function Cart() {
                   <div className="text-center mx-auto border-b-[1px] border-t-[1px] border-gray-400">
                     <p className="font-bold text-gray-500 my-2">
                       <span className="">Subtotal: </span>
-                      <span className="">{data.totalPrice}$</span>
+                      <span className="">{totalPrice}$</span>
                     </p>
                   </div>
                   <div className="mt-2 pb-8">

@@ -37,11 +37,6 @@ const createCart = async (id, { productId, quantity }) => {
   if (!productUpdate) {
     throw new Error("Failed to update product stock");
   }
-  await setKey(
-    `product:${productUpdate.slug}`,
-    JSON.stringify(productUpdate),
-    3600
-  );
   const updateCart = await user.save();
   return updateCart;
 };

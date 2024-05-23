@@ -30,10 +30,10 @@ export const updateReview = async (productId, token) => {
   });
 };
 
-export const deleteReview = async (productId, token) => {
+export const deleteReview = async (reviewId, token) => {
   return axiosConfig({
     method: "delete",
-    url: `/review/delete/productId=${productId}`,
+    url: `/review/delete?id=${reviewId}`,
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,

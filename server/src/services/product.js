@@ -1,5 +1,4 @@
 import ProductModel from "../models/product.js";
-import { getkey, setKey } from "../configs/redis.js";
 const getAllProduct = async () => {
   const products = await ProductModel.find({}).populate(
     "categoryId",
@@ -10,18 +9,11 @@ const getAllProduct = async () => {
 
 const getProductBySlug = async ({ slug }) => {
   try {
-    const cachedProduct = await getkey(`product:${slug}`);
-    if (cachedProduct) {
-      console.log("get Key thành công");
-      return JSON.parse(cachedProduct);
-    }
-
     const product = await ProductModel.findOne({ slug });
     if (!product) {
       throw new Error("Product Not Found");
     }
-    await setKey(`product:${slug}`, JSON.stringify(product), 3600);
-    console.log("Set Key Thành công");
+
     return product;
   } catch (error) {
     console.log(error);

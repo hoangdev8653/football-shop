@@ -43,4 +43,18 @@ export const reviewStore = create((set) => ({
       set({ error: error.message, isLoading: false });
     }
   },
+  deleteReview: async (data) => {
+    try {
+      set({ isLoading: true });
+      const response = await deleteReview(data);
+      if (response.status === 200) {
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
+      }
+    } catch (error) {
+      console.log(error);
+      set({ error: error.message, isLoading: false });
+    }
+  },
 }));

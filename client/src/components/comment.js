@@ -6,12 +6,14 @@ import { AiTwotoneLike } from "react-icons/ai";
 import FormatDate from "../utils/formatDate";
 import { getLocalStorage } from "../utils/LocalStorage";
 import { reviewStore } from "../store/reviewStore";
+import { MdDeleteForever } from "react-icons/md";
 
 function Comment({ data }) {
   const productId = data._id;
   const {
     createReview,
     getReviewsByProduct,
+    deleteReview,
     data: content,
     averageRating,
   } = reviewStore();
@@ -19,8 +21,8 @@ function Comment({ data }) {
   const [like, setLike] = useState(false);
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
-  const user = getLocalStorage("user");
   const [filterStar, setFilterStar] = useState(0);
+  const user = getLocalStorage("user");
 
   const handleLikeComment = () => {
     setLike(!like);
@@ -30,6 +32,13 @@ function Comment({ data }) {
   };
   const handleCommentText = (e) => {
     setComment(e.target.value);
+  };
+  const handleDeleteReview = async (id) => {
+    try {
+      await deleteReview(id);
+    } catch (error) {
+      console.log(error);
+    }
   };
   const commentApi = async () => {
     try {
@@ -153,6 +162,12 @@ function Comment({ data }) {
                         />
                         <span className="text-sm">{like ? 3 : 2}</span>
                       </div>
+                    </div>
+                    <div className="absolute right-4 mt-4">
+                      <MdDeleteForever
+                        onClick={() => handleDeleteReview(item._id)}
+                        className="text-3xl hover:opacity-60 cursor-pointer"
+                      />
                     </div>
                   </div>
                 ))}

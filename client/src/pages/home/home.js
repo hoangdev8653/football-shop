@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { CiStar } from "react-icons/ci";
 import BannerDestop from "../../assets/Home-banner.jpg";
 import BannerMobile from "../../assets/Banner-homepage-mobile-1.jpg";
@@ -9,7 +9,6 @@ import { MdOutlineNavigateNext } from "react-icons/md";
 import Slider from "react-slick";
 import { FaAngleDown } from "react-icons/fa";
 import styles from "./home.module.scss";
-
 import { blogStore } from "../../store/blogStore";
 import { productStore } from "../../store/productStore";
 function Home() {

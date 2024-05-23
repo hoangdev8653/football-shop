@@ -26,7 +26,7 @@ export const productStore = create((set) => ({
   },
   getProductBySlug: async (slug) => {
     try {
-      set({ isLoading: true });
+      set({ isLoading: true, error: null });
       const response = await getProductBySlug(slug);
       set({ isLoading: false, data: response.data.content });
     } catch (error) {
