@@ -2,28 +2,42 @@ import React, { useEffect, useState } from "react";
 import Discount from "../../components/discount";
 import WishList from "../../components/wishList";
 import styles from "./searchProduct.module.scss";
-import { getProductByKey } from "../../apis/product";
 import { useLocation } from "react-router-dom";
 import product from "../../assets/product_coming-soon.jpg";
+import { productStore } from "../../store/productStore";
+import Paginate from "../../components/paginate/Paginate";
 
 function SearchProduct() {
-  const [data, setData] = useState([]);
+  const { getProductByKey, data } = productStore();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const key = searchParams.get("s");
 
+  const [currentItems, setCurrentItems] = useState([]);
+  const [pageCount, setPageCount] = useState(0);
+  const [itemOffset, setItemOffset] = useState(0);
+  const itemsPerPage = 10;
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await getProductByKey(key);
-        setData(response.data.content);
+        await getProductByKey(key);
       } catch (error) {
         console.log(error);
       }
     };
     fetchData();
   }, [key]);
-  console.log(data);
+  useEffect(() => {
+    const endOffset = itemOffset + itemsPerPage;
+    setCurrentItems(data?.slice(itemOffset, endOffset));
+    setPageCount(Math.ceil(data?.length / itemsPerPage));
+  }, [itemOffset, itemsPerPage, data]);
+
+  const handlePageClick = (event) => {
+    const newOffset = (event.selected * itemsPerPage) % data?.length;
+    setItemOffset(newOffset);
+  };
   return (
     <div
       style={{ backgroundColor: "rgba(10, 10, 10, 0.01)" }}
@@ -51,8 +65,8 @@ function SearchProduct() {
               </div>
             </div>
             <div className={styles.grid}>
-              {data &&
-                data.map((item, index) => (
+              {currentItems &&
+                currentItems.map((item, index) => (
                   <a href={`/product/${item.slug}`}>
                     <div key={index} className={styles.container}>
                       <img
@@ -86,6 +100,7 @@ function SearchProduct() {
                   </a>
                 ))}
             </div>
+            <Paginate pageCount={pageCount} handlePageClick={handlePageClick} />
           </div>
         </>
       ) : (

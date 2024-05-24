@@ -51,7 +51,6 @@ function Modal() {
 
   const handleSearch = (value) => {
     setValueSearch(value);
-    console.log(value);
   };
 
   return (

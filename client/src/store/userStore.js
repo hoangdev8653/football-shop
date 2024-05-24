@@ -110,6 +110,7 @@ export const userStore = create((set) => ({
       set({ isLoading: true });
       const response = await getHistoryOrder(token);
       if (response.status === 200) {
+        set({ user: response.data.content });
         set({ isLoading: false });
       }
     } catch (error) {

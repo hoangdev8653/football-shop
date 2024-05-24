@@ -1,27 +1,34 @@
 import React, { useEffect, useState } from "react";
 import Button from "../../components/button";
 import { getLocalStorage } from "../../utils/LocalStorage";
-import { getHistoryOrder } from "../../apis/auth";
 import formatDate from "../../utils/formatDate";
+import { userStore } from "../../store/userStore";
 
 function HistoryOrder() {
   const token = getLocalStorage("accessToken");
-  const [data, setData] = useState([]);
+  const { user, getHistoryOrder } = userStore();
+  const [showMore, setShowMore] = useState(false);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await getHistoryOrder(token);
-        setData(response.data.content);
+        await getHistoryOrder(token);
       } catch (error) {
         console.log(error);
       }
     };
     fetchData();
-  }, [token]);
-
+  }, []);
+  const sortDay = user?.sort(
+    (a, b) => new Date(b.orderDate) - new Date(a.orderDate)
+  );
+  const handleShowMore = () => {
+    setShowMore(!showMore);
+  };
+  const displayOrders = showMore ? sortDay : sortDay?.slice(0, 3);
   return (
     <div className="py-4 w-full max-h-[600px] overflow-y-auto">
-      {data && data.length > 0 ? (
+      {user && user.length > 0 ? (
         <>
           <table className="table-auto w-full">
             <thead>
@@ -33,38 +40,47 @@ function HistoryOrder() {
               </tr>
             </thead>
             <tbody>
-              {data &&
-                data.map((item, index) => (
-                  <tr key={index}>
-                    <td className=" items-center">
-                      {item.cart.map((item, idx) => (
-                        <div key={idx} className="flex items-center">
-                          <img
-                            className="h-[50px] w-[50px] object-cover my-1"
-                            src={item.productId.image[0]}
-                            alt={item.productId.name}
-                          />
-                          <div className="block">
-                            <p className="mx-[10px] font-semibold uppercase">
-                              {item.productId.name}
-                            </p>
-                            <p className="text-red-500 mx-2">
-                              {item.productId.price}$ * {item.quantity}
-                            </p>
-                          </div>
+              {displayOrders.map((item, index) => (
+                <tr key={index}>
+                  <td className=" items-center">
+                    {item.cart.map((item, idx) => (
+                      <div key={idx} className="flex items-center">
+                        <img
+                          className="h-[50px] w-[50px] object-cover my-1"
+                          src={item.productId.image[0]}
+                          alt={item.productId.name}
+                        />
+                        <div className="block">
+                          <p className="mx-[10px] font-semibold uppercase">
+                            {item.productId.name}
+                          </p>
+                          <p className="text-red-500 mx-2">
+                            {item.productId.price}$ * {item.quantity}
+                          </p>
                         </div>
-                      ))}
-                    </td>
-                    <td className="text-center">{item.address}</td>
-                    <td className="text-center">{item.totalAmount}$</td>
-                    <td className="text-center">
-                      <p>{item.status}</p>
-                      <p> {formatDate(item.orderDate)}</p>
-                    </td>
-                  </tr>
-                ))}
+                      </div>
+                    ))}
+                  </td>
+                  <td className="text-center">{item.address}</td>
+                  <td className="text-center">{item.totalAmount}$</td>
+                  <td className="text-center">
+                    <p>{item.status}</p>
+                    <p> {formatDate(item.orderDate)}</p>
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
+
+          <div className="text-center">
+            <button
+              onClick={handleShowMore}
+              style={{ boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px" }}
+              className="px-3 py-2 bg-slate-300 text-blue-400 rounded font-semibold mt-2 "
+            >
+              {showMore ? "Show less" : "Show more"}
+            </button>
+          </div>
         </>
       ) : (
         <div className="mx-auto ">
