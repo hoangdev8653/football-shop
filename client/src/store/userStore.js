@@ -1,12 +1,12 @@
 import { create } from "zustand";
 import {
-  forgotPassword,
   getHistoryOrder,
   getUserById,
   getUserCurrent,
   login,
   logout,
   register,
+  forgotPassword,
   resetPassword,
   updatePassword,
   updateUser,

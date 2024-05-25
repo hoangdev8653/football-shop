@@ -3,7 +3,9 @@ import bcrypt, { hashSync } from "bcrypt";
 import { generateTokens } from "../Utils/generateTokens.js";
 import { verifyRefreshToken } from "../middlewares/verifyRefreshToken.js";
 import ProductModel from "../models/product.js";
-import { setKey, getkey } from "../configs/redis.js";
+import { setKey, getkey, deleteKey } from "../configs/redis.js";
+import jwt from "jsonwebtoken";
+import { sendMail } from "../Utils/sendMail.js";
 
 const getAllUser = async () => {
   return await UserModel.find({}, { password: 0 }).populate(
@@ -234,11 +236,66 @@ const forgotPassword = async ({ email }) => {
   try {
     const user = await UserModel.findOne({ email });
     if (!user) {
-      throw new Error("User Not Found");
+      throw "Email Not Found";
     }
-    const { accessToken } = generateTokens(user.id);
-    console.log(accessToken);
-    return user;
+    const token = jwt.sign({ id: user._id }, process.env.ACCESS_TOKEN_SECRET, {
+      expiresIn: "1h",
+    });
+    user.passwordResetToken = token;
+    user.passwordResetExpires = Date.now() + 3600000;
+    await user.save();
+    const resetUrl = `http://localhost:3000/reset-password?token=${token}`;
+    const message = ` we heve recived a password reset request. Please use the below link to reset your password\n\n${resetUrl}\n\nThis reset password link will be valid only for 1h. `;
+
+    try {
+      sendMail({
+        email: user.email,
+        subject: "Password change request received",
+        message,
+        a,
+      });
+      return "Sendding success";
+    } catch (error) {
+      (user.passwordResetToken = undefined),
+        (user.passwordResetExpires = undefined);
+      user.save();
+      throw "There was an error sending password reset email. Please try again later";
+    }
+  } catch (error) {
+    console.log("Error: ", error);
+    throw error;
+  }
+};
+
+const resetPassword = async (token, { password }) => {
+  try {
+    const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+    const user = await UserModel.findOne({
+      _id: decoded.id,
+      passwordResetToken: token,
+      passwordResetExpires: { $gt: Date.now() },
+    });
+    if (!user) {
+      throw createHttpError.Unauthorized(
+        "Invalid or expired password reset token"
+      );
+    }
+    user.password = password;
+    user.passwordResetToken = undefined;
+    user.passwordResetExpires = undefined;
+    await user.save();
+    try {
+      sendMail({
+        email: user.email,
+        subject: "Password Reset Confirmation",
+        html: `
+      <p>Your password has been successfully reset. If you did not initiate this request, please contact us immediately.</p>
+    `,
+      });
+      return user;
+    } catch (error) {
+      console.log("Can not send Mail: ", error);
+    }
   } catch (error) {
     console.log(error);
     throw error;
@@ -272,5 +329,7 @@ export const userServices = {
   profile,
   deleteUser,
   refreshToken,
+  forgotPassword,
+  resetPassword,
   logOut,
 };

@@ -252,6 +252,22 @@ const forgotPassword = async (req, res) => {
   }
 };
 
+const resetPassword = async (req, res, next) => {
+  try {
+    const token = req.query;
+    const { newPassword } = req.body;
+    const user = await userServices.resetPassword(token, { newPassword });
+    return res
+      .status(StatusCodes.OK)
+      .json({ status: 200, message: "Xử lý thành công", content: user });
+  } catch (error) {
+    console.log(error);
+    res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ status: 500, message: "Server Error" });
+  }
+};
+
 const logOut = async (req, res) => {
   try {
     const id = req.userId;
@@ -282,5 +298,7 @@ export const userController = {
   createCart,
   updateCart,
   deleteCart,
+  forgotPassword,
+  resetPassword,
   logOut,
 };

@@ -1,6 +1,24 @@
 import React from "react";
+import { userStore } from "../store/userStore";
+import { useFormik } from "formik";
+import { forgotPW } from "../validations/auth";
+function ForgotPassword() {
+  const { forgotPassword } = userStore();
 
-function forgotPassword() {
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+    },
+    validationSchema: forgotPW,
+    onSubmit: async (values) => {
+      try {
+        await forgotPassword(values);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  });
+
   return (
     <div className="dark:bg-gray-900 h-screen">
       <main
@@ -18,7 +36,7 @@ function forgotPassword() {
                 Remember your password?
                 <a
                   className="text-blue-600 decoration-2 hover:underline font-medium"
-                  href="/"
+                  href="/login"
                 >
                   Login here
                 </a>
@@ -26,7 +44,7 @@ function forgotPassword() {
             </div>
 
             <div className="mt-5">
-              <form>
+              <form onSubmit={formik.handleSubmit}>
                 <div className="grid gap-y-4">
                   <div>
                     <label
@@ -41,10 +59,17 @@ function forgotPassword() {
                         id="email"
                         name="email"
                         className="py-3 px-4 block w-full border-2 border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 shadow-sm"
-                        required
-                        aria-describedby="email-error"
+                        value={formik.values.email}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
                       />
+                      {formik.touched.email && formik.errors.email && (
+                        <div className="text-red-500  text-center mt-1">
+                          {formik.errors.email}
+                        </div>
+                      )}
                     </div>
+
                     <p
                       className="hidden text-xs text-red-600 mt-2"
                       id="email-error"
@@ -69,4 +94,4 @@ function forgotPassword() {
   );
 }
 
-export default forgotPassword;
+export default ForgotPassword;

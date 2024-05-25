@@ -59,7 +59,7 @@ function Comment({ data }) {
   useEffect(() => {
     getReviewsByProduct(productId);
   }, [productId]);
-
+  console.log(filteredComments);
   return (
     <div className="comment">
       {content && content.length > 0 ? (
@@ -103,7 +103,7 @@ function Comment({ data }) {
               <span style={{ top: "20%", left: "3%" }} className="absolute">
                 <img
                   className="w-9 h-9 rounded-3xl"
-                  src={user?.avatar || avatarDefault}
+                  src={user ? user.avarta : avatarDefault}
                   alt="avatar"
                 />
               </span>
@@ -146,7 +146,7 @@ function Comment({ data }) {
                   >
                     <img
                       className="rounded-full w-[50px] h-[50px] object-cover"
-                      src={item.userId.image || avatarDefault}
+                      src={item.userId.image}
                       alt="avatar"
                     />
                     <div className="block mt-1 mx-2">

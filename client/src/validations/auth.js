@@ -38,3 +38,7 @@ export const updateUserValidate = Yup.object().shape({
     .matches(phoneRegExp, "Phone number is not valid"),
   username: Yup.string().min(3).required("User name is Required"),
 });
+
+export const forgotPW = Yup.object().shape({
+  email: Yup.string().email("Invalid email").required("Email is Required"),
+});

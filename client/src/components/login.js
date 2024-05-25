@@ -63,9 +63,7 @@ function Login() {
             </p>
           </div>
           {formik.touched.email && formik.errors.email && (
-            <div
-              style={{ color: "red", marginBottom: "8px", textAlign: "center" }}
-            >
+            <div className="text-red-500 mb-2 text-center">
               {formik.errors.email}
             </div>
           )}
@@ -93,9 +91,11 @@ function Login() {
               {formik.errors.password}
             </div>
           )}
-          <p className="text-right hover:text-blue-600 cursor-pointer text-gray-600">
-            Forgot Password?
-          </p>
+          <a href="forgot-password">
+            <p className="text-right hover:text-blue-600 cursor-pointer text-gray-600">
+              Forgot Password?
+            </p>
+          </a>
           <button
             type="submit"
             className="text-white font-medium bg-blue-800 w-full text-xl my-6 px-4 py-3 rounded-2xl hover:opacity-80"
