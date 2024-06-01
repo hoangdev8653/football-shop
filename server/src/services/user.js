@@ -150,7 +150,7 @@ const login = async ({ email, password }) => {
   try {
     const user = await UserModel.findOne({ email });
     if (!user) {
-      throw new Error("Email chưa tồn tại");
+      throw Error("Email chưa tồn tại");
     }
     const checkPassword = await bcrypt.compare(password, user.password);
     if (!checkPassword) {

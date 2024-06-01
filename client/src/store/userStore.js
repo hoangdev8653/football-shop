@@ -12,10 +12,13 @@ import {
   updateUser,
 } from "../apis/auth";
 import { setLocalStorage } from "../utils/LocalStorage";
+import { toast } from "react-toastify";
+
 export const userStore = create((set) => ({
   user: null,
   error: null,
   isLoading: false,
+  navigate: "",
 
   register: async (data) => {
     try {
@@ -29,22 +32,32 @@ export const userStore = create((set) => ({
       set({ error: error.message });
     }
   },
-  login: async (data) => {
+  login: async (data, navigate) => {
     try {
       set({ isLoading: true });
       const response = await login(data);
       if (response.status === 200) {
         set({ isLoading: false });
+        toast.success("Đăng nhập thành công");
         set({ user: response.data.content });
         setLocalStorage("user", response.data.content);
         setLocalStorage("accessToken", response.data.accessToken);
         setLocalStorage("refreshToken", response.data.refreshToken);
+        set({ navigate: "/" });
+        navigate("/");
+      } else if (response.status === 500) {
+        set({ isLoading: false });
+        set({ navigate: "/login" });
+        set({ error: "Unexpected response status: " + response.status });
       }
     } catch (error) {
-      console.log(error);
+      set({ isLoading: false });
       set({ error: error.message });
+      console.log(error);
+      toast.error("Mật Khẩu hoặc tài khoản không đúng");
     }
   },
+
   logout: async () => {
     try {
       set({ isLoading: true });

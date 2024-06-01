@@ -100,7 +100,7 @@ export const productStore = create((set) => ({
       if (response.status === 200) {
         set((state) => ({
           isLoading: false,
-          data: [...state.data, response.data.content],
+          data: response.data.content,
         }));
       }
     } catch (error) {
@@ -126,6 +126,7 @@ export const productStore = create((set) => ({
     try {
       set({ isLoading: true });
       const response = await deleteProductWhishList(id);
+      console.log(response);
       if (response.status === 200) {
         set((state) => ({
           isLoading: false,

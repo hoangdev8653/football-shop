@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import Slider from "react-slick";
 import styles from "./productItems.module.scss";
 import Discount from "../discount";
 import WishList from "../wishList";
 
-function productItems({ itemToShow = 5, data }) {
+function ProductItems({ itemToShow = 5, data }) {
+  const [idProduct, setIdProduct] = useState(null);
+
   var settings = {
     infinite: true,
     speed: 500,
@@ -38,6 +40,10 @@ function productItems({ itemToShow = 5, data }) {
         },
       },
     ],
+  };
+
+  const handleId = (id) => {
+    setIdProduct(id);
   };
   return (
     <div className="overflow-hidden bg-black">
@@ -76,7 +82,9 @@ function productItems({ itemToShow = 5, data }) {
                   pecentDiscount={15}
                 />
               </a>
-              <WishList className="absolute top-2 right-2" />
+              <div onClick={() => handleId(item._id)}>
+                <WishList id={idProduct} className="absolute top-2 right-2" />
+              </div>
             </div>
           ))}
       </Slider>
@@ -84,4 +92,4 @@ function productItems({ itemToShow = 5, data }) {
   );
 }
 
-export default productItems;
+export default ProductItems;

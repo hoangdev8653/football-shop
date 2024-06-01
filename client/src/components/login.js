@@ -8,8 +8,8 @@ import { loginValidate } from "../validations/auth";
 import { useNavigate } from "react-router-dom";
 import { userStore } from "../store/userStore";
 function Login() {
-  const navigate = useNavigate();
-  const { login } = userStore();
+  const nvg = useNavigate();
+  const { login, navigate } = userStore();
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -18,14 +18,10 @@ function Login() {
     validationSchema: loginValidate,
     onSubmit: async (values) => {
       try {
-        await login(values);
-        toast.success("Đăng nhập thành công");
-        setTimeout(() => {
-          navigate("/");
-        }, 3000);
+        await login(values, navigate);
+        nvg(navigate);
       } catch (error) {
         console.log(error);
-        toast.error("Đăng nhập thất bại");
       }
     },
   });
