@@ -2,6 +2,7 @@ import clsx from "clsx";
 import React from "react";
 import { CiHeart } from "react-icons/ci";
 import { twMerge } from "tailwind-merge";
+import { toast } from "react-toastify";
 function wishList({ className }) {
   const className1 = twMerge(
     clsx(
@@ -9,9 +10,13 @@ function wishList({ className }) {
     ),
     className
   );
+
+  const handleAddWhishList = () => {
+    toast.success("Thêm sản phẩm vào mục yêu thích");
+  };
   return (
-    <p href="/" title="Add to WishList">
-      <CiHeart className={className1} />
+    <p onClick={handleAddWhishList} href="/" title="Add to WishList">
+      <CiHeart className={`${className1} `} />
     </p>
   );
 }

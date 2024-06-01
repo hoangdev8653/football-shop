@@ -18,10 +18,10 @@ export const cartStore = create((set) => ({
     }
   },
 
-  addProduct: async (productData, token) => {
+  addProduct: async (productData) => {
     try {
       set({ isLoading: true });
-      const response = await addProduct(productData, token);
+      const response = await addProduct(productData);
       set((state) => ({
         data: response.data.content.cart, // Update cart data with the new data from response
         isLoading: false,
@@ -36,7 +36,8 @@ export const cartStore = create((set) => ({
   deleteProduct: async (productId) => {
     try {
       set({ isLoading: true });
-      await deleteProduct(productId);
+      const response = await deleteProduct(productId);
+      console.log(response);
       set((state) => ({
         data: state.data.filter((item) => item.productId._id !== productId),
         isLoading: false,

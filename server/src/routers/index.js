@@ -5,6 +5,7 @@ import productRoutes from "./product.js";
 import reviewRoutes from "./review.js";
 import blogRoutes from "./blog.js";
 import orderRoutes from "./order.js";
+import whishListRoutes from "./whishList.js";
 
 export const routers = {
   userRoutes,
@@ -14,4 +15,5 @@ export const routers = {
   reviewRoutes,
   blogRoutes,
   orderRoutes,
+  whishListRoutes,
 };

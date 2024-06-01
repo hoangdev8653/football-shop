@@ -12,13 +12,14 @@ function Avarta() {
   const [isOpen, setIsOpen] = useState(false);
   const user = getLocalStorage("user");
   const navigate = useNavigate();
-
+  console.log(user.image);
   const handleAvartaHover = () => {
     setIsOpen(true);
   };
   const handleAvartaLeave = () => {
     setIsOpen(false);
   };
+  // console.log(user);
   const handleLogout = async () => {
     try {
       const response = await logout();
@@ -39,23 +40,26 @@ function Avarta() {
       >
         <a href={user ? "/profile" : "/login"}>
           <img
-            className="w-[50px] h-[50px] rounded-full cursor-pointer object-cover hover:opacity-60"
-            src={user?.avarta || UserDeafaute}
+            className="w-[50px] h-[50px] rounded-full cursor-pointer object-cover hover:opacity-60 "
+            src={user?.image || UserDeafaute}
             alt="avarta"
           />
         </a>
         {user && isOpen ? (
           <>
-            <div style={{ right: "-48px" }} className="absolute z-50 ">
+            <div
+              style={{ right: "-16px" }}
+              className="absolute z-50 overflow-hidden "
+            >
               <div className="  mt-2 w-36 p-2 bg-gray-800">
                 <a href="/profile">
                   <p className="text-white font-semibold hover:bg-gray-400 cursor-pointer mt-[2px] text-lg">
                     Profile
                   </p>
                 </a>
-                <a href="/profile">
+                <a href="/whishList">
                   <p className="text-white font-semibold cursor-pointer border-b-[1px] text-lg border-gray-400 hover:bg-gray-400">
-                    Account
+                    WhishList
                   </p>
                 </a>
                 <div onClick={handleLogout}>

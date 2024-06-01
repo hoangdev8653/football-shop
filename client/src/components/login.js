@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { userStore } from "../store/userStore";
 function Login() {
   const navigate = useNavigate();
-  const { login, user } = userStore();
+  const { login } = userStore();
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -19,18 +19,17 @@ function Login() {
     onSubmit: async (values) => {
       try {
         await login(values);
-        if (user !== null) {
-          toast.success("Đăng nhập thành công");
-          setTimeout(() => {
-            navigate("/");
-          }, 3000);
-        }
+        toast.success("Đăng nhập thành công");
+        setTimeout(() => {
+          navigate("/");
+        }, 3000);
       } catch (error) {
         console.log(error);
         toast.error("Đăng nhập thất bại");
       }
     },
   });
+  console.log(formik.values);
 
   return (
     <div

@@ -15,6 +15,10 @@ const review = mongoose.Schema({
   comment: {
     type: String,
   },
+  like: {
+    type: Number,
+    default: 0,
+  },
   time: {
     type: Date,
     default: Date.now(),

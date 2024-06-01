@@ -62,6 +62,7 @@ export const userStore = create((set) => ({
       set({ isLoading: true });
       const response = await getUserCurrent();
       if (response.status === 200) {
+        set({ user: response.data.content });
         set({ isLoading: false });
       }
     } catch (error) {
@@ -81,12 +82,22 @@ export const userStore = create((set) => ({
       set({ error: error.message });
     }
   },
-  updateUser: async (data, token) => {
+  updateUser: async (data) => {
     try {
       set({ isLoading: true });
-      const response = await updateUser(data, token);
+      const response = await updateUser(data);
       if (response.status === 200) {
+        console.log(response);
+        const updatedUser = {
+          id: response.data.content._id,
+          email: response.data.content.email,
+          image: response.data.content.image,
+          phone: response.data.content.phone,
+          username: response.data.content.username,
+        };
+        setLocalStorage("user", updatedUser);
         set({ isLoading: false });
+        // window.location.reload();
       }
     } catch (error) {
       console.log(error);

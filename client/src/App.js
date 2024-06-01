@@ -20,6 +20,7 @@ import CheckOut from "./pages/checkout/checkout";
 import OrderComplete from "./pages/orderComplete/orderComplete";
 import ForgotPassword from "./pages/forgotPassword";
 import ResetPassword from "./pages/resetPassword";
+import WhishList from "./pages/whishList";
 // import { io } from "socket.io-client";
 
 function App() {
@@ -45,6 +46,7 @@ function App() {
       <Route path={path.ORDER_COMPLETE} element={<OrderComplete />} />
       <Route path={path.FORGOT_PASSWORD} element={<ForgotPassword />} />
       <Route path={path.RESET_PASSWORD} element={<ResetPassword />} />
+      <Route path={path.WHISHLIST} element={<WhishList />} />
       <Route path={path.NOTFOUND} element={<NotFound />} />
     </Routes>
   );

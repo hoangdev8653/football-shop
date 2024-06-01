@@ -45,6 +45,7 @@ app.use("/club", routers.clubRoutes);
 app.use("/product", routers.productRoutes);
 app.use("/blog", routers.blogRoutes);
 app.use("/order", routers.orderRoutes);
+app.use("/whishList", routers.whishListRoutes);
 
 app.listen(port, (req, res) => {
   console.log(`listen running on port ${port}`);

@@ -17,7 +17,7 @@ import { productStore } from "../../store/productStore";
 function ProductDeatails() {
   const [loading, setLoading] = useState(true);
   const { value, increment, decrement, deleteQuantity } = quantityStore();
-  const { getProductBySlug, data } = productStore();
+  const { getProductBySlug, data, stockQuality } = productStore();
   const { addProduct } = cartStore();
   const { slug } = useParams();
   const token = getLocalStorage("accessToken");
@@ -198,7 +198,7 @@ function ProductDeatails() {
                 </div>
                 <div className="flex gap-1 ">
                   <p className="opacity-80 text-gray-500">Số lượng: </p>
-                  <span className="font-semibold">{data.stockQuality}</span>
+                  <span className="font-semibold">{stockQuality}</span>
                 </div>
                 <div className="flex mt-8 ml-4 gap-4 font-semibold ">
                   <Button className="text-white bg-red-700 hover:bg-red-900">

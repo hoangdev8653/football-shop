@@ -32,7 +32,7 @@ const getReviewsByProduct = async (productId) => {
     );
     const ratingLength = rating.length;
     const averageRating = parseFloat(totalRating / ratingLength);
-    return { rvLastet, ratingLength, averageRating };
+    return { rvLastet, ratingLength, averageRating, totalRating };
   } catch (error) {
     console.log(error.message);
     return [];

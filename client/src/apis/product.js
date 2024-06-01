@@ -48,3 +48,25 @@ export const getProductByKey = async (key) => {
     url: `/product/search/?s=${key}`,
   });
 };
+
+export const getProductWhishList = async () => {
+  return axiosConfig({
+    method: "get",
+    url: "/whishList/getByUser",
+  });
+};
+
+export const addProductWhishList = async (data) => {
+  return axiosConfig({
+    method: "post",
+    url: "/whishList/addProduct",
+    data: data,
+  });
+};
+
+export const deleteProductWhishList = async (productId) => {
+  return axiosConfig({
+    method: "delete",
+    url: `/whishList/deleteProduct?id=${productId}`,
+  });
+};

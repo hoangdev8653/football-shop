@@ -33,7 +33,7 @@ const getReviewByUser = async (req, res) => {
 const getReviewsByProduct = async (req, res) => {
   try {
     const productId = req.query.productId;
-    const { rvLastet, ratingLength, averageRating } =
+    const { rvLastet, ratingLength, averageRating, totalRating } =
       await reviewService.getReviewsByProduct(productId);
 
     return res.status(StatusCodes.OK).json({
@@ -42,6 +42,7 @@ const getReviewsByProduct = async (req, res) => {
       content: rvLastet,
       ratingLength,
       averageRating,
+      totalRating,
     });
   } catch (error) {
     console.log(error);
@@ -72,8 +73,12 @@ const createReview = async (req, res) => {
 const updateReview = async (req, res) => {
   try {
     const id = req.query.id;
-    const { rating, comment } = req.body;
-    const review = await reviewService.updateReview(id, { rating, comment });
+    const { rating, comment, like } = req.body;
+    const review = await reviewService.updateReview(id, {
+      rating,
+      comment,
+      like,
+    });
     return res
       .status(StatusCodes.OK)
       .json({ status: 200, message: "Xử lý thành công", content: review });

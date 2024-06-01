@@ -48,12 +48,13 @@ function Cart() {
     setIsOpen(false);
   };
 
-  const handleDelete = async (productId) => {
+  const handleDelete = async (productId, quantity) => {
     try {
-      console.log(cart);
       await deleteProduct(productId);
-      console.log(cart);
       toast.success("Xóa sản phẩm thành công");
+      setTimeout(() => {
+        window.location.reload();
+      }, 2500);
     } catch (error) {
       toast.error("Thất bại");
     }
@@ -98,7 +99,9 @@ function Cart() {
                         </div>
                       </a>
                       <IoIosCloseCircleOutline
-                        onClick={() => handleDelete(item.productId._id)}
+                        onClick={() =>
+                          handleDelete(item.productId._id, item.quantity)
+                        }
                         className={styles.icon_close}
                       />
                     </div>

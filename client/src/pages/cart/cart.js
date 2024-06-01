@@ -5,41 +5,29 @@ import { RiCoupon3Line } from "react-icons/ri";
 import styles from "./cart.module.scss";
 import Button from "../../components/button";
 import { toast } from "react-toastify";
-import { getUserCurrent } from "../../apis/auth";
-import { deleteProduct } from "../../apis/cart";
-// import { useSelector, useDispatch } from "react-redux";
-// import { minusQuantity, plusQuantity } from "../../redux/actions/quantity";
+import { userStore } from "../../store/userStore";
+import { productStore } from "../../store/productStore";
+import { quantityStore } from "../../store/quantityStore";
 
 function Cart() {
-  const [cart, setCart] = useState([]);
-  const [data, setData] = useState("");
-  // const [changeQuantity, setChangeQuantity] = useState(0);
-  // const soluong = useSelector((state) => state.valueQuantity.value);
+  const { user, getUserCurrent } = userStore();
+  const { deleteProduct } = productStore();
 
-  // const dispatch = useDispatch();
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await getUserCurrent();
-        setData(response.data.content);
-        setCart(response.data.content.cart);
+        await getUserCurrent();
       } catch (error) {
         console.log(error);
       }
     };
     fetchData();
   }, []);
-  // const handlePlus = () => {
-  //   dispatch(plusQuantity());
-  // };
-  // const handleMinus = () => {
-  //   dispatch(minusQuantity());
-  // };
+  // console.log(user);
 
-  // const handleChangeQuantity = (quantity) => {
-  //   console.log(quantity);
-  //   setChangeQuantity(quantity);
-  // };
+  const handleClickCart = (quantity) => {
+    console.log(quantity + 1);
+  };
 
   const handleDeleteProduct = async (productId) => {
     try {
@@ -57,7 +45,7 @@ function Cart() {
   };
   return (
     <div className="w-full bg-white">
-      {cart && cart.length > 0 ? (
+      {user?.cart && user?.cart.length > 0 ? (
         <>
           <div className="max-w-[1050px] mx-auto text-center justify-center">
             <div
@@ -94,8 +82,8 @@ function Cart() {
                       </tr>
                     </thead>
                     <tbody>
-                      {cart &&
-                        cart.map((item, index) => (
+                      {user.cart &&
+                        user.cart.map((item, index) => (
                           <tr key={index}>
                             <td>
                               <IoIosCloseCircleOutline
@@ -151,6 +139,9 @@ function Cart() {
                                   // value={soluong}
                                 />
                                 <button
+                                  onClick={() => {
+                                    handleClickCart(item.quantity);
+                                  }}
                                   // onClick={handlePlus}
                                   className="border-[1px] border-solid border-gray-300 px-2 py-2"
                                 >
@@ -190,11 +181,11 @@ function Cart() {
                   </p>
                   <div className="flex mt-4 justify-between border-b-[1px] border-gray-200 mb-2">
                     <span>subtotal</span>
-                    <span className="font-semibold">{data.totalPrice}$</span>
+                    <span className="font-semibold">{user.totalPrice}$</span>
                   </div>
                   <div className="flex  justify-between border-b-[3px] border-gray-200 mb-2">
                     <span>Total</span>
-                    <span className="font-semibold">{data.totalPrice}$</span>
+                    <span className="font-semibold">{user.totalPrice}$</span>
                   </div>
                   <a href="/checkout">
                     <Button className="text-white font-semibold bg-orange-500 hover:opacity-70 text-lg w-full my-4">

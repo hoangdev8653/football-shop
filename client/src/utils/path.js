@@ -19,4 +19,5 @@ export const path = {
   LOGIN: "/login",
   REGISTER: "/register",
   NOTFOUND: "*",
+  WHISHLIST: "/whishList",
 };

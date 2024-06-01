@@ -7,12 +7,16 @@ import {
   getProductNation,
   getProductNoLogo,
   getProductPretty,
+  addProductWhishList,
+  getProductWhishList,
+  deleteProductWhishList,
 } from "../apis/product";
 
 export const productStore = create((set) => ({
   data: null,
   error: null,
   isLoading: false,
+  stockQuality: 0,
 
   getProductByKey: async (key) => {
     try {
@@ -28,7 +32,11 @@ export const productStore = create((set) => ({
     try {
       set({ isLoading: true, error: null });
       const response = await getProductBySlug(slug);
-      set({ isLoading: false, data: response.data.content });
+      set({
+        isLoading: false,
+        data: response.data.content,
+        stockQuality: response.data.content.stockQuality,
+      });
     } catch (error) {
       console.log(error);
       set({ isLoading: false, error: error.message });
@@ -82,6 +90,51 @@ export const productStore = create((set) => ({
     } catch (error) {
       console.log(error);
       set({ isLoading: false, error: error.message });
+    }
+  },
+
+  getProductWhishList: async () => {
+    try {
+      set({ isLoading: true });
+      const response = await getProductWhishList();
+      if (response.status === 200) {
+        set((state) => ({
+          isLoading: false,
+          data: [...state.data, response.data.content],
+        }));
+      }
+    } catch (error) {
+      console.log(error);
+      set({ error: error.message });
+    }
+  },
+
+  addProductWhishList: async (data) => {
+    try {
+      set({ isLoading: true });
+      const response = await addProductWhishList(data);
+      if (response.status === 201) {
+        set({ isLoading: false });
+      }
+    } catch (error) {
+      console.log(error);
+      set({ error: error.message });
+    }
+  },
+
+  deleteProductWhishList: async (id) => {
+    try {
+      set({ isLoading: true });
+      const response = await deleteProductWhishList(id);
+      if (response.status === 200) {
+        set((state) => ({
+          isLoading: false,
+          data: state.data.filter((item) => item._id !== id),
+        }));
+      }
+    } catch (error) {
+      console.log(error);
+      set({ error: error.message });
     }
   },
 }));
