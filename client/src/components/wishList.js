@@ -1,24 +1,35 @@
 import React, { useState } from "react";
 import { CiHeart } from "react-icons/ci";
 import { toast } from "react-toastify";
+// import { productStore } from "../store/productStore";
+import { twMerge } from "tailwind-merge";
+import clsx from "clsx";
+
 function WishList({ className, id }) {
-  const [click, setClick] = useState(false);
+  // const { addProductWhishList } = productStore();
+  const [click, setClick] = useState(true);
 
-  console.log("id :", id);
-
-  const handleAddWhishList = () => {
+  const handleAddWhishList = async () => {
+    console.log(id);
+    // await new Promise((resolve) => setTimeout(resolve, 1000));
+    // addProductWhishList(id);
     setClick(!click);
     toast.success("Thêm sản phẩm vào mục yêu thích");
   };
+
   return (
     <p onClick={handleAddWhishList} href="/" title="Add to WishList">
       <CiHeart
-        style={
-          click
-            ? { backgroundColor: "white" }
-            : { backgroundColor: "red", color: "white" }
-        }
-        className={`${className}  text-4xl rounded-3xl p-2 cursor-pointer hover:bg-red-600 hover:text-black `}
+        className={twMerge(
+          clsx(
+            "text-4xl rounded-3xl p-2 cursor-pointer transition-colors duration-200",
+            {
+              "bg-white hover:bg-red-600": click,
+              "bg-red-500 text-white hover:bg-red-600": !click,
+            },
+            className
+          )
+        )}
       />
     </p>
   );

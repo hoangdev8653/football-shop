@@ -12,15 +12,17 @@ function Modal() {
 
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        const response = await getProductByKey(debounceSearch);
-        if (response.status === 200) {
-          setData(response.data.content);
-        } else {
-          console.log("Thất bại");
+      if (debounceSearch.trim() !== "") {
+        try {
+          const response = await getProductByKey(debounceSearch);
+          if (response.status === 200) {
+            setData(response.data.content);
+          } else {
+            console.log("Thất bại");
+          }
+        } catch (error) {
+          console.log(error);
         }
-      } catch (error) {
-        console.log(error);
       }
     };
     fetchData();
@@ -52,7 +54,7 @@ function Modal() {
   const handleSearch = (value) => {
     setValueSearch(value);
   };
-
+  console.log(valueSearch);
   return (
     <div className="relative">
       <BsSearch
@@ -82,30 +84,38 @@ function Modal() {
             </a>
             <div className={`${styles.positionresults} absolute z-50 w-full`}>
               <div className="w-[452px] text-white max-h-[20rem] overflow-y-auto">
-                {data.map((item, index) => (
+                {data && data.length > 0 ? (
                   <>
-                    <a href={`/product/${item.slug}`}>
-                      <div
-                        key={index}
-                        className="w-full flex mt-2 mb-4 items-center cursor-pointer hover:opacity-75"
-                      >
-                        <img
-                          className="w-[50px] h-[50px] rounded-full object-cover"
-                          src={item.image[0]}
-                          alt={item.slug}
-                        />
+                    {data?.map((item, index) => (
+                      <>
+                        <a href={`/product/${item.slug}`}>
+                          <div
+                            key={index}
+                            className="w-full flex mt-2 mb-4 items-center cursor-pointer hover:opacity-75"
+                          >
+                            <img
+                              className="w-[50px] h-[50px] rounded-full object-cover"
+                              src={item.image[0]}
+                              alt={item.slug}
+                            />
 
-                        <p className="mx-4 text-3xl">{item.name}</p>
-                        <p className="font-medium text-2xl">
-                          <del className="font-normal text-gray-300 mx-1">
-                            <span>300.000$</span>
-                          </del>
-                          <span>{item.price}$</span>
-                        </p>
-                      </div>
-                    </a>
+                            <p className="mx-4 text-3xl">{item.name}</p>
+                            <p className="font-medium text-2xl">
+                              <del className="font-normal text-gray-300 mx-1">
+                                <span>300.000$</span>
+                              </del>
+                              <span>{item.price}$</span>
+                            </p>
+                          </div>
+                        </a>
+                      </>
+                    ))}
                   </>
-                ))}
+                ) : (
+                  <div className="w-full flex mt-2 mb-4 items-center mx-auto justify-center my-2">
+                    <p className="font-semibold text-2xl">No Products Found</p>
+                  </div>
+                )}
               </div>
             </div>
           </div>

@@ -4,7 +4,7 @@ import Discount from "../../components/discount";
 import WishList from "../../components/wishList";
 import Section from "../../components/section/section";
 import styles from "./club.module.scss";
-import LogoLoader from "../../components/logoLoader/logoLoader";
+import Loadding from "../../components/loadding/Loadding";
 import product_coming from "../../assets/product_coming-soon.jpg";
 import { useParams } from "react-router-dom";
 import { getClubBySlug } from "../../apis/club";
@@ -31,7 +31,7 @@ function Club() {
   return (
     <div className="club w-full">
       {loading ? (
-        <LogoLoader />
+        <Loadding />
       ) : (
         <>
           <div className=" bg-gray-700">

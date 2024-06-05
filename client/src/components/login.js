@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { userStore } from "../store/userStore";
 function Login() {
   const nvg = useNavigate();
-  const { login, navigate } = userStore();
+  const { login, isLoading, error } = userStore();
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -18,14 +18,19 @@ function Login() {
     validationSchema: loginValidate,
     onSubmit: async (values) => {
       try {
-        await login(values, navigate);
-        nvg(navigate);
+        const error = await login(values);
+        if (error === null) {
+          setTimeout(() => {
+            nvg("/");
+          }, 3000);
+        } else {
+          return;
+        }
       } catch (error) {
-        console.log(error);
+        console.log("Đăng nhập không thành công:", error);
       }
     },
   });
-  console.log(formik.values);
 
   return (
     <div
@@ -33,7 +38,7 @@ function Login() {
         backgroundImage:
           "url(https://colorlib.com/etc/lf/Login_v4/images/bg-01.jpg)",
       }}
-      className="max-w-[100%] h-screen flex flex-wrap justify-center items-center p-[15px] bg-no-repeat bg-center bg-cover"
+      className="max-w-[100%] min-h-screen flex flex-wrap justify-center items-center p-[15px] bg-no-repeat bg-center bg-cover"
     >
       <div className="w-[500px] bg-white rounded-xl overflow-hidden px-[20px] py-[30px]">
         <form onSubmit={formik.handleSubmit} className="w-full">

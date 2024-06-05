@@ -111,8 +111,10 @@ export const productStore = create((set) => ({
 
   addProductWhishList: async (data) => {
     try {
+      console.log({ data });
       set({ isLoading: true });
       const response = await addProductWhishList(data);
+      console.log(response.data);
       if (response.status === 201) {
         set({ isLoading: false });
       }

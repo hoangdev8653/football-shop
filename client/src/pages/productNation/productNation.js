@@ -93,8 +93,8 @@ function ProductNation() {
                     className="absolute top-1 left-2 px-3 py-4 rounded-full"
                     pecentDiscount={15}
                   />
-                  <WishList className="absolute top-2 right-2" />
                 </a>
+                <WishList className="absolute top-2 right-2" />
               </div>
             ))}
         </div>

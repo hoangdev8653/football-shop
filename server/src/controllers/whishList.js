@@ -23,7 +23,7 @@ const addWhishList = async (req, res) => {
     const product = await whishListService.addWhishList(id, { productId });
     return res
       .status(StatusCodes.CREATED)
-      .json({ status: 201, message: "Xử lý thành công", ocntent: product });
+      .json({ status: 201, message: "Xử lý thành công", content: product });
   } catch (error) {
     console.log(error);
     res

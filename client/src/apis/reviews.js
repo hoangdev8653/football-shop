@@ -20,7 +20,7 @@ export const createReview = async (data, token) => {
 };
 
 export const updateReview = async (productId, token) => {
-  return axiosConfig({
+  return await axiosConfig({
     method: "put",
     url: `/review/update/productId=${productId}`,
     headers: {
@@ -31,7 +31,7 @@ export const updateReview = async (productId, token) => {
 };
 
 export const deleteReview = async (reviewId, token) => {
-  return axiosConfig({
+  return await axiosConfig({
     method: "delete",
     url: `/review/delete?id=${reviewId}`,
     headers: {

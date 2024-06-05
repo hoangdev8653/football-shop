@@ -1,71 +1,72 @@
 import { axiosConfig } from "../axiosConfig";
 
 export const getProductClub = async () => {
-  return axiosConfig({
+  return await axiosConfig({
     method: "get",
     url: "/product/ao-bong-da-clb",
   });
 };
 
 export const getProductNoLogo = async () => {
-  return axiosConfig({
+  return await axiosConfig({
     method: "get",
     url: "/product/ao-bong-da-khong-logo",
   });
 };
 
 export const getProductNation = async () => {
-  return axiosConfig({
+  return await axiosConfig({
     method: "get",
     url: "/product/ao-bong-da-doi-tuyen",
   });
 };
 
 export const getProductPretty = async () => {
-  return axiosConfig({
+  return await axiosConfig({
     method: "get",
     url: "/product/ao-dep-nhat",
   });
 };
 
 export const getProductFromVn = async () => {
-  return axiosConfig({
+  return await axiosConfig({
     method: "get",
     url: "/product/ao-bong-da-clb-vn",
   });
 };
 
 export const getProductBySlug = async (slug) => {
-  return axiosConfig({
+  return await axiosConfig({
     method: "get",
     url: `/product/detail/${slug}`,
   });
 };
 
 export const getProductByKey = async (key) => {
-  return axiosConfig({
+  return await axiosConfig({
     method: "get",
     url: `/product/search/?s=${key}`,
   });
 };
 
 export const getProductWhishList = async () => {
-  return axiosConfig({
+  return await axiosConfig({
     method: "get",
     url: "/whishList/getByUser",
   });
 };
 
 export const addProductWhishList = async (data) => {
-  return axiosConfig({
+  console.log(data);
+  return await axiosConfig({
     method: "post",
     url: "/whishList/addProduct",
-    data: data,
+    data,
   });
 };
 
 export const deleteProductWhishList = async (productId) => {
-  return axiosConfig({
+  return await axiosConfig({
     method: "delete",
     url: `/whishList/deleteProduct?id=${productId}`,
   });

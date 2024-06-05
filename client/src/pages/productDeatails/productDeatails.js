@@ -7,12 +7,13 @@ import Button from "../../components/button";
 import styles from "./productDeatail.module.scss";
 import { useParams } from "react-router-dom";
 import { quantityStore } from "../../store/quantityStore";
-import Loader from "../../components/logoLoader/logoLoader";
+// import Loader from "../../components/logoLoader/logoLoader";
 import { getLocalStorage } from "../../utils/LocalStorage";
 import { toast } from "react-toastify";
 import Expandable from "./expandable/index";
 import { cartStore } from "../../store/cartStore";
 import { productStore } from "../../store/productStore";
+import Loadding from "../../components/loadding/Loadding";
 
 function ProductDeatails() {
   const [loading, setLoading] = useState(true);
@@ -64,7 +65,7 @@ function ProductDeatails() {
   return (
     <div className="product-deatail">
       {loading ? (
-        <Loader />
+        <Loadding />
       ) : (
         <>
           <div

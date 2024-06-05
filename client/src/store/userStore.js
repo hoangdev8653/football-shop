@@ -18,7 +18,6 @@ export const userStore = create((set) => ({
   user: null,
   error: null,
   isLoading: false,
-  navigate: "",
 
   register: async (data) => {
     try {
@@ -32,10 +31,10 @@ export const userStore = create((set) => ({
       set({ error: error.message });
     }
   },
-  login: async (data, navigate) => {
+  login: async (data) => {
     try {
       set({ isLoading: true });
-      const response = await login(data);
+      const response = await login(data); // loginAPI là hàm gọi API thực tế
       if (response.status === 200) {
         set({ isLoading: false });
         toast.success("Đăng nhập thành công");
@@ -43,18 +42,17 @@ export const userStore = create((set) => ({
         setLocalStorage("user", response.data.content);
         setLocalStorage("accessToken", response.data.accessToken);
         setLocalStorage("refreshToken", response.data.refreshToken);
-        set({ navigate: "/" });
-        navigate("/");
-      } else if (response.status === 500) {
+        return null; // Trả về null khi không có lỗi
+      } else {
         set({ isLoading: false });
-        set({ navigate: "/login" });
         set({ error: "Unexpected response status: " + response.status });
+        return "Unexpected response status: " + response.status;
       }
     } catch (error) {
       set({ isLoading: false });
       set({ error: error.message });
-      console.log(error);
-      toast.error("Mật Khẩu hoặc tài khoản không đúng");
+      toast.error("Tài khoản hoặc mật khảo không đúng");
+      return error.message; // Trả về thông báo lỗi
     }
   },
 

@@ -20,7 +20,7 @@ function ForgotPassword() {
   });
 
   return (
-    <div className="dark:bg-gray-900 h-screen">
+    <div className="dark:bg-gray-900 min-h-screen">
       <main
         id="content"
         role="main"
