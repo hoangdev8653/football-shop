@@ -73,7 +73,7 @@ const getProductFromVN = async () => {
     "name slug -_id"
   );
   const getProductFromVN = products.filter(
-    (product) => product.categoryId.slug === "ao-clb-vn"
+    (product) => product.categoryId.slug === "ao-bong-da-clb-vn"
   );
   return getProductFromVN;
 };
@@ -110,6 +110,8 @@ const createProduct = async ({
   categoryId,
 }) => {
   const product = await ProductModel.findOne({ name });
+  console.log({ name, description, price, stockQuality, slug });
+
   if (product) {
     throw { Error: "Đã tồn tại" };
   }
@@ -126,25 +128,25 @@ const createProduct = async ({
 
 const updateProduct = async (
   id,
-  { name, description, price, stockQuality, image, slug, categoryId }
+  { name, description, price, stockQuality, slug, categoryId }
 ) => {
   const product = await ProductModel.findById(id);
   if (!product) {
     throw { Error: "Không tìm thấy sản phẩm" };
   }
-  return await ProductModel.findByIdAndUpdate(
+  const newProduct = await ProductModel.findByIdAndUpdate(
     id,
     {
       name,
       description,
       price,
       stockQuality,
-      image,
       slug,
       categoryId,
     },
     { new: true }
   );
+  return newProduct;
 };
 
 const deleteProduct = async (id) => {

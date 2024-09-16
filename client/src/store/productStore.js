@@ -7,6 +7,7 @@ import {
   getProductNation,
   getProductNoLogo,
   getProductPretty,
+  getProductAccessory,
   addProductWhishList,
   getProductWhishList,
   deleteProductWhishList,
@@ -86,6 +87,17 @@ export const productStore = create((set) => ({
     try {
       set({ isLoading: true });
       const response = await getProductPretty();
+      set({ isLoading: false, data: response.data.content });
+    } catch (error) {
+      console.log(error);
+      set({ isLoading: false, error: error.message });
+    }
+  },
+
+  getProductAccessory: async () => {
+    try {
+      set({ isLoading: true });
+      const response = await getProductAccessory();
       set({ isLoading: false, data: response.data.content });
     } catch (error) {
       console.log(error);

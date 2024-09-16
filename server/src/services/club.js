@@ -39,6 +39,7 @@ const createClub = async ({
   slug,
   stadium,
   banner,
+  logo,
   establish,
   productId,
 }) => {
@@ -53,6 +54,7 @@ const createClub = async ({
       slug,
       stadium,
       banner,
+      logo,
       establish,
       productId,
     });
@@ -61,25 +63,20 @@ const createClub = async ({
   }
 };
 
-const createImageClub = async (id, { image }) => {
-  try {
-    const club = await ClubModel.findById(id);
-    if (!club) {
-      throw new Error({ message: "Không tồn tại" });
-    }
-    return await ClubModel.findByIdAndUpdate(id, { image }, { new: true });
-  } catch (error) {
-    console.log(error.message);
-  }
-};
-
-const updateClub = async (id) => {
+const updateClub = async (
+  id,
+  { name, nickname, slug, stadium, banner, logo, establish, productId }
+) => {
   try {
     const club = await ClubModel.findById(id);
     if (!club) {
       throw new { Error: "Không tồn tại" }();
     }
-    return await ClubModel.findByIdAndUpdate(id, {}, { new: true });
+    return await ClubModel.findByIdAndUpdate(
+      id,
+      { name, nickname, slug, stadium, banner, logo, establish, productId },
+      { new: true }
+    );
   } catch (error) {
     console.log(error);
   }
@@ -102,7 +99,6 @@ export const clubService = {
   getClub,
   getClubBySlug,
   createClub,
-  createImageClub,
   updateClub,
   deleteclub,
 };

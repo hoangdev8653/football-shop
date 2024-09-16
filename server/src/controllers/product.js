@@ -157,7 +157,7 @@ const createProduct = async (req, res) => {
       .status(StatusCodes.OK)
       .json({ status: 200, message: "Xử lý thành công", content: product });
   } catch (error) {
-    console.log(error);
+    console.log("error ", error);
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ Error: "Lỗi server" });
   }
 };
@@ -165,15 +165,16 @@ const createProduct = async (req, res) => {
 const updateProduct = async (req, res) => {
   try {
     const id = req.query.id;
-    const { name, description, price, stockQuality, image, slug, categoryId } =
+    console.log(id);
+    const { name, description, price, stockQuality, slug, categoryId } =
       req.body;
-    const images = files.map((file) => file.path);
+    // const images = files?.map((file) => file.path);
     const product = await productService.updateProduct(id, {
       name,
       description,
       price,
       stockQuality,
-      image: images,
+      // image: images,
       slug,
       categoryId,
     });

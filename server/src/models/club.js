@@ -8,7 +8,9 @@ const Club = mongoose.Schema({
   banner: {
     type: String,
   },
-
+  logo: {
+    type: String,
+  },
   stadium: {
     type: String,
     required: true,

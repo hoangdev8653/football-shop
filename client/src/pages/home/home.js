@@ -166,17 +166,16 @@ function Home() {
                 <div key={index} className="w-1/4 cursor-pointer mb-4 ">
                   <a href="/blog">
                     <img
-                      className={styles.size}
+                      className={`${styles.size} h-[217px] `}
                       src={item.image}
                       alt={item.title}
                     />
                     <div className="items-center justify-center text-center cursor-pointer">
                       <p className="text-orange-500 font-bold mx-2 my-2 ">
-                        Tiết lộ áo đội tuyển Argentina sân nhà Copa America 2024
+                        {item.title}
                       </p>
                       <span className="text-white hover:opacity-60 mx-2 my-2">
-                        Chúng ta đã có hình ảnh thực tế đầu tiên các mẫu áo đội
-                        [..]
+                        {item.content}
                       </span>
                     </div>
                   </a>

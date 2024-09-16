@@ -18,8 +18,8 @@ import ChangePassword from "./pages/profile/changePassword";
 import Register from "./components/register";
 import CheckOut from "./pages/checkout/checkout";
 import OrderComplete from "./pages/orderComplete/orderComplete";
-import ForgotPassword from "./pages/forgotPassword";
-import ResetPassword from "./pages/resetPassword";
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
 import WhishList from "./pages/whishList";
 // import { io } from "socket.io-client";
 

@@ -8,12 +8,17 @@ import { CiStar } from "react-icons/ci";
 import styles from "./productClub.module.scss";
 import Discount from "../../components/discount";
 import WishList from "../../components/wishList";
-import { getProductFromVn, getProductNoLogo } from "../../apis/product";
+import {
+  getProductFromVn,
+  getProductNoLogo,
+  getProductAccessory,
+} from "../../apis/product";
+import { formatPrice } from "../../utils/forrmatPriceVn";
 
 function ProductClb() {
   const [data, setData] = useState([]);
   const [productNoLogo, setProductNoLogo] = useState([]);
-
+  const [accessory, setAccessory] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -22,13 +27,16 @@ function ProductClb() {
 
         const resNoLogo = await getProductNoLogo();
         setProductNoLogo(resNoLogo.data.content);
+
+        const phuKien = await getProductAccessory();
+        setAccessory(phuKien.data.content);
       } catch (error) {
         console.log(error);
       }
     };
 
     fetchData();
-  });
+  }, []);
 
   return (
     <div className="productClub w-full">
@@ -98,9 +106,11 @@ function ProductClb() {
                       {item.name}
                     </p>
                     <p className="flex justify-center text-center">
-                      <del className="text-gray-400 mx-1">150.000$</del>
+                      <del className="text-gray-400 mx-1">
+                        {formatPrice(150000)}
+                      </del>
                       <ins className="font-medium text-white mx-1">
-                        <strong>{item.price}$</strong>
+                        <strong>{formatPrice(Number(item.price))}</strong>
                       </ins>
                     </p>
 
@@ -147,6 +157,54 @@ function ProductClb() {
             <span className="text-lg font-bold">PHỤ KIỆN BÓNG ĐÁ</span>
           </p>
           <b className="block flex-1 h-[2px] bg-current font-bold mt-5 opacity-30"></b>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-6 lg:grid-cols-6 gap-1">
+          {accessory &&
+            accessory.map((item, index) => (
+              <a
+                key={index}
+                href={`/product/${item.slug}`}
+                className="relative"
+              >
+                <img
+                  className="w-full h-[331.73px] object-cover"
+                  src={item.image[0]}
+                  alt={item.slug}
+                />
+                <div
+                  style={{
+                    backgroundColor: "rgba(0, 0, 0, 0.55)",
+                    textShadow: "1px 1px 1px rgba(0,0,0,0.5)",
+                  }}
+                  className="absolute bottom-0 w-full"
+                >
+                  <p className="text-center mx-4 text-lg text-white mt-2 hover:opacity-60 uppercase">
+                    {item.name}
+                  </p>
+                  <p className="flex justify-center text-center">
+                    <del className="text-gray-400 mx-1">
+                      {formatPrice(150000)}
+                    </del>
+                    <ins className="font-medium text-white mx-1">
+                      <strong>{formatPrice(Number(item.price))}</strong>
+                    </ins>
+                  </p>
+
+                  <div className="text-center mt-2 mb-2">
+                    <p className=" text-white flex items-center justify-center gap-2 ">
+                      <button className="bg-gray-800 rounded-2xl px-[10px] pb-[2px] font-medium hover:text-black hover:bg-white">
+                        Quick view
+                      </button>
+                    </p>
+                  </div>
+                </div>
+                <Discount
+                  className="absolute top-2 px-3 py-4 rounded-full"
+                  pecentDiscount={17}
+                />
+                <WishList className="top-2 right-2 absolute" />
+              </a>
+            ))}
         </div>
         <div className="text-white py-4  mt-4  w-full mx-auto ">
           <p className="  my-2 text-center justify-center mx-auto">

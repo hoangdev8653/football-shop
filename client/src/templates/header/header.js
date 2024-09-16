@@ -27,131 +27,132 @@ function Header() {
         <div className={styles.socal_media}>
           <a href="/" title="Facebook">
             <FaFacebookF />
-          </a>
+          </a>{" "}
           <a href="/" title="Instagram">
             <FaInstagram />
-          </a>
+          </a>{" "}
           <a href="/" title="Youtube">
             <FaYoutube />
-          </a>
+          </a>{" "}
           <a href="/" title="Mail">
             <MdOutlineMailOutline />
-          </a>
+          </a>{" "}
           <a href="/" title="Phone">
             <MdOutlinePhone />
-          </a>
-        </div>
-      </div>
+          </a>{" "}
+        </div>{" "}
+      </div>{" "}
       <div className="w-full relative flex justify-between h-full ">
         <div className={styles.menu_mobile}>
-          <IoMdMenu onClick={handleOpenMenu} />
+          <IoMdMenu onClick={handleOpenMenu} />{" "}
           {isOpen ? (
             <>
               <div className="w-full absolute left-0 top-0 mt-[60px] z-50">
                 <div className="text-center w-full  py-4 my-4">
                   <a href="/">
                     <p className="text-white font-bold opacity-80 hover:opacity-100">
-                      ÁO BÓNG ĐÁ THÁI LAN
-                    </p>
-                  </a>
-                </div>
+                      ÁO BÓNG ĐÁ THÁI LAN{" "}
+                    </p>{" "}
+                  </a>{" "}
+                </div>{" "}
                 <div className="text-center w-full py-4 my-4">
                   <a href="/ao-bong-da-clb/">
                     <p className="text-white font-bold opacity-80 hover:opacity-100">
-                      ÁO BÓNG ĐÁ CÂU LẠC BỘ
-                    </p>
-                  </a>
-                </div>
+                      ÁO BÓNG ĐÁ CÂU LẠC BỘ{" "}
+                    </p>{" "}
+                  </a>{" "}
+                </div>{" "}
                 <div className="text-center w-full py-4 my-4">
                   <a href="/ao-bong-da-doi-tuyen">
                     <p className="text-white font-bold opacity-80 hover:opacity-100">
-                      ÁO BÓNG ĐÁ ĐỘI TUYỂN
-                    </p>
-                  </a>
-                </div>
+                      ÁO BÓNG ĐÁ ĐỘI TUYỂN{" "}
+                    </p>{" "}
+                  </a>{" "}
+                </div>{" "}
                 <div className="text-center w-full  py-4 my-4">
                   <a href="/ao-bong-da-khong-logo">
                     <p className="text-white font-bold opacity-80 hover:opacity-100">
-                      ÁO BÓNG ĐÁ KHÔNG LOGO
-                    </p>
-                  </a>
-                </div>
+                      ÁO BÓNG ĐÁ KHÔNG LOGO{" "}
+                    </p>{" "}
+                  </a>{" "}
+                </div>{" "}
                 <div className="text-center w-full py-4 my-4">
                   <a href="/">
                     <p className="text-white font-bold opacity-80 hover:opacity-100">
-                      ĐỒ THỂ THAO
-                    </p>
-                  </a>
-                </div>
+                      ĐỒ THỂ THAO{" "}
+                    </p>{" "}
+                  </a>{" "}
+                </div>{" "}
                 <div className="text-center w-full py-4 my-4">
                   <a href={user ? "/profile" : "/login"}>
                     <p className="text-white font-bold opacity-80 hover:opacity-100">
-                      {user ? <span>PROFILE</span> : <span>LOGIN</span>}
-                    </p>
-                  </a>
-                </div>
+                      {" "}
+                      {user ? <span> PROFILE </span> : <span>LOGIN</span>}{" "}
+                    </p>{" "}
+                  </a>{" "}
+                </div>{" "}
                 <div className="text-center w-full py-4 my-4 relative">
                   <a className="flex text-center justify-center gap-2" href="/">
                     <a href="/cart">
                       <span className="text-white font-bold opacity-80 hover:opacity-100 ">
-                        Giỏ hàng
-                      </span>
-                    </a>
-                  </a>
-                </div>
+                        Giỏ hàng{" "}
+                      </span>{" "}
+                    </a>{" "}
+                  </a>{" "}
+                </div>{" "}
                 <div className="absolute top-0 right-0">
                   <IoMdClose
                     onClick={handleCloseMenu}
                     className="text-white opacity-60 text-2xl cursor-pointer hover:opacity-100 w-10 h-10"
                   />
-                </div>
-              </div>
+                </div>{" "}
+              </div>{" "}
               <div
                 onClick={handleCloseMenu}
                 style={isOpen ? { overflowY: "hidden" } : { overflowY: "auto" }}
                 className={`${styles.overlay} ${
                   isOpen ? "overflow-y-hidden" : "overflow-y-auto"
                 }`}
-              ></div>
+              ></div>{" "}
             </>
           ) : (
-            <></>
-          )}
-        </div>
+            <> </>
+          )}{" "}
+        </div>{" "}
         <div>
           <a
             href="/"
             title="Hệ Thống Bán Lẻ Đồ Thể Thao Sporter.vn - Chuyên cung cấp Quần áo bóng đá, thảm tập yoga, quần áo tập GYM – Yoga chất lượng cao"
           >
             <img className="w-[300px] mt-2 " src={Logo} alt="logo" />
-          </a>
-        </div>
+          </a>{" "}
+        </div>{" "}
         <div className="flex gap-4 mr-4 justify-center my-auto items-center">
           <ModalSearch />
           <Avarta />
           <Cart />
-        </div>
-      </div>
+        </div>{" "}
+      </div>{" "}
       <div className={styles.nav_header}>
         <a className="my-2" href="/ao-bong-da-clb/">
           <span className="opacity-80 hover:opacity-100">
-            ÁO BÓNG ĐÁ CÂU LẠC BỘ
-          </span>
-        </a>
+            ÁO BÓNG ĐÁ CÂU LẠC BỘ{" "}
+          </span>{" "}
+        </a>{" "}
         <a className="my-2" href="/ao-bong-da-doi-tuyen">
           <span className="opacity-80 hover:opacity-100">
-            ÁO BÓNG ĐÁ ĐỘI TUYỂN
-          </span>
-        </a>
+            ÁO BÓNG ĐÁ ĐỘI TUYỂN{" "}
+          </span>{" "}
+        </a>{" "}
         <a className="my-2" href="/ao-bong-da-khong-logo">
           <span className="opacity-80 hover:opacity-100">
-            ÁO BÓNG ĐÁ KHÔNG LOGO
-          </span>
-        </a>
+            ÁO BÓNG ĐÁ KHÔNG LOGO{" "}
+          </span>{" "}
+        </a>{" "}
         <a className="my-2" href="/">
-          <span className="opacity-80 hover:opacity-100">ĐỒ THỂ THAO</span>
-        </a>
-      </div>
+          <span className="opacity-80 hover:opacity-100"> ĐỒ THỂ THAO </span>{" "}
+        </a>{" "}
+      </div>{" "}
     </div>
   );
 }

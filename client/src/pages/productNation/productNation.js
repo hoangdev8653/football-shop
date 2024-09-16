@@ -5,6 +5,7 @@ import Discount from "../../components/discount";
 import WishList from "../../components/wishList";
 import styles from "./productNation.module.scss";
 import { getProductNation, getProductFromVn } from "../../apis/product";
+import { formatPrice } from "../../utils/forrmatPriceVn";
 
 function ProductNation() {
   const [productNation, setProductNation] = useState([]);
@@ -83,9 +84,11 @@ function ProductNation() {
                       {item.name}
                     </p>
                     <p className="mb-6 mt-1 text-xs">
-                      <del className="text-gray-400 mx-2">330.000$</del>
+                      <del className="text-gray-400 mx-2">
+                        {formatPrice(330000)}
+                      </del>
                       <ins className="mx-2 text-white">
-                        <strong>{item.price}$</strong>
+                        <strong>{formatPrice(Number(item.price))}</strong>
                       </ins>
                     </p>
                   </div>
@@ -132,9 +135,11 @@ function ProductNation() {
                       {item.name}
                     </p>
                     <p className="mb-6 mt-1 text-xs">
-                      <del className="text-gray-400 mx-2">330.000$</del>
+                      <del className="text-gray-400 mx-2">
+                        {formatPrice(330000)}
+                      </del>
                       <ins className="mx-2 text-white">
-                        <strong>{item.price}$</strong>
+                        <strong>{formatPrice(Number(item.price))}</strong>
                       </ins>
                     </p>
                   </div>

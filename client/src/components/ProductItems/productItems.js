@@ -3,6 +3,7 @@ import Slider from "react-slick";
 import styles from "./productItems.module.scss";
 import Discount from "../discount";
 import WishList from "../wishList";
+import { formatPrice } from "../../utils/forrmatPriceVn";
 
 function ProductItems({ itemToShow = 5, data }) {
   const [idProduct, setIdProduct] = useState(null);
@@ -71,9 +72,11 @@ function ProductItems({ itemToShow = 5, data }) {
                     {item.name}
                   </p>
                   <p className="mb-6 mt-1 text-xs">
-                    <del className="text-gray-400 mx-2">250.000$</del>
+                    <del className="text-gray-400 mx-2">
+                      {formatPrice(250000)}
+                    </del>
                     <ins className="mx-2 text-white">
-                      <strong>{item.price}$</strong>
+                      <strong>{formatPrice(Number(item.price))}</strong>
                     </ins>
                   </p>
                 </div>

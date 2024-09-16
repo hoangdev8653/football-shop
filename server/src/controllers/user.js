@@ -118,6 +118,8 @@ const changePassword = async (req, res) => {
 const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
+    console.log({ email }, password);
+
     const { error } = LoginValidation.validate(req.body, { abortEarly: false });
     if (error) {
       const errorDetails = convertJoiError(error);

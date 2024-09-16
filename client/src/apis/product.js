@@ -56,6 +56,13 @@ export const getProductWhishList = async () => {
   });
 };
 
+export const getProductAccessory = async (productId) => {
+  return await axiosConfig({
+    method: "get",
+    url: "/product/phu-kien",
+  });
+};
+
 export const addProductWhishList = async (data) => {
   console.log(data);
   return await axiosConfig({

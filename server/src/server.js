@@ -13,7 +13,7 @@ import http from "http";
 
 const port = process.env.PORT;
 connectDB();
-connectRedis();
+// connectRedis();
 
 const app = express();
 const server = http.createServer(app);

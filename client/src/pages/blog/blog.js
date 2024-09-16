@@ -21,10 +21,10 @@ function Blog() {
                   <div className={`${styles.shadown} bg-white ml-auto`}>
                     <a href="/">
                       <div className="bg-white table w-full">
-                        <div className="w-[40%] table-cell align-middle relative h-auto mx-auto overflow-hidden">
-                          <div className="pt-[56%] relative h-auto overflow-hidden bg-cover">
+                        <div className="w-[40%] table-cell align-middle relativemx-auto overflow-hidden">
+                          <div className="pt-[56%] relative  overflow-hidden bg-cover">
                             <img
-                              className="right-0 left-0 top-0 bottom-0 w-full h-full absolute object-cover max-w-[100%]"
+                              className="right-0 left-0 top-0 bottom-0 w-full  absolute object-cover max-w-[100%] h-[217.29px]"
                               src={item.image}
                               alt={item.title}
                             />

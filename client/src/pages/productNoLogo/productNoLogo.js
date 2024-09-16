@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import styles from "./productNoLogo.module.scss";
 import Banner from "../../assets/Banner-quan-ao-bong-da-khong-logo-12.jpg";
 import bt4 from "../../assets/button-4.jpg";
@@ -7,15 +7,15 @@ import bt2 from "../../assets/Button-2.jpg";
 import bt1 from "../../assets/Button-1.jpg";
 import Discount from "../../components/discount";
 import WishList from "../../components/wishList";
-import { getProductNoLogo } from "../../apis/product";
+import { productStore } from "../../store/productStore";
+import { formatPrice } from "../../utils/forrmatPriceVn";
 
 function ProductNoLogo() {
-  const [data, setData] = useState("");
+  const { getProductNoLogo, data } = productStore();
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await getProductNoLogo();
-      setData(response.data.content);
+      await getProductNoLogo();
     };
     fetchData();
   }, []);
@@ -91,9 +91,11 @@ function ProductNoLogo() {
                         {item.name}
                       </p>
                       <p className="mb-2 mt-1 text-xs">
-                        <del className="text-gray-400 mx-2">330.000$</del>
+                        <del className="text-gray-400 mx-2">
+                          {formatPrice(330000)}
+                        </del>
                         <ins className="mx-2 text-white">
-                          <strong>{item.price}$</strong>
+                          <strong>{formatPrice(Number(item.price))}</strong>
                         </ins>
                       </p>
                     </div>

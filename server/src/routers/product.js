@@ -17,9 +17,7 @@ router.route("/phu-kien/").get(productController.getProductAccessory);
 router
   .route("/create")
   .post(uploadCloud.array("image", 10), productController.createProduct);
-router
-  .route("/update")
-  .put(uploadCloud.array("image", 10), productController.updateProduct);
+router.route("/update").put(productController.updateProduct);
 router.route("/delete").delete(productController.deleteProduct);
 
 export default router;
