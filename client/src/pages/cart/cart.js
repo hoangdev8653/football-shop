@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { RiCoupon3Line } from "react-icons/ri";
@@ -7,7 +7,7 @@ import Button from "../../components/button";
 import { toast } from "react-toastify";
 import { userStore } from "../../store/userStore";
 import { productStore } from "../../store/productStore";
-import { quantityStore } from "../../store/quantityStore";
+import { formatPrice } from "../../utils/forrmatPriceVn";
 
 function Cart() {
   const { user, getUserCurrent } = userStore();
@@ -23,7 +23,6 @@ function Cart() {
     };
     fetchData();
   }, []);
-  // console.log(user);
 
   const handleClickCart = (quantity) => {
     console.log(quantity + 1);
@@ -43,6 +42,8 @@ function Cart() {
       console.log("Error: ", error);
     }
   };
+  console.log(user);
+
   return (
     <div className="w-full bg-white">
       {user?.cart && user?.cart.length > 0 ? (
@@ -104,45 +105,38 @@ function Cart() {
                             </td>
                             <td>
                               <a href="/">
-                                <span className="text-orange-400 hover:opacity-60">
-                                  Áo bóng đá Man city sân khách 23/24 hàng thái
-                                  lan * {item.quantity}
+                                <span className="text-orange-400 hover:opacity-60 uppercase">
+                                  {item.productId.name} * {item.quantity}
                                 </span>
                                 <p className={styles.price_one_product}>
                                   1 x{" "}
                                   <span className="font-semibold">
-                                    {item.productId.price}$
+                                    {formatPrice(item.productId.price)}
                                   </span>
                                 </p>
                               </a>
                             </td>
                             <td className={styles.td_price}>
                               <span>
-                                <strong>{item.productId.price}$</strong>
+                                <strong>
+                                  {formatPrice(Number(item.productId.price))}
+                                </strong>
                               </span>
                             </td>
                             <td>
                               <div className="flex">
-                                <button
-                                  // onClick={handleMinus}
-                                  className="border-[1px] border-solid border-gray-300 px-2 py-2"
-                                >
+                                <button className="border-[1px] border-solid border-gray-300 px-2 py-2">
                                   -
                                 </button>
                                 <input
-                                  // onChange={() => {
-                                  //   handleChangeQuantity(item.quantity);
-                                  // }}
                                   type="text"
                                   className="border-solid border-[1px] border-gray-300 text-center w-[40px] focus:outline-none"
                                   value={item.quantity}
-                                  // value={soluong}
                                 />
                                 <button
                                   onClick={() => {
                                     handleClickCart(item.quantity);
                                   }}
-                                  // onClick={handlePlus}
                                   className="border-[1px] border-solid border-gray-300 px-2 py-2"
                                 >
                                   +
@@ -152,9 +146,10 @@ function Cart() {
                             <td className={styles.td_subtotal}>
                               <span>
                                 <strong>
-                                  {parseInt(item.productId.price) *
-                                    item.quantity}
-                                  $
+                                  {formatPrice(
+                                    parseInt(item.productId.price) *
+                                      item.quantity
+                                  )}
                                 </strong>
                               </span>
                             </td>
@@ -181,11 +176,15 @@ function Cart() {
                   </p>
                   <div className="flex mt-4 justify-between border-b-[1px] border-gray-200 mb-2">
                     <span>subtotal</span>
-                    <span className="font-semibold">{user.totalPrice}$</span>
+                    <span className="font-semibold">
+                      {formatPrice(user.totalPrice)}
+                    </span>
                   </div>
                   <div className="flex  justify-between border-b-[3px] border-gray-200 mb-2">
                     <span>Total</span>
-                    <span className="font-semibold">{user.totalPrice}$</span>
+                    <span className="font-semibold">
+                      {formatPrice(user.totalPrice)}
+                    </span>
                   </div>
                   <a href="/checkout">
                     <Button className="text-white font-semibold bg-orange-500 hover:opacity-70 text-lg w-full my-4">

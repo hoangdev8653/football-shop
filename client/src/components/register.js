@@ -65,9 +65,7 @@ function Register() {
             </p>
           </div>
           {formik.touched.email && formik.errors.email && (
-            <div
-              style={{ color: "red", marginBottom: "8px", textAlign: "center" }}
-            >
+            <div className="text-red-500 mb-2 text-center">
               {formik.errors.email}
             </div>
           )}
@@ -89,9 +87,7 @@ function Register() {
             </p>
           </div>
           {formik.touched.password && formik.errors.password && (
-            <div
-              style={{ color: "red", marginBottom: "8px", textAlign: "center" }}
-            >
+            <div className="text-red-500 mb-2 text-center">
               {formik.errors.password}
             </div>
           )}
@@ -113,9 +109,7 @@ function Register() {
             </p>
           </div>
           {formik.touched.username && formik.errors.username && (
-            <div
-              style={{ color: "red", marginBottom: "8px", textAlign: "center" }}
-            >
+            <div className="text-red-500 mb-2 text-center">
               {formik.errors.username}
             </div>
           )}
@@ -137,9 +131,7 @@ function Register() {
             </p>
           </div>
           {formik.touched.phone && formik.errors.phone && (
-            <div
-              style={{ color: "red", marginBottom: "8px", textAlign: "center" }}
-            >
+            <div className="text-red-500 mb-2 text-center">
               {formik.errors.phone}
             </div>
           )}

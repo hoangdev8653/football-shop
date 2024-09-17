@@ -82,10 +82,10 @@ function Description({ data }) {
                 Lật ngược mặt bên trong áo và quần khi giặt và ủi
               </li>
             </ul>
-            <p className="text-orange-500 font-bold text-2xl mb-2 mt-4 ml-8 uppercase">
+            <p className="text-orange-500 font-bold text-2xl mb-2 mt-4 ml-8 uppercase text-center">
               Bảng size tư vấn áo đấu {data.name} sân khách mùa giải 23/24
             </p>
-            <span className="ml-8">
+            <span className=" ml-8  text-center">
               Bảng size tư vấn mang tình chất tham khảo dựa trên chiều cao và
               cân nặng chuẩn của người mẫu mặc trên cơ thể. Để được tư vấn chính
               xác hơn bạn có thể nhắn tin trực tiếp Sporter để được tư vấn kỹ
@@ -94,14 +94,14 @@ function Description({ data }) {
             </span>
             <div className="w-full flex my-4">
               <div className="w-1/2 mx-2">
-                <img className="" src={SizeVn} alt="bang-size-vn" />
-                <p className="mx-auto text-center">
+                <img src={SizeVn} alt="bang-size-vn" />
+                <p className="mx-auto text-center font-semibold">
                   Bảng tư vấn size hàng Việt Nam
                 </p>
               </div>
               <div className="w-1/2 mx-2">
-                <img className="" src={SizeTL} alt="bang-size-thailan" />
-                <p className="mx-auto text-center">
+                <img src={SizeTL} alt="bang-size-thailan" />
+                <p className="mx-auto text-center font-semibold">
                   Bảng tư vấn size hàng Thái Lan
                 </p>
               </div>

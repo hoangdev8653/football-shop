@@ -3,13 +3,12 @@ import { CiLock } from "react-icons/ci";
 import Facebook from "../assets/fb_logo-512x512.png";
 import Google from "../assets/google-search-3.png";
 import { useFormik } from "formik";
-import { toast } from "react-toastify";
 import { loginValidate } from "../validations/auth";
 import { useNavigate } from "react-router-dom";
 import { userStore } from "../store/userStore";
 function Login() {
   const nvg = useNavigate();
-  const { login, isLoading, error } = userStore();
+  const { login } = userStore();
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -85,9 +84,7 @@ function Login() {
             </p>
           </div>
           {formik.touched.password && formik.errors.password && (
-            <div
-              style={{ color: "red", marginBottom: "8px", textAlign: "center" }}
-            >
+            <div className="text-red-500 mb-2 text-center">
               {formik.errors.password}
             </div>
           )}

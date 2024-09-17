@@ -7,13 +7,13 @@ import Button from "../../components/button";
 import styles from "./productDeatail.module.scss";
 import { useParams } from "react-router-dom";
 import { quantityStore } from "../../store/quantityStore";
-// import Loader from "../../components/logoLoader/logoLoader";
 import { getLocalStorage } from "../../utils/LocalStorage";
 import { toast } from "react-toastify";
 import Expandable from "./expandable/index";
 import { cartStore } from "../../store/cartStore";
 import { productStore } from "../../store/productStore";
 import Loadding from "../../components/loadding/Loadding";
+import { formatPrice } from "../../utils/forrmatPriceVn";
 
 function ProductDeatails() {
   const [loading, setLoading] = useState(true);
@@ -108,13 +108,10 @@ function ProductDeatails() {
                 </p>
                 <p className="text-xl flex gap-4">
                   <del className="opacity-30">
-                    <span>
-                      330
-                      <span>$</span>
-                    </span>
+                    <span>{formatPrice(330000)}</span>
                   </del>
                   <ins className="text-orange-500 font-semibold">
-                    <span>{data.price}$</span>
+                    <span>{formatPrice(Number(data.price))}</span>
                   </ins>
                 </p>
                 <p className="my-2">
@@ -135,22 +132,28 @@ function ProductDeatails() {
                   Hàng VN giá{" "}
                   <span>
                     <strong className="text-red-500">
-                      Khuyến mãi còn 100$ /1 bộ{" "}
+                      Khuyến mãi còn {formatPrice(100000)} /1 bộ{" "}
                     </strong>
                   </span>
                   -
                   <span className="text-red-500">
-                    <strong>Từ 5 bộ trở lên: 95$ / 1 bộ</strong>
+                    <strong>
+                      Từ 5 bộ trở lên: {formatPrice(95000)} / 1 bộ
+                    </strong>
                   </span>
                   <p>
                     Hàng Thái Lan giá{" "}
                     <span className="text-red-500">
-                      <strong>Khuyến mãi còn 280$ /1 áo - 350$ /1 bộ</strong>
+                      <strong>
+                        Khuyến mãi còn {formatPrice(280000)} /1 áo -{" "}
+                        {formatPrice(350000)} /1 bộ
+                      </strong>
                     </span>
                     -
                     <span className="text-red-500">
                       <strong>
-                        Từ 5 bộ trở lên: 270$/ 1 áo - 340$/ 1 bộ
+                        Từ 5 bộ trở lên: {formatPrice(270000)}/ 1 áo -{" "}
+                        {formatPrice(340000)}/ 1 bộ
                         <img src={BannerIn} alt="banner-keu-goi-in" />
                       </strong>
                     </span>

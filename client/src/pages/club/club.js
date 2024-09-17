@@ -8,6 +8,7 @@ import Loadding from "../../components/loadding/Loadding";
 import product_coming from "../../assets/product_coming-soon.jpg";
 import { useParams } from "react-router-dom";
 import { getClubBySlug } from "../../apis/club";
+import { formatPrice } from "../../utils/forrmatPriceVn";
 
 function Club() {
   const { slug } = useParams();
@@ -62,9 +63,11 @@ function Club() {
                     <p className="text-gray-200">{data.productId[0].name}</p>
                     <p className="text-gray-400 ">
                       <span className="">
-                        <del className="mx-1">330.000$</del>
+                        <del className="mx-1">{formatPrice(330000)}</del>
                         <ins className="mx-1 text-white">
-                          <strong>{data.productId[0].price}$</strong>
+                          <strong>
+                            {formatPrice(Number(data.productId[0].price))}
+                          </strong>
                         </ins>
                       </span>
                     </p>
@@ -112,9 +115,11 @@ function Club() {
 
                     <p className="text-gray-400 ">
                       <span className="">
-                        <del className="mx-1">330.000$</del>
+                        <del className="mx-1">{formatPrice(330000)}</del>
                         <ins className="mx-1 text-white">
-                          <strong>{data.productId[0].price}$</strong>
+                          <strong>
+                            {formatPrice(Number(data.productId[0].price))}
+                          </strong>
                         </ins>
                       </span>
                     </p>
@@ -155,9 +160,9 @@ function Club() {
                     </a>
                     <p className="text-gray-400 ">
                       <span className="">
-                        <del className="mx-1">330.000$</del>
+                        <del className="mx-1">{formatPrice(330000)}</del>
                         <ins className="mx-1 text-white">
-                          <strong>280.000$</strong>
+                          <strong>{formatPrice(280000)}</strong>
                         </ins>
                       </span>
                     </p>

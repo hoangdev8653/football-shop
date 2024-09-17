@@ -5,6 +5,7 @@ import styles from "./cart.module.scss";
 import Button from "../../../components/button";
 import { toast } from "react-toastify";
 import { cartStore } from "../../../store/cartStore";
+import { formatPrice } from "../../../utils/forrmatPriceVn";
 
 function Cart() {
   const [isOpen, setIsOpen] = useState(false);
@@ -94,7 +95,8 @@ function Cart() {
                             {item.productId.name}
                           </p>
                           <p className="text-gray-300 font-medium mb-1">
-                            {item.productId.price} * {item.quantity}
+                            {formatPrice(item.productId.price)} *{" "}
+                            {item.quantity}
                           </p>
                         </div>
                       </a>
@@ -112,7 +114,7 @@ function Cart() {
                   <div className="text-center mx-auto border-b-[1px] border-t-[1px] border-gray-400">
                     <p className="font-bold text-gray-500 my-2">
                       <span className="">Subtotal: </span>
-                      <span className="">{totalPrice}$</span>
+                      <span className="">{formatPrice(totalPrice)}</span>
                     </p>
                   </div>
                   <div className="mt-2 pb-8">

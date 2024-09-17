@@ -1,17 +1,28 @@
 import React from "react";
 import generateInvoicePDF from "./generateInvoicePDF";
-import jsPDF from "jspdf";
 
 const InvoiceApp = () => {
   const handleGeneratePDF = () => {
     const invoiceData = {
-      customer: "John Doe",
-      date: "2024-09-16",
+      number: "12345",
+      date: "16/06/2025",
+      customerName: "Trịnh Thanh Huyền",
+      customerPhone: "+84 912 345 678",
+      customerAddress: "123 Đường ABC, Thành phố DEF",
       products: [
-        { name: "Product 1", price: 100 },
-        { name: "Product 2", price: 200 },
+        { name: "Đột huấn luyện cơ bụng 30 ngày", qty: 1, price: 3000000 },
+        { name: "Tạ bình với DKY - Trọng lượng 9 kg", qty: 2, price: 3000000 },
+        {
+          name: "Tạ bình với DKY - Trọng lượng 4.5 kg",
+          qty: 1,
+          price: 3000000,
+        },
       ],
-      total: 300,
+      total: 12000000,
+      bankName: "Ngân hàng Bình An",
+      accountName: "Công ty Cổng Vàng",
+      accountNumber: "123456789",
+      paymentDue: "05/07/2025",
     };
 
     // Tạo file PDF bằng jsPDF

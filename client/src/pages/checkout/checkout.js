@@ -8,13 +8,12 @@ import { useFormik } from "formik";
 import { checkoutValidate } from "../../validations/checkout";
 import { getUserCurrent } from "../../apis/auth";
 import Payment from "./payment/payment";
-import { redirect } from "react-router-dom";
+import { formatPrice } from "../../utils/forrmatPriceVn";
 
 function Checkout() {
   const [cart, setCart] = useState([]);
   const [data, setData] = useState("");
-  // const [{ options, isPending }, dispatch] = usePayPalScriptReducer();
-  // const [currency, setCurrency] = useState(options.currency)
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -40,9 +39,6 @@ function Checkout() {
     },
     validationSchema: checkoutValidate,
   });
-  // if (cart.length <= 0) {
-  //   return redirect("/cart");
-  // }
   return (
     <div className={styles.checkout}>
       <div className="max-w-[1050px] mx-auto">
@@ -105,13 +101,7 @@ function Checkout() {
                 />
               </div>
               {formik.touched.username && formik.errors.username && (
-                <div
-                  style={{
-                    color: "red",
-                    textAlign: "center",
-                    fontWeight: "500",
-                  }}
-                >
+                <div className="text-red-500 text-center font-medium">
                   {formik.errors.username}
                 </div>
               )}
@@ -130,13 +120,7 @@ function Checkout() {
                 />
               </div>
               {formik.touched.street && formik.errors.street && (
-                <div
-                  style={{
-                    color: "red",
-                    textAlign: "center",
-                    fontWeight: "500",
-                  }}
-                >
+                <div className="text-red-500 text-center font-medium">
                   {formik.errors.street}
                 </div>
               )}
@@ -152,13 +136,7 @@ function Checkout() {
                   onBlur={formik.handleBlur}
                 />
                 {formik.touched.phonenumber && formik.errors.phonenumber && (
-                  <div
-                    style={{
-                      color: "red",
-                      textAlign: "center",
-                      fontWeight: "500",
-                    }}
-                  >
+                  <div className="text-red-500 text-center font-medium">
                     {formik.errors.phonenumber}
                   </div>
                 )}
@@ -175,13 +153,7 @@ function Checkout() {
                   onBlur={formik.handleBlur}
                 />
                 {formik.touched.email && formik.errors.email && (
-                  <div
-                    style={{
-                      color: "red",
-                      textAlign: "center",
-                      fontWeight: "500",
-                    }}
-                  >
+                  <div className="text-red-500 text-center font-medium">
                     {formik.errors.email}
                   </div>
                 )}
@@ -221,23 +193,24 @@ function Checkout() {
                       <p className="my-1 opacity-60 uppercase  font-bold">
                         {item.productId.name}
                         <span className="text-black opacity-100 font-bold">
-                          {" "}
                           × {item.quantity}
                         </span>
                       </p>
                       <p className="my-1 pl-4">
-                        {parseInt(item.productId.price) * item.quantity}$
+                        {formatPrice(
+                          parseInt(item.productId.price) * item.quantity
+                        )}
                       </p>
                     </div>
                   ))}
 
                 <div className="font-medium justify-between flex border-b-[1px] border-solid border-gray-300 my-1">
                   <p className="my-1 font-medium">Subtotal</p>
-                  <p className="my-1">{data.totalPrice}$</p>
+                  <p className="my-1">{formatPrice(data.totalPrice)}</p>
                 </div>
                 <div className="font-medium justify-between mb-8 flex border-b-[1px] border-solid border-gray-300 my-1">
                   <p className="my--1 font-medium">Total</p>
-                  <p className="my-1">{data.totalPrice}$</p>
+                  <p className="my-1">{formatPrice(data.totalPrice)}</p>
                 </div>
                 {Object.keys(formik.errors).length === 0 && (
                   <Payment

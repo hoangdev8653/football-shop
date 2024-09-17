@@ -33,7 +33,7 @@ function Section() {
         <div className="flex flex-wrap justify-center">
           {data &&
             data.map((item, index) => (
-              <div key={index} className="max-w-[132px] relative flex ">
+              <div key={index} className="max-w-[130px] relative flex ">
                 <div className="ml-auto p-[15px] relative ">
                   <a href={`/club/${item.slug}`} target="_blank">
                     <img src={item.logo} alt="logo" />
