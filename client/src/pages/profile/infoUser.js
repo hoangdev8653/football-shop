@@ -11,7 +11,6 @@ import Loadding from "../../components/loadding/Loadding";
 function InfoUser() {
   const { updateUser, isLoading } = userStore();
   const user = getLocalStorage("user");
-  const token = getLocalStorage("accessToken");
   const fileInputRef = useRef(null);
   const avatarImageRef = useRef(null);
   const [currentImage, setCurrentImage] = useState(

@@ -24,7 +24,6 @@ function Profile() {
           </div>
         </div>
       </div>
-      <InvoiceApp />
     </div>
   );
 }

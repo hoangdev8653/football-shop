@@ -10,10 +10,10 @@ import WishList from "../../components/wishList";
 import { productStore } from "../../store/productStore";
 import { formatPrice } from "../../utils/forrmatPriceVn";
 import { getProductAccessory } from "../../apis/product";
+import product_coming from "../../assets/product_coming-soon.jpg";
 
 function ProductNoLogo() {
   const { getProductNoLogo, data } = productStore();
-
   const [accessory, setAccessory] = useState([]);
 
   useEffect(() => {
@@ -84,7 +84,10 @@ function ProductNoLogo() {
                       alt={item.slug}
                     />
                     <div className={styles.overlay}>
-                      <img src={item.image[1]} alt={item.slug} />
+                      <img
+                        src={item.image[1] || product_coming}
+                        alt={item.slug}
+                      />
                     </div>
                     <div
                       style={{

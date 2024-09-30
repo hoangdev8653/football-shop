@@ -7,7 +7,7 @@ import { getkey, setKey } from "../configs/redis.js";
 const getAllUser = async (req, res) => {
   try {
     const user = await userServices.getAllUser();
-    res.status(StatusCodes.OK).json({
+    return res.status(StatusCodes.OK).json({
       status: 200,
       message: "Xử lý thành công",
       content: user,

@@ -1,46 +1,109 @@
+// import React from "react";
+// import { jsPDF } from "jspdf";
+// import { FaFileInvoiceDollar } from "react-icons/fa";
+// import formatDate from "../../utils/formatDate";
+
+// const Invoice = ({ item }) => {
+//   const generatePDF = () => {
+//     let value;
+//     if (item !== null) {
+//       console.log(item);
+
+//       value = item;
+
+//       const doc = new jsPDF();
+//       // Thông tin hóa đơn
+//       const companyName = "Football Shop";
+//       const productName = "Áo bóng đá";
+//       const quantity = 2;
+//       const totalPrice = 500000;
+//       const date = formatDate(value.orderDate);
+
+//       // Tạo PDF
+//       doc.setFontSize(18);
+//       doc.text("CÔNG TY H7SPORT", 60, 20);
+//       doc.setFontSize(12);
+//       doc.text("Thôn Vạn Lăng, Xã Cẩm Thanh, Hội An", 30, 10);
+
+//       doc.setFontSize(12);
+//       doc.text(`Ngày: ${date}`, 20, 30);
+//       doc.text(`Tên công ty: ${companyName}`, 20, 40);
+
+//       doc.text("Chi tiết sản phẩm:", 20, 60);
+//       doc.text(`Tên sản phẩm: ${productName}`, 20, 70);
+//       doc.text(`Số lượng: ${quantity}`, 20, 80);
+//       doc.text(`Tổng tiền: ${totalPrice} VND`, 20, 90);
+
+//       // Tải xuống file PDF
+//       doc.save("invoice.pdf");
+//     }
+//   };
+
+//   return (
+//     <div>
+//       <div>
+//         <FaFileInvoiceDollar
+//           onClick={generatePDF}
+//           className="text-center m-auto"
+//         />
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default Invoice;
+
 import React from "react";
-import generateInvoicePDF from "./generateInvoicePDF";
+import { jsPDF } from "jspdf";
+import { FaFileInvoiceDollar } from "react-icons/fa";
+import formatDate from "../../utils/formatDate";
 
-const InvoiceApp = () => {
-  const handleGeneratePDF = () => {
-    const invoiceData = {
-      number: "12345",
-      date: "16/06/2025",
-      customerName: "Trịnh Thanh Huyền",
-      customerPhone: "+84 912 345 678",
-      customerAddress: "123 Đường ABC, Thành phố DEF",
-      products: [
-        { name: "Đột huấn luyện cơ bụng 30 ngày", qty: 1, price: 3000000 },
-        { name: "Tạ bình với DKY - Trọng lượng 9 kg", qty: 2, price: 3000000 },
-        {
-          name: "Tạ bình với DKY - Trọng lượng 4.5 kg",
-          qty: 1,
-          price: 3000000,
-        },
-      ],
-      total: 12000000,
-      bankName: "Ngân hàng Bình An",
-      accountName: "Công ty Cổng Vàng",
-      accountNumber: "123456789",
-      paymentDue: "05/07/2025",
-    };
+const Invoice = ({ item }) => {
+  const generatePDF = () => {
+    if (!item) {
+      return;
+    }
 
-    // Tạo file PDF bằng jsPDF
-    const doc = generateInvoicePDF(invoiceData);
+    const doc = new jsPDF();
+    const date = formatDate(item.orderDate);
 
-    // Tạo Blob từ PDF để mở trong tab mới
-    const pdfBlob = doc.output("blob");
-    const pdfUrl = URL.createObjectURL(pdfBlob);
+    doc.setFontSize(18);
+    doc.text("CÔNG TY H7SPORT", 60, 20);
+    doc.setFontSize(12);
+    doc.text("Thôn Vạn Lăng, Xã Cẩm Thanh, Hội An", 30, 10);
 
-    // Mở trang mới với file PDF
-    window.open(pdfUrl, "_blank");
+    doc.setFontSize(12);
+    doc.text(`Ngày: ${date}`, 20, 30);
+    doc.text(`Mã đơn hàng: ${item._id}`, 20, 40);
+    doc.text(`Địa chỉ nhận hàng: ${item.address}`, 20, 50);
+    doc.text(`Trạng thái: ${item.status}`, 20, 60);
+    doc.text(`Tổng tiền: ${item.totalAmount} VND`, 20, 70);
+
+    doc.text("Chi tiết sản phẩm:", 20, 90);
+
+    item.cart.forEach((product, index) => {
+      const productName = product.productId.name;
+      const productQuantity = product.quantity;
+      const productPrice = product.productId.price;
+
+      doc.text(`Sản phẩm: ${productName}`, 20, 100 + index * 10);
+      doc.text(`Số lượng: ${productQuantity}`, 20, 110 + index * 10);
+      doc.text(`Giá: ${productPrice} VND`, 20, 120 + index * 10);
+    });
+
+    doc.save("invoice.pdf");
   };
 
   return (
     <div>
-      <button onClick={handleGeneratePDF}>Generate Invoice PDF</button>
+      <div>
+        <FaFileInvoiceDollar
+          onClick={generatePDF}
+          className="text-center m-auto cursor-pointer"
+        />
+      </div>
     </div>
   );
 };
 
-export default InvoiceApp;
+export default Invoice;

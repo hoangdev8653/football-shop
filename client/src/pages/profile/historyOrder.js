@@ -3,11 +3,14 @@ import Button from "../../components/button";
 import { getLocalStorage } from "../../utils/LocalStorage";
 import formatDate from "../../utils/formatDate";
 import { userStore } from "../../store/userStore";
+import { formatPrice } from "../../utils/forrmatPriceVn";
+import Invoice from "../../pages/pdf/Invoice";
 
 function HistoryOrder() {
   const token = getLocalStorage("accessToken");
   const { user, getHistoryOrder } = userStore();
   const [showMore, setShowMore] = useState(false);
+  const [oneItem, setOneItem] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -37,6 +40,7 @@ function HistoryOrder() {
                 <th className="text-center">Địa chỉ nhận hàng</th>
                 <th className="text-center">Tổng tiền</th>
                 <th className="text-center">Trạng thái </th>
+                <th className="text-center">Hóa đơn </th>
               </tr>
             </thead>
             <tbody>
@@ -55,17 +59,30 @@ function HistoryOrder() {
                             {item.productId.name}
                           </p>
                           <p className="text-red-500 mx-2">
-                            {item.productId.price}$ * {item.quantity}
+                            {formatPrice(Number(item.productId.price))} *{" "}
+                            {item.quantity}
                           </p>
                         </div>
                       </div>
                     ))}
                   </td>
                   <td className="text-center">{item.address}</td>
-                  <td className="text-center">{item.totalAmount}$</td>
+                  <td className="text-center">
+                    {formatPrice(Number(item.totalAmount))}
+                  </td>
                   <td className="text-center">
                     <p>{item.status}</p>
                     <p> {formatDate(item.orderDate)}</p>
+                  </td>
+                  <td
+                    onClick={() => setOneItem(item)}
+                    className="text-center cursor-pointer text-2xl"
+                  >
+                    <Invoice
+                      item={
+                        oneItem && oneItem._id === item._id ? oneItem : null
+                      }
+                    />
                   </td>
                 </tr>
               ))}

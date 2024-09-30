@@ -206,11 +206,11 @@ function Checkout() {
 
                 <div className="font-medium justify-between flex border-b-[1px] border-solid border-gray-300 my-1">
                   <p className="my-1 font-medium">Subtotal</p>
-                  <p className="my-1">{formatPrice(data.totalPrice)}</p>
+                  <p className="my-1">{formatPrice(Number(data.totalPrice))}</p>
                 </div>
                 <div className="font-medium justify-between mb-8 flex border-b-[1px] border-solid border-gray-300 my-1">
                   <p className="my--1 font-medium">Total</p>
-                  <p className="my-1">{formatPrice(data.totalPrice)}</p>
+                  <p className="my-1">{formatPrice(Number(data.totalPrice))}</p>
                 </div>
                 {Object.keys(formik.errors).length === 0 && (
                   <Payment
@@ -219,9 +219,9 @@ function Checkout() {
                   />
                 )}
                 <p className="my-4">
-                  Sau khi hoàn tất đặt hàng. SPorter sẽ gọi điện để tư vấn size
+                  Sau khi hoàn tất đặt hàng. H7sport sẽ gọi điện để tư vấn size
                   và chốt đơn để tránh đơn hàng chọn nhầm Size. Hoặc khách hàng
-                  nhắn Zalo (0936777554) cho SPorter nếu có nhu cầu đặt in cho
+                  nhắn Zalo (0766640006) cho H7sport nếu có nhu cầu đặt in cho
                   trang phục thi đấu nhé.
                 </p>
               </div>
