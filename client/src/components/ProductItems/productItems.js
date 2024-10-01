@@ -4,6 +4,7 @@ import styles from "./productItems.module.scss";
 import Discount from "../discount";
 import WishList from "../wishList";
 import { formatPrice } from "../../utils/forrmatPriceVn";
+import product_coming from "../../assets/product_coming-soon.jpg";
 
 function ProductItems({ itemToShow = 5, data }) {
   const [idProduct, setIdProduct] = useState(null);
@@ -55,11 +56,15 @@ function ProductItems({ itemToShow = 5, data }) {
               <a href={`/product/${item.slug}`}>
                 <img
                   className={styles.image}
-                  src={item.image[0]}
+                  src={item.image[0] || product_coming}
                   alt={item.slug}
                 />
                 <div className={styles.overlay}>
-                  <img className="h-full" src={item.image[1]} alt={item.slug} />
+                  <img
+                    className="h-full"
+                    src={item.image[1] || product_coming}
+                    alt={item.slug}
+                  />
                 </div>
                 <div
                   style={{

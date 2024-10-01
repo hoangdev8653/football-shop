@@ -2,7 +2,6 @@ import styles from "./profile.module.scss";
 import { Tabs, Tab } from "./Tabs/Tabs";
 import HistoryOrder from "./historyOrder";
 import InfoUser from "./infoUser";
-import InvoiceApp from "../pdf/Invoice";
 
 function Profile() {
   return (

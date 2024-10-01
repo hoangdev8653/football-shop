@@ -3,6 +3,7 @@ import { BsSearch } from "react-icons/bs";
 import styles from "./modal.module.scss";
 import { getProductByKey } from "../../../apis/product";
 import { useDebounce } from "../../../hooks/useDebounce";
+
 function Modal() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [valueSearch, setValueSearch] = useState("");
@@ -35,6 +36,7 @@ function Modal() {
   const handleClickOutside = (event) => {
     if (modalRef.current && !modalRef.current.contains(event.target)) {
       setIsModalOpen(false);
+      setValueSearch("");
     }
   };
 
@@ -55,6 +57,7 @@ function Modal() {
     setValueSearch(value);
   };
   console.log(valueSearch);
+
   return (
     <div className="relative">
       <BsSearch

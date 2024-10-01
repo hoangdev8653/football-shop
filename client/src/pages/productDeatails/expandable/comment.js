@@ -17,19 +17,14 @@ function Comment({ data }) {
     deleteReview,
     data: content,
     averageRating,
-    totalRating,
-    ratingLength,
     isLoading,
-    like,
   } = reviewStore();
 
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
   const [filterStar, setFilterStar] = useState(0);
   const user = getLocalStorage("user");
-  // const handleLikeComment = () => {
-  //   setLike(!like);
-  // };
+
   const handleChangeRating = (value) => {
     setRating(value);
   };
@@ -46,11 +41,7 @@ function Comment({ data }) {
   const commentApi = async () => {
     try {
       await createReview({ productId, rating, comment });
-      setTimeout(() => {
-        console.log("số lượng cmt: ", ratingLength);
-        console.log("tổng sao: ", totalRating);
-        console.log("trung bình: ", averageRating);
-      }, 3000);
+      setRating(0);
     } catch (error) {
       console.log(error.message);
     }
@@ -66,9 +57,6 @@ function Comment({ data }) {
 
   useEffect(() => {
     getReviewsByProduct(productId);
-    console.log("số lượng cmt: ", ratingLength);
-    console.log("tổng sao: ", totalRating);
-    console.log("trung bình: ", averageRating);
   }, [productId, getReviewsByProduct]);
 
   return (
@@ -124,7 +112,7 @@ function Comment({ data }) {
                 <div className="w-full cursor-pointer relative max-w-xl">
                   <span style={{ top: "20%", left: "3%" }} className="absolute">
                     <img
-                      className="w-9 h-9 rounded-3xl"
+                      className="rounded-full w-[40px] h-[40px] object-cover "
                       src={user ? user.image : avatarDefault}
                       alt="avatar"
                     />
@@ -135,7 +123,7 @@ function Comment({ data }) {
                       border: "1px solid #e8e8e9",
                       padding: "6px 150px 10px 60px",
                     }}
-                    className="text-gray-700 w-full cursor-pointer bg-white h-[60px] rounded text-sm outline-none"
+                    className="text-gray-700 w-full cursor-pointer bg-white h-[60px] rounded text-sm outline-none mx-1"
                     type="text"
                     placeholder="Nhận xét về sản phẩm?"
                   />
@@ -167,7 +155,7 @@ function Comment({ data }) {
                     {filteredComments.map((item, index) => (
                       <div
                         key={index}
-                        className="flex border-b-[1px] border-gray-400 mt-2"
+                        className="flex border-b-[1px] border-gray-300 mt-2"
                       >
                         <img
                           className="rounded-full w-[50px] h-[50px] object-cover"
@@ -180,13 +168,7 @@ function Comment({ data }) {
                           <p className="text-xs">{FormatDate(item.time)}</p>
                           <p className="my-1">{item.comment}</p>
                           <div className="flex opacity-60 gap-1 mb-2">
-                            <AiTwotoneLike
-                              style={
-                                like ? { color: "red" } : { color: "gray" }
-                              }
-                              // onClick={handleLikeComment}
-                              className="text-xl cursor-pointer"
-                            />
+                            <AiTwotoneLike className="text-xl cursor-pointer" />
                             <span className="text-sm">
                               {item.like !== 0 ? item.like : ""}
                             </span>

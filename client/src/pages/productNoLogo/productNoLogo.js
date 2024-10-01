@@ -80,7 +80,7 @@ function ProductNoLogo() {
                   <div key={index} className={styles.container}>
                     <img
                       className={styles.image}
-                      src={item.image[0]}
+                      src={item.image[0] || product_coming}
                       alt={item.slug}
                     />
                     <div className={styles.overlay}>

@@ -91,7 +91,7 @@ function ProductDeatails() {
                       alt={data.slug}
                     />
                     <img
-                      className="w-full h-full"
+                      className="w-full h-[700px]"
                       src={data?.image[1] || image_comming_soon}
                       alt={data.slug}
                     />
