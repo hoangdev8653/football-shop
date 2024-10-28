@@ -1,26 +1,26 @@
 import { Route, Routes } from "react-router-dom";
 import { path } from "./utils/path";
-import Layout from "./templates/layout";
-import Home from "./pages/home/home";
-import Cart from "./pages/cart/cart";
-import ProductDeatails from "./pages/productDeatails/productDeatails";
-import ProductClb from "./pages/productClb/productClb";
-import ProductNation from "./pages/productNation/productNation";
-import ProductNoLogo from "./pages/productNoLogo/productNoLogo";
-import Blog from "./pages/blog/blog";
-import SearchProduct from "./pages/searchProduct/searchProduct";
-import Club from "./pages/club/club";
+import Layout from "./templates/user/layout";
+import Home from "./pages/user/home/home";
+import Cart from "./pages/user/cart/cart";
+import ProductDeatails from "./pages/user/productDeatails/productDeatails";
+import ProductClb from "./pages/user/productClb/productClb";
+import ProductNation from "./pages/user/productNation/productNation";
+import ProductNoLogo from "./pages/user/productNoLogo/productNoLogo";
+import Blog from "./pages/user/blog/blog";
+import SearchProduct from "./pages/user/searchProduct/searchProduct";
+import Club from "./pages/user/club/club";
 
 import Login from "./components/login";
-import NotFound from "./pages/404";
-import Profile from "./pages/profile/profile";
-import ChangePassword from "./pages/profile/changePassword";
+import NotFound from "./pages/user/404";
+import Profile from "./pages/user/profile/profile";
+import ChangePassword from "./pages/user/profile/changePassword";
 import Register from "./components/register";
-import CheckOut from "./pages/checkout/checkout";
-import OrderComplete from "./pages/orderComplete/orderComplete";
-import ForgotPassword from "./pages/ForgotPassword";
-import ResetPassword from "./pages/ResetPassword";
-import WhishList from "./pages/whishList";
+import CheckOut from "./pages/user/checkout/checkout";
+import OrderComplete from "./pages/user/orderComplete/orderComplete";
+import ForgotPassword from "./pages/user/ForgotPassword";
+import ResetPassword from "./pages/user/ResetPassword";
+import WhishList from "./pages/user/whishList";
 // import { io } from "socket.io-client";
 
 function App() {

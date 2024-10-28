@@ -3,7 +3,7 @@ import bcrypt, { hashSync } from "bcrypt";
 import { generateTokens } from "../Utils/generateTokens.js";
 import { verifyRefreshToken } from "../middlewares/verifyRefreshToken.js";
 import ProductModel from "../models/product.js";
-import { setKey, getkey, deleteKey } from "../configs/redis.js";
+// import { setKey, getkey, deleteKey } from "../configs/redis.js";
 import jwt from "jsonwebtoken";
 import { sendMail } from "../Utils/sendMail.js";
 
@@ -141,7 +141,7 @@ const findUser = async (id) => {
   if (!user) {
     throw { Error: "Không tồn tại user" };
   }
-  getkey(`refreshToken_${id}`);
+  // getkey(`refreshToken_${id}`);
 
   return await user;
 };
@@ -157,7 +157,7 @@ const login = async ({ email, password }) => {
       throw Error("Mật khẩu không chính xác");
     }
     const { accessToken, refreshToken } = generateTokens(user?.id);
-    setKey(`refreshToken_${user.id}`, refreshToken);
+    // setKey(`refreshToken_${user.id}`, refreshToken);
     return { accessToken, refreshToken, user };
   } catch (error) {
     console.log(error);
@@ -228,7 +228,7 @@ const deleteUser = async (id) => {
 const refreshToken = async (refreshToken) => {
   const { userId } = await verifyRefreshToken(refreshToken);
   const newToken = generateTokens(userId);
-  setKey(`refreshToken_${userId}`, newToken.refreshToken);
+  // setKey(`refreshToken_${userId}`, newToken.refreshToken);
   return newToken;
 };
 
@@ -308,7 +308,7 @@ const logOut = async (id) => {
     if (!exitsUser) {
       throw new Error("User Not Found");
     }
-    deleteKey(`refreshToken_${id}`);
+    // deleteKey(`refreshToken_${id}`);
     return exitsUser;
   } catch (error) {
     console.log(error);

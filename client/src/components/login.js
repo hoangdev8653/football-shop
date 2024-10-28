@@ -17,8 +17,8 @@ function Login() {
     validationSchema: loginValidate,
     onSubmit: async (values) => {
       try {
-        const error = await login(values);
-        if (error === null) {
+        const value = await login(values);
+        if (value === null) {
           setTimeout(() => {
             nvg("/");
           }, 3000);
