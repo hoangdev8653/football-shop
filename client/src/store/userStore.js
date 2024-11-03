@@ -209,4 +209,21 @@ export const userStore = create((set) => ({
       set({ error: error.message });
     }
   },
+  deleteUser: async (id) => {
+    try {
+      set({ isLoading: true });
+      const response = await deleteUser(id);
+      if (response.status === 200) {
+        toast.success("Xóa thành công");
+        set((state) => ({
+          isLoading: false,
+          user: state.user.filter((user) => user._id !== id),
+        }));
+      }
+    } catch (error) {
+      toast.error("Xóa thất bại");
+      console.log(error);
+      set({ error: error.message });
+    }
+  },
 }));

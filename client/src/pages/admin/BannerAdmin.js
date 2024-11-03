@@ -7,6 +7,7 @@ import Modal from "../../components/modal";
 import { bannerValidate } from "../../validations/banner";
 import { useFormik } from "formik";
 import Product_deafaut from "../../assets/default-image-product.png";
+import { Link } from "react-router-dom";
 
 function BannerAdmin() {
   const [currentImage, setCurrentImage] = useState([Product_deafaut]);
@@ -95,7 +96,12 @@ function BannerAdmin() {
 
   return (
     <div className="w-full h-full">
-      <div className="mt-8 ml-8 text-2xl font-medium">Banner</div>
+      <div className="flex justify-between">
+        <div className="mt-8 ml-8 text-2xl font-medium">Banner</div>
+        <div className="mt-8 mr-8 text-2xl font-medium">
+          <Link to="/dashboard/banner/add-new">Add New</Link>
+        </div>
+      </div>
       <div className="relative overflow-x-auto sm:rounded-md my-2 mx-8">
         <table
           style={{
@@ -178,8 +184,7 @@ function BannerAdmin() {
                           </h2>
 
                           <div className="grid grid-cols-2 gap-6 w-full border-gray-400">
-                            {/* Tên sản phẩm */}
-                            <div className="flex flex-col gap-2">
+                            <div className="flex flex-col gap-4">
                               <label className="text-gray-600 dark:text-gray-400">
                                 Tên Banner
                               </label>

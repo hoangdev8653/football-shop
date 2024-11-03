@@ -7,7 +7,7 @@ import Modal from "../../components/modal";
 import { useFormik } from "formik";
 import { formatPrice } from "../../utils/forrmatPriceVn";
 import { updateProuctValidate } from "../../validations/product";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function ProductAdmin() {
   const [currentItems, setCurrentItems] = useState([]);
@@ -79,7 +79,12 @@ function ProductAdmin() {
 
   return (
     <div className="w-full h-full">
-      <div className="mt-8 ml-8 text-2xl font-medium">Product</div>
+      <div className="flex justify-between">
+        <div className="mt-8 ml-8 text-2xl font-medium">Product</div>
+        <div className="mt-8 mr-8 text-2xl font-medium hover:opacity-60">
+          <Link to="/dashboard/product/add-new">Add New</Link>
+        </div>
+      </div>
       <div className="relative overflow-x-auto sm:rounded-md my-2 mx-8">
         <table
           style={{
@@ -140,9 +145,7 @@ function ProductAdmin() {
                     {item?.categoryId?.name}
                   </td>
                   <td className="px-4 py-2 flex gap-1 my-20 text-center ">
-                    <span className="font-medium  hover:underline hover:opacity-60 cursor-pointer">
-                      <FiPlus className="text-2xl" />
-                    </span>
+                    <span className="font-medium  hover:underline hover:opacity-60 cursor-pointer"></span>
                     <span
                       onClick={() => handleOpenModal(item)}
                       className="font-medium  hover:underline hover:opacity-60 cursor-pointer"

@@ -57,7 +57,7 @@ export const blogStore = create((set) => ({
       if (response.status === 200) {
         set((state) => ({
           isLoading: false,
-          data: state.data.filter((item) => item.id !== id),
+          data: state.data.filter((item) => item._id !== id),
         }));
       }
     } catch (error) {

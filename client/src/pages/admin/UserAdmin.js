@@ -12,7 +12,7 @@ function UserAdmin() {
   const [currentUser, SetCurrentUser] = useState([]);
   const [openModal, SetOpenModal] = useState(false);
   const [id, setId] = useState("");
-  const { user, getAllUser, updateUserByAdmin } = userStore();
+  const { user, getAllUser, updateUserByAdmin, deleteUser } = userStore();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -36,14 +36,14 @@ function UserAdmin() {
       try {
         console.log(values);
 
-        // const error = await updateUserByAdmin(id, values);
-        // if (!error) {
-        //   setTimeout(() => {
-        //     window.location.reload();
-        //   }, 3000);
-        // } else {
-        //   SetOpenModal(false);
-        // }
+        const error = await updateUserByAdmin(id, values);
+        if (!error) {
+          setTimeout(() => {
+            window.location.reload();
+          }, 3000);
+        } else {
+          SetOpenModal(false);
+        }
       } catch (error) {
         console.error(error);
       }
@@ -64,9 +64,9 @@ function UserAdmin() {
     }
   };
 
-  useEffect(() => {
-    console.log(formik.values);
-  }, [formik.values]);
+  const handleDelete = (id) => {
+    deleteUser(id);
+  };
 
   return (
     <div className="w-full h-full">
@@ -131,7 +131,10 @@ function UserAdmin() {
                     >
                       <MdOutlineModeEditOutline className="text-2xl" />
                     </span>
-                    <span className="hover:opacity-70 cursor-pointer text-center">
+                    <span
+                      onClick={() => handleDelete(item._id)}
+                      className="hover:opacity-70 cursor-pointer text-center"
+                    >
                       <MdDeleteForever className="text-2xl" />
                     </span>
                   </td>
