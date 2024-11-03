@@ -208,7 +208,8 @@ const profile = async (id) => {
     authFacebookId: 0,
     authType: 0,
     role: 0,
-  }).populate("cart.productId", " -categoryId");
+  }).populate("cart.productId");
+  // console.log(user);
 
   if (!user) throw new Error("User not found");
 

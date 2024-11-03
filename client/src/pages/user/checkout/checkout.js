@@ -12,7 +12,10 @@ import { formatPrice } from "../../../utils/forrmatPriceVn";
 
 function Checkout() {
   const [cart, setCart] = useState([]);
-  const [data, setData] = useState("");
+  const [data, setData] = useState([]);
+  const [isDiscount, setIsDiscount] = useState();
+  const [disabledDiscount, setDisabledDiscount] = useState(true);
+  const [valueDiscount, setValueDiscount] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -35,10 +38,25 @@ function Checkout() {
       notes: "",
     },
     onSubmit: (values) => {
-      console.log(values);
+      // console.log(values);
     },
     validationSchema: checkoutValidate,
   });
+
+  const handleDiscount = (price) => {
+    setIsDiscount((price * 85) / 100);
+  };
+
+  const handleValueCode = (e) => {
+    setValueDiscount(e.target.value);
+  };
+  useEffect(() => {
+    setDisabledDiscount(valueDiscount.length < 6);
+    if (valueDiscount.length < 6) {
+      setIsDiscount(null);
+    }
+  }, [valueDiscount]);
+
   return (
     <div className={styles.checkout}>
       <div className="max-w-[1050px] mx-auto">
@@ -77,7 +95,7 @@ function Checkout() {
         </div>
         <div className={styles.discount}>
           <span>Have a coupon?</span>
-          <a href="/">
+          <a href="/checkout/coupon">
             <span className="text-orange-500 hover:opacity-60">
               Click here to enter your code
             </span>
@@ -208,16 +226,39 @@ function Checkout() {
                   <p className="my-1 font-medium">Subtotal</p>
                   <p className="my-1">{formatPrice(Number(data.totalPrice))}</p>
                 </div>
+                <div className="font-medium justify-between flex border-b-[1px] border-solid border-gray-300 my-1 ">
+                  <input
+                    onChange={(e) => handleValueCode(e)}
+                    className="my-1 p-1 border border-gray-600 "
+                    type="text"
+                    placeholder="Enter Discount code"
+                  />
+                  <button
+                    disabled={disabledDiscount}
+                    onClick={() => handleDiscount(data.totalPrice)}
+                    className={`rounded px-4 border-gray-600  text-white ${
+                      disabledDiscount ? "bg-slate-500" : "bg-slate-800"
+                    }`}
+                  >
+                    Apply
+                  </button>
+                </div>
                 <div className="font-medium justify-between mb-8 flex border-b-[1px] border-solid border-gray-300 my-1">
                   <p className="my--1 font-medium">Total</p>
-                  <p className="my-1">{formatPrice(Number(data.totalPrice))}</p>
+                  {isDiscount ? (
+                    <>
+                      <p className="my-1">{formatPrice(Number(isDiscount))}</p>
+                    </>
+                  ) : (
+                    <p className="my-1">
+                      {formatPrice(Number(data.totalPrice))}
+                    </p>
+                  )}
                 </div>
-                {/* {Object.keys(formik.errors).length === 0 && ( */}
                 <Payment
                   address={formik.values.street}
-                  totalPrice={data.totalPrice}
+                  totalPrice={isDiscount ? isDiscount : data.totalPrice}
                 />
-                {/* )} */}
                 <p className="my-4">
                   Sau khi hoàn tất đặt hàng. H7sport sẽ gọi điện để tư vấn size
                   và chốt đơn để tránh đơn hàng chọn nhầm Size. Hoặc khách hàng

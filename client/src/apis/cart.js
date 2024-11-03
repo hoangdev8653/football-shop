@@ -1,14 +1,11 @@
 import { axiosConfig } from "../axiosConfig";
 
-export const addProduct = async (data, token) => {
+export const addProduct = async (data) => {
+  console.log(data);
   return await axiosConfig({
     url: "/user/createCart",
     method: "post",
     data,
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
   });
 };
 

@@ -225,6 +225,8 @@ const deleteUser = async (req, res) => {
 const profileUser = async (req, res) => {
   try {
     const id = req.userId;
+    console.log(id);
+
     const user = await userServices.profile(id);
     return res
       .status(StatusCodes.OK)

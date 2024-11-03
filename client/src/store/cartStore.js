@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { addProduct, deleteProduct } from "../apis/cart";
 import { getUserCurrent } from "../apis/auth";
+import { toast } from "react-toastify";
 export const cartStore = create((set) => ({
   data: [],
   error: null,
@@ -20,12 +21,14 @@ export const cartStore = create((set) => ({
 
   addProduct: async (productData) => {
     try {
+      console.log(productData);
       set({ isLoading: true });
       const response = await addProduct(productData);
+      console.log(response);
+
       set((state) => ({
-        data: response.data.content.cart, // Update cart data with the new data from response
         isLoading: false,
-        error: null,
+        data: [...state.data, response.data.content],
       }));
     } catch (error) {
       console.log(error);
@@ -38,13 +41,17 @@ export const cartStore = create((set) => ({
       set({ isLoading: true });
       const response = await deleteProduct(productId);
       console.log(response);
-      set((state) => ({
-        data: state.data.filter((item) => item.productId._id !== productId),
-        isLoading: false,
-        error: null,
-      }));
+      if (response.status === 200) {
+        toast.success("Xóa thành công");
+        set((state) => ({
+          data: state.data.filter((item) => item.productId._id !== productId),
+          isLoading: false,
+        }));
+      }
     } catch (error) {
       console.log(error);
+      toast.error("Xóa thất bại");
+
       set({ error: error.message, isLoading: false });
     }
   },

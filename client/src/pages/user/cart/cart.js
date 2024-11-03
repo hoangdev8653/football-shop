@@ -4,7 +4,6 @@ import { IoIosCloseCircleOutline } from "react-icons/io";
 import { RiCoupon3Line } from "react-icons/ri";
 import styles from "./cart.module.scss";
 import Button from "../../../components/button";
-import { toast } from "react-toastify";
 import { userStore } from "../../../store/userStore";
 import { productStore } from "../../../store/productStore";
 import { formatPrice } from "../../../utils/forrmatPriceVn";
@@ -30,19 +29,15 @@ function Cart() {
 
   const handleDeleteProduct = async (productId) => {
     try {
-      const response = await deleteProduct(productId);
-      if (response.error) {
-        toast.error("Thất bại");
-      }
-      toast.success("Xóa sản phẩm thành công");
+      await deleteProduct(productId);
+
       setTimeout(() => {
         window.location.reload();
-      }, 2500);
+      }, 3000);
     } catch (error) {
       console.log("Error: ", error);
     }
   };
-  console.log(user);
 
   return (
     <div className="w-full bg-white">

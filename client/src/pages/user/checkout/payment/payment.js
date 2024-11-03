@@ -1,15 +1,14 @@
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import { createCheckout } from "../../../../apis/cart";
-import { getLocalStorage } from "../../../../utils/LocalStorage";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { useCallback } from "react";
 
 function Payment({ address, totalPrice }) {
   const navigate = useNavigate();
+  console.log(address);
 
-  const token = getLocalStorage("accessToken");
-
-  async function createOrder(data, actions) {
+  const createOrder = (data, actions) => {
     return actions.order.create({
       intent: "CAPTURE",
       purchase_units: [
@@ -21,28 +20,32 @@ function Payment({ address, totalPrice }) {
         },
       ],
     });
-  }
+  };
 
-  async function onApprove(data, actions) {
-    const order = await actions.order.capture();
-    if (order.status === "COMPLETED") {
-      try {
-        const response = await createCheckout({ address }, token);
-        console.log(response);
-        if (response.status === 201) {
-          toast.success("Đã Thanh toán thành công");
-          setTimeout(() => {
-            navigate("/");
-          }, 3000);
+  const onApprove = useCallback(
+    async (data, actions) => {
+      const order = await actions.order.capture();
+      if (order.status === "COMPLETED") {
+        try {
+          console.log("Address in onApprove:", address);
+
+          // const response = await createCheckout({ address });
+          // if (response.status === 201) {
+          //   toast.success("Đã Thanh toán thành công");
+          //   setTimeout(() => {
+          //     navigate("/");
+          //   }, 3000);
+          // }
+        } catch (error) {
+          console.error("Thất bại:", error);
+          toast.error("Thanh toán Thất bại");
         }
-      } catch (error) {
-        console.log("Thất bại: ", error);
+      } else {
         toast.error("Thanh toán Thất bại");
       }
-    } else {
-      toast.error("Thanh toán Thất bại");
-    }
-  }
+    },
+    [address, navigate] // Ensure `address` is captured with the latest value
+  );
 
   return (
     <PayPalScriptProvider>

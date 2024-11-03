@@ -9,33 +9,27 @@ import { formatPrice } from "../../../../utils/forrmatPriceVn";
 
 function Cart() {
   const [isOpen, setIsOpen] = useState(false);
-  const {
-    data: cart,
-    fetchCart,
-    deleteProduct,
-  } = cartStore((state) => ({
-    data: state.data,
-    fetchCart: state.fetchCart,
-    deleteProduct: state.deleteProduct,
-  }));
+
+  const cart = cartStore();
+
   const [checkCart, setCheckCart] = useState(false);
   useEffect(() => {
-    if (cart && cart.length > 0) {
+    if (cart.data && cart.data.length > 0) {
       setCheckCart(true);
     } else {
       setCheckCart(false);
     }
-  }, [cart]);
+  }, [cart.data]);
   useEffect(() => {
-    fetchCart();
+    cart.fetchCart();
   }, []);
-  const quantity = cart?.map((item) => item.quantity);
+  const quantity = cart.data?.map((item) => item.quantity);
   const totalQuantity = quantity.reduce(
     (value, curentValue) => value + curentValue,
     0
   );
-  const priceOneProduct = cart?.map(
-    (item) => item.quantity * item.productId.price
+  const priceOneProduct = cart.data?.map(
+    (item) => item.quantity * item.productId?.price
   );
   const totalPrice = priceOneProduct.reduce(
     (value, currentValue) => value + currentValue,
@@ -49,10 +43,10 @@ function Cart() {
     setIsOpen(false);
   };
 
-  const handleDelete = async (productId, quantity) => {
+  const handleDelete = async (productId) => {
     try {
-      await deleteProduct(productId);
-      toast.success("Xóa sản phẩm thành công");
+      await cart.deleteProduct(productId);
+      // toast.success("Xóa sản phẩm thành công");
       setTimeout(() => {
         window.location.reload();
       }, 2500);
@@ -75,28 +69,28 @@ function Cart() {
           <div className={styles.cart}>
             <div className="mx-4">
               <div className="max-h-[400px] overflow-y-auto">
-                {cart &&
-                  cart.map((item, index) => (
+                {cart.data &&
+                  cart.data?.map((item, index) => (
                     <div
                       key={index}
                       className="flex mt-4 border-b-[1px] border-gray-400 border-solid mb-2 "
                     >
                       <a
                         className="flex"
-                        href={`/product/${item.productId.slug}`}
+                        href={`/product/${item?.productId.slug}`}
                       >
                         <img
                           className="w-16 object-cover ml-1 h-[70px]"
-                          src={item.productId.image[0]}
-                          alt={item.slug}
+                          src={item?.productId.image[0]}
+                          alt={item?.slug}
                         />
                         <div className="mx-4 w-[100px] ">
                           <p className="text-orange-500 font-medium hover:text-white cursor-pointer uppercase">
-                            {item.productId.name}
+                            {item?.productId.name}
                           </p>
                           <p className="text-gray-300 font-medium mb-1">
-                            {formatPrice(item.productId.price)} *{" "}
-                            {item.quantity}
+                            {formatPrice(item?.productId.price)} *{" "}
+                            {item?.quantity}
                           </p>
                         </div>
                       </a>
@@ -109,7 +103,7 @@ function Cart() {
                     </div>
                   ))}
               </div>
-              {cart && checkCart === true ? (
+              {cart.data && checkCart === true ? (
                 <>
                   <div className="text-center mx-auto border-b-[1px] border-t-[1px] border-gray-400">
                     <p className="font-bold text-gray-500 my-2">

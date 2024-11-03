@@ -21,8 +21,6 @@ function ProductDeatails() {
   const { getProductBySlug, data, stockQuality } = productStore();
   const { addProduct } = cartStore();
   const { slug } = useParams();
-  const token = getLocalStorage("accessToken");
-  console.log(stockQuality);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -40,11 +38,11 @@ function ProductDeatails() {
   const handleSubmit = async () => {
     const productId = data?._id;
     const quantity = value;
+    console.log(quantity);
+    console.log(productId);
+
     try {
-      if (!token) {
-        throw new Error("Token is not Valid");
-      }
-      await addProduct({ productId, quantity }, token);
+      await addProduct({ productId, quantity });
       toast.success("Thêm sản phẩm vào giỏ hàng thành công");
       setTimeout(() => {
         window.location.reload();

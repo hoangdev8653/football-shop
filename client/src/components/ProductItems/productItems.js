@@ -51,7 +51,7 @@ function ProductItems({ itemToShow = 5, data }) {
     <div className="overflow-hidden bg-black">
       <Slider {...settings}>
         {data &&
-          data.map((item, index) => (
+          data?.map((item, index) => (
             <div key={index} className={styles.container}>
               <a href={`/product/${item.slug}`}>
                 <img
