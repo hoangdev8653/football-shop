@@ -1,15 +1,20 @@
 import { create } from "zustand";
-import { getAllBlog, createBlog, deleteBlog, updateBlog } from "../apis/blog";
+import {
+  createCategory,
+  getAllCategory,
+  updateCategory,
+  deleteCategory,
+} from "../apis/category";
 
-export const blogStore = create((set) => ({
+export const categoryStore = create((set) => ({
   data: [],
   error: null,
   isLoading: false,
 
-  createBlog: async (data) => {
+  createCategory: async (data) => {
     try {
       set({ isLoading: true });
-      const response = await createBlog(data);
+      const response = await createCategory(data);
       if (response.status === 201) {
         set((state) => ({
           isLoading: false,
@@ -22,11 +27,10 @@ export const blogStore = create((set) => ({
     }
   },
 
-  getAllBlog: async () => {
+  getAllCategory: async () => {
     try {
       set({ isLoading: true });
-      const response = await getAllBlog();
-      set({ isLoading: false });
+      const response = await getAllCategory();
       if (response.status === 200) {
         set({ data: response.data.content });
       }
@@ -36,10 +40,10 @@ export const blogStore = create((set) => ({
     }
   },
 
-  updateBlog: async (id, data) => {
+  updateCategory: async (id, data) => {
     try {
       set({ isLoading: true });
-      const response = await updateBlog(id, data);
+      const response = await updateCategory(id, data);
       if (response.status === 200) {
         set({ isLoading: false });
         set({ data: response.data.content });
@@ -50,10 +54,10 @@ export const blogStore = create((set) => ({
     }
   },
 
-  deleteBlog: async (id) => {
+  deleteCategory: async (id) => {
     try {
       set({ isLoading: true });
-      const response = await deleteBlog(id);
+      const response = await deleteCategory(id);
       if (response.status === 200) {
         set((state) => ({
           isLoading: false,

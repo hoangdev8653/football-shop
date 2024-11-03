@@ -14,7 +14,6 @@ connectDB();
 // connectRedis();
 
 const app = express();
-
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -29,6 +28,7 @@ app.use("/product", routers.productRoutes);
 app.use("/blog", routers.blogRoutes);
 app.use("/order", routers.orderRoutes);
 app.use("/whishList", routers.whishListRoutes);
+app.use("/banner", routers.bannerRoutes);
 
 app.listen(port, (req, res) => {
   console.log(`listen running on port ${port}`);

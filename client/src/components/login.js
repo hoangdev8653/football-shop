@@ -7,8 +7,8 @@ import { loginValidate } from "../validations/auth";
 import { useNavigate } from "react-router-dom";
 import { userStore } from "../store/userStore";
 function Login() {
-  const nvg = useNavigate();
-  const { login } = userStore();
+  const Navigate = useNavigate();
+  const { user, login } = userStore();
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -17,13 +17,17 @@ function Login() {
     validationSchema: loginValidate,
     onSubmit: async (values) => {
       try {
-        const value = await login(values);
-        if (value === null) {
+        const { role, error } = await login(values);
+        if (error) {
+          console.log("Đăng nhập không thành công:", error);
+        } else if (role) {
           setTimeout(() => {
-            nvg("/");
+            if (role === "admin") {
+              Navigate("/dashboard");
+            } else {
+              Navigate("/");
+            }
           }, 3000);
-        } else {
-          return;
         }
       } catch (error) {
         console.log("Đăng nhập không thành công:", error);

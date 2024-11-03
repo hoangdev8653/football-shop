@@ -42,5 +42,6 @@ router
   .route("/deleteCart")
   .delete(verifyAccessToken, userController.deleteCart);
 router.route("/delete").delete(userController.deleteUser);
+router.route("/updateUserByAdmin").put(userController.updateUserByAdmin);
 
 export default router;

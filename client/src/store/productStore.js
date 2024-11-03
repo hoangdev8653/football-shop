@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import {
+  getAllProduct,
   getProductByKey,
   getProductBySlug,
   getProductClub,
@@ -11,13 +12,51 @@ import {
   addProductWhishList,
   getProductWhishList,
   deleteProductWhishList,
+  createProduct,
+  deleteProduct,
+  updateProduct,
 } from "../apis/product";
+import { toast } from "react-toastify";
 
 export const productStore = create((set) => ({
-  data: null,
+  data: [],
   error: null,
   isLoading: false,
   stockQuality: 0,
+
+  createProduct: async (data) => {
+    try {
+      console.log(data);
+
+      set({ isLoading: true });
+      const response = await createProduct(data);
+      if (response.status === 201) {
+        set({ isLoading: true });
+        toast.success("Thêm Mới thành công");
+      }
+      console.log(response);
+
+      return null;
+    } catch (error) {
+      console.log(error);
+      toast.error("Thêm Mới thất bại");
+
+      set({ error: error.message });
+    }
+  },
+
+  getAllProduct: async () => {
+    try {
+      set({ isLoading: true });
+      const response = await getAllProduct();
+      if (response.status === 200) {
+        set({ isLoading: false, data: response.data.content });
+      }
+    } catch (error) {
+      console.log(error.message);
+      set({ isLoading: false, error: error.message });
+    }
+  },
 
   getProductByKey: async (key) => {
     try {
@@ -146,6 +185,38 @@ export const productStore = create((set) => ({
           isLoading: false,
           data: state.data.filter((item) => item._id !== id),
         }));
+      }
+    } catch (error) {
+      console.log(error);
+      set({ error: error.message });
+    }
+  },
+
+  deleteProduct: async (id) => {
+    try {
+      set({ isLoading: true });
+      const response = await deleteProduct(id);
+      if (response.status === 200) {
+        toast.success("Xóa thành công");
+        set((state) => ({
+          isLoading: false,
+          data: state.data.filter((item) => item._id !== id),
+        }));
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("xóa không thành công");
+      set({ error: error.message });
+    }
+  },
+
+  updateProduct: async (id, data) => {
+    try {
+      set({ isLoading: true });
+      const response = await updateProduct(id, data);
+      if (response.status === 200) {
+        set({ isLoading: false });
+        toast.success("Cập nhật thành công");
       }
     } catch (error) {
       console.log(error);

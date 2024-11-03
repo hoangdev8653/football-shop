@@ -11,7 +11,9 @@ const getAllBlog = async (req, res) => {
       .json({ status: 200, message: "Xử lý thành công", content: blog });
   } catch (error) {
     console.log(error);
-    res.status(StatusCodes.OK).json({ Error: "Lỗi Server" });
+    res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ Error: "Server Error" });
   }
 };
 
@@ -41,7 +43,9 @@ const createBlog = async (req, res) => {
       .json({ status: 201, message: "Xử lý thành công", content: blog });
   } catch (error) {
     console.log(error);
-    res.status(StatusCodes.OK).json({ Error: "Lỗi Server" });
+    res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ Error: "Server Error" });
   }
 };
 
@@ -71,7 +75,9 @@ const updateBlog = async (req, res) => {
       .json({ status: 201, message: "Xử lý thành công", content: blog });
   } catch (error) {
     console.log(error);
-    res.status(StatusCodes.OK).json({ Error: "Lỗi Server" });
+    res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ Error: "Server Error" });
   }
 };
 
@@ -84,7 +90,7 @@ const deleteBlog = async (req, res) => {
       .json({ status: 200, message: "Xử lý thành công", content: blog });
   } catch (error) {
     console.log(error);
-    res.status(StatusCodes.OK).json({ Error: "Lỗi Server" });
+    res.status(StatusCodes.OK).json({ Error: "Server Error" });
   }
 };
 

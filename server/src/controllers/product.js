@@ -154,8 +154,8 @@ const createProduct = async (req, res) => {
       categoryId,
     });
     return res
-      .status(StatusCodes.OK)
-      .json({ status: 200, message: "Xử lý thành công", content: product });
+      .status(StatusCodes.CREATED)
+      .json({ status: 201, message: "Xử lý thành công", content: product });
   } catch (error) {
     console.log("error ", error);
     res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ Error: "Lỗi server" });

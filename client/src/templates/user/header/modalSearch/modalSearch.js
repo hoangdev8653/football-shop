@@ -1,10 +1,11 @@
 import React, { useState, useRef, useEffect } from "react";
 import { BsSearch } from "react-icons/bs";
-import styles from "./modal.module.scss";
+import styles from "./modalSearch.module.scss";
 import { getProductByKey } from "../../../../apis/product";
 import { useDebounce } from "../../../../hooks/useDebounce";
+import { formatPrice } from "../../../../utils/forrmatPriceVn";
 
-function Modal() {
+function ModalSearch() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [valueSearch, setValueSearch] = useState("");
   const debounceSearch = useDebounce(valueSearch);
@@ -56,7 +57,6 @@ function Modal() {
   const handleSearch = (value) => {
     setValueSearch(value);
   };
-  console.log(valueSearch);
 
   return (
     <div className="relative">
@@ -102,12 +102,14 @@ function Modal() {
                               alt={item.slug}
                             />
 
-                            <p className="mx-4 text-3xl">{item.name}</p>
-                            <p className="font-medium text-2xl">
+                            <p className="mx-3 text-2xl uppercase">
+                              {item.name}
+                            </p>
+                            <p className="font-medium text-base">
                               <del className="font-normal text-gray-300 mx-1">
-                                <span>300.000$</span>
+                                <span>{formatPrice(330000)}</span>
                               </del>
-                              <span>{item.price}$</span>
+                              <span>{formatPrice(Number(item.price))}</span>
                             </p>
                           </div>
                         </a>
@@ -129,4 +131,4 @@ function Modal() {
   );
 }
 
-export default Modal;
+export default ModalSearch;

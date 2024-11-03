@@ -20,4 +20,14 @@ export const path = {
   REGISTER: "/register",
   NOTFOUND: "*",
   WHISHLIST: "/whishList",
+
+  LAYOUTADMIN: "/dashboard",
+  DASHBOARD: "",
+  PRODUCTADMIN: "/dashboard/product",
+  CATEGORYADMIN: "/dashboard/category",
+  BLOGADMIN: "/dashboard/blog",
+  BANNERADMIN: "/dashboard/banner",
+  USERADMIN: "/dashboard/user",
+  ADD_NEW_PRODUCT: "/dashboard/product/add-new",
+  ADD_NEW_BANNER: "/dashboard/banner/add-new",
 };

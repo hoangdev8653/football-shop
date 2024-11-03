@@ -22,6 +22,7 @@ export const logout = async () => {
     url: "user/logout",
   });
 };
+
 export const getUserCurrent = async () => {
   return await axiosConfig({
     method: "get",
@@ -53,17 +54,21 @@ export const updatePassword = async (data, token) => {
     method: "post",
     url: `/user/changePassword`,
     data,
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
+  });
+};
+
+export const updateUserByAdmin = async (id, data) => {
+  return await axiosConfig({
+    method: "put",
+    url: `/user/updateUserByAdmin?id=${id}`,
+    data,
   });
 };
 
 export const getHistoryOrder = async (token) => {
   return await axiosConfig({
     method: "get",
-    url: `/order/getOrderById`,
+    url: "/order/getOrderById",
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
@@ -84,5 +89,19 @@ export const resetPassword = async (data, token) => {
     method: "patch",
     url: `/user/reset-password?token=${token}`,
     data,
+  });
+};
+
+export const getAllUser = async () => {
+  return await axiosConfig({
+    method: "get",
+    url: "/user",
+  });
+};
+
+export const deleteUser = async (id) => {
+  return await axiosConfig({
+    method: "delete",
+    url: `user/delete?id=${id}`,
   });
 };

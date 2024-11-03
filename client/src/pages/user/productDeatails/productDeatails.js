@@ -22,6 +22,7 @@ function ProductDeatails() {
   const { addProduct } = cartStore();
   const { slug } = useParams();
   const token = getLocalStorage("accessToken");
+  console.log(stockQuality);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -183,7 +184,8 @@ function ProductDeatails() {
                       +
                     </button>
                   </div>
-                  {value === "" && typeof value === "string" ? (
+                  {(value === "" && typeof value === "string") ||
+                  value > stockQuality ? (
                     <Button
                       disabled={true}
                       onClick={handleSubmit}

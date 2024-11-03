@@ -212,12 +212,12 @@ function Checkout() {
                   <p className="my--1 font-medium">Total</p>
                   <p className="my-1">{formatPrice(Number(data.totalPrice))}</p>
                 </div>
-                {Object.keys(formik.errors).length === 0 && (
-                  <Payment
-                    address={formik.values.street}
-                    totalPrice={data.totalPrice}
-                  />
-                )}
+                {/* {Object.keys(formik.errors).length === 0 && ( */}
+                <Payment
+                  address={formik.values.street}
+                  totalPrice={data.totalPrice}
+                />
+                {/* )} */}
                 <p className="my-4">
                   Sau khi hoàn tất đặt hàng. H7sport sẽ gọi điện để tư vấn size
                   và chốt đơn để tránh đơn hàng chọn nhầm Size. Hoặc khách hàng

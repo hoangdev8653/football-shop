@@ -39,6 +39,7 @@ const getProductClub = async () => {
     "categoryId",
     "name slug -_id"
   );
+
   const ProductClub = products.filter(
     (product) => product.categoryId.slug === "ao-cau-lac-bo"
   );

@@ -1,31 +1,31 @@
 import { axiosConfig } from "../axiosConfig";
 
-export const createBlog = async (data) => {
+export const createBanner = async (data) => {
   return await axiosConfig({
     method: "post",
-    url: "blog/create",
+    url: "banner/create",
     data,
   });
 };
 
-export const getAllBlog = async () => {
+export const getAllBanner = async () => {
   return await axiosConfig({
     method: "get",
-    url: "/blog",
+    url: "banner",
   });
 };
 
-export const updateBlog = async (id, data) => {
+export const updateBanner = async (id, data) => {
   return await axiosConfig({
     method: "put",
-    url: `blog/update?id=${id}`,
+    url: `banner/update?id=${id}`,
     data,
   });
 };
 
-export const deleteBlog = async (id) => {
+export const deleteBanner = async (id) => {
   return await axiosConfig({
     method: "delete",
-    url: `blog/delete?id=${id}`,
+    url: `banner/delete?id=${id}`,
   });
 };

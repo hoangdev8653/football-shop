@@ -10,14 +10,31 @@ import {
   resetPassword,
   updatePassword,
   updateUser,
+  updateUserByAdmin,
+  deleteUser,
+  getAllUser,
 } from "../apis/auth";
 import { setLocalStorage } from "../utils/LocalStorage";
 import { toast } from "react-toastify";
 
 export const userStore = create((set) => ({
-  user: null,
+  user: [],
   error: null,
   isLoading: false,
+
+  getAllUser: async () => {
+    try {
+      set({ isLoading: true });
+      const response = await getAllUser();
+      if (response.status === 200) {
+        set({ isLoading: false });
+        set({ user: response.data.content });
+      }
+    } catch (error) {
+      console.log(error);
+      set({ error: error.message });
+    }
+  },
 
   register: async (data) => {
     try {
@@ -31,28 +48,32 @@ export const userStore = create((set) => ({
       set({ error: error.message });
     }
   },
+
   login: async (data) => {
     try {
       set({ isLoading: true });
-      const response = await login(data); // loginAPI là hàm gọi API thực tế
+      const response = await login(data);
       if (response.status === 200) {
-        set({ isLoading: false });
         toast.success("Đăng nhập thành công");
-        set({ user: response.data.content });
+
+        // Lưu thông tin người dùng và token vào localStorage
         setLocalStorage("user", response.data.content);
         setLocalStorage("accessToken", response.data.accessToken);
         setLocalStorage("refreshToken", response.data.refreshToken);
-        return null; // Trả về null khi không có lỗi
+
+        // Trả về role khi đăng nhập thành công
+        return { role: response.data.content.role, error: null };
       } else {
         set({ isLoading: false });
-        set({ error: "Unexpected response status: " + response.status });
-        return "Unexpected response status: " + response.status;
+        const errorMsg = "Unexpected response status: " + response.status;
+        set({ error: errorMsg });
+        return { role: null, error: errorMsg };
       }
     } catch (error) {
       set({ isLoading: false });
       set({ error: error.message });
-      toast.error("Tài khoản hoặc mật khảo không đúng");
-      return error.message; // Trả về thông báo lỗi
+      toast.error("Tài khoản hoặc mật khẩu không đúng");
+      return { role: null, error: error.message };
     }
   },
 
@@ -127,6 +148,30 @@ export const userStore = create((set) => ({
       set({ error: error.message });
     }
   },
+
+  updateUserByAdmin: async (id, values) => {
+    try {
+      set({ isLoading: true });
+      const response = await updateUserByAdmin(id, values);
+      if (response.status === 200) {
+        set((state) => {
+          const updatedUsers = state.user.map((user) =>
+            user.id === id ? { ...user, ...response.data.content } : user
+          );
+          return { user: updatedUsers, isLoading: false };
+        });
+        toast.success("Cập nhật thành công");
+      } else {
+        toast.error("Cập nhật thất bại");
+      }
+      return null;
+    } catch (error) {
+      toast.error("Cập nhật thất bại");
+      console.log(error.message);
+      set({ error: error.message });
+    }
+  },
+
   getHistoryOrder: async (token) => {
     try {
       set({ isLoading: true });

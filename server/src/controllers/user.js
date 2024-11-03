@@ -16,7 +16,7 @@ const getAllUser = async (req, res) => {
     console.log(error);
     res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ message: "Lỗi Server" });
+      .json({ message: "Server Error" });
   }
 };
 
@@ -92,7 +92,9 @@ const registerUser = async (req, res) => {
       .json({ status: 201, message: "Xử lý thành công", content: user });
   } catch (error) {
     console.log("register error: ", error);
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: "Lỗi Server" });
+    res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ error: "Server Error" });
   }
 };
 
@@ -111,14 +113,13 @@ const changePassword = async (req, res) => {
     console.log(error);
     res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ status: 500, message: "Error Server" });
+      .json({ status: 500, message: "Server Error" });
   }
 };
 
 const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
-    console.log({ email }, password);
 
     const { error } = LoginValidation.validate(req.body, { abortEarly: false });
     if (error) {
@@ -165,7 +166,29 @@ const updateUser = async (req, res) => {
     console.log(error);
     res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ message: "Lỗi Server" });
+      .json({ message: "Server Error" });
+  }
+};
+
+const updateUserByAdmin = async (req, res, next) => {
+  try {
+    const id = req.query.id;
+    const { email, username, role, phone } = req.body;
+    const user = await userServices.updateUserByAdmin(id, {
+      email,
+      username,
+      role,
+      phone,
+    });
+    return res
+      .status(StatusCodes.OK)
+      .json({ status: 200, message: "Xử lý thành công", content: user });
+  } catch (error) {
+    console.log(error);
+    next(error);
+    res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ message: "Server Error" });
   }
 };
 
@@ -180,7 +203,7 @@ const findUser = async (req, res) => {
     console.log(error);
     res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ message: "Lỗi Server" });
+      .json({ message: "Server Error" });
   }
 };
 
@@ -195,7 +218,7 @@ const deleteUser = async (req, res) => {
     console.log(error);
     res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ message: "Lỗi Server" });
+      .json({ message: "Server Error" });
   }
 };
 
@@ -292,6 +315,7 @@ export const userController = {
   loginUser,
   changePassword,
   updateUser,
+  updateUserByAdmin,
   findUser,
   profileUser,
   authGoogle,

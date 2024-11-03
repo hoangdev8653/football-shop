@@ -38,7 +38,7 @@ function InfoUser() {
         setTimeout(() => {
           toast.success("Cập nhật thành công");
         }, 2000);
-        setCurrentImage(URL.createObjectURL(values.image)); // Update currentImage state
+        setCurrentImage(URL.createObjectURL(values.image));
       } catch (error) {
         console.log(error.message);
         toast.error("Cập Nhật Thất bại");
@@ -52,7 +52,7 @@ function InfoUser() {
       formik.setFieldValue("image", file);
       const fileUrl = URL.createObjectURL(file);
       avatarImageRef.current.src = fileUrl;
-      setCurrentImage(fileUrl); // Update currentImage state
+      setCurrentImage(fileUrl);
     }
   };
 

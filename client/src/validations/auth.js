@@ -42,3 +42,14 @@ export const updateUserValidate = Yup.object().shape({
 export const forgotPW = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Email is Required"),
 });
+
+export const updateUserByAdminValidate = Yup.object().shape({
+  email: Yup.string().email("Invalid email").required("Email is Required"),
+  phone: Yup.string()
+    .required("Phone number is Required")
+    .matches(phoneRegExp, "Phone number is not valid"),
+  username: Yup.string().min(3).required("User name is Required"),
+  role: Yup.string()
+    .required("You Must select an role")
+    .notOneOf([""], "You must select an option"),
+});

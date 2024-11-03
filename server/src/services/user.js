@@ -8,7 +8,7 @@ import jwt from "jsonwebtoken";
 import { sendMail } from "../Utils/sendMail.js";
 
 const getAllUser = async () => {
-  return await UserModel.find({}, { password: 0 }).populate(
+  return await UserModel.find({}).populate(
     "cart.productId",
     "-description -slug -categoryId"
   );
@@ -126,6 +126,22 @@ const updateUser = async (id, { email, username, phone, image }) => {
   } catch (error) {
     console.log(error);
     throw error;
+  }
+};
+
+const updateUserByAdmin = async (id, { email, username, phone, role }) => {
+  try {
+    const user = await UserModel.findById(id);
+    if (!user) {
+      throw Error("User Not Found");
+    }
+    return await UserModel.findByIdAndUpdate(
+      id,
+      { email, username, phone, role },
+      { new: true }
+    );
+  } catch (error) {
+    console.log(error);
   }
 };
 
@@ -325,6 +341,7 @@ export const userServices = {
   login,
   changePassword,
   updateUser,
+  updateUserByAdmin,
   findUser,
   profile,
   deleteUser,

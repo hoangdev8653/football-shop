@@ -1,5 +1,20 @@
 import { axiosConfig } from "../axiosConfig";
 
+export const createProduct = async (data) => {
+  return await axiosConfig({
+    method: "post",
+    url: "/product/create",
+    data,
+  });
+};
+
+export const getAllProduct = async () => {
+  return await axiosConfig({
+    method: "get",
+    url: "product",
+  });
+};
+
 export const getProductClub = async () => {
   return await axiosConfig({
     method: "get",
@@ -64,10 +79,17 @@ export const getProductAccessory = async (productId) => {
 };
 
 export const addProductWhishList = async (data) => {
-  console.log(data);
   return await axiosConfig({
     method: "post",
     url: "/whishList/addProduct",
+    data,
+  });
+};
+
+export const updateProduct = async (id, data) => {
+  return await axiosConfig({
+    method: "put",
+    url: `product/update?id=${id}`,
     data,
   });
 };
@@ -76,5 +98,12 @@ export const deleteProductWhishList = async (productId) => {
   return await axiosConfig({
     method: "delete",
     url: `/whishList/deleteProduct?id=${productId}`,
+  });
+};
+
+export const deleteProduct = async (id) => {
+  return await axiosConfig({
+    method: "delete",
+    url: `/product/delete?id=${id}`,
   });
 };

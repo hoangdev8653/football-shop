@@ -21,10 +21,18 @@ import OrderComplete from "./pages/user/orderComplete/orderComplete";
 import ForgotPassword from "./pages/user/ForgotPassword";
 import ResetPassword from "./pages/user/ResetPassword";
 import WhishList from "./pages/user/whishList";
-// import { io } from "socket.io-client";
+
+import LayoutAdmin from "./templates/admin/Layout";
+import DashBoard from "./pages/admin/DashBoard";
+import ProductAdmin from "./pages/admin/ProductAdmin";
+import CategoryAdmin from "./pages/admin/CategoryAdmin";
+import BlogAdmin from "./pages/admin/BlogAdmin";
+import BannerAdmin from "./pages/admin/BannerAdmin";
+import UserAdmin from "./pages/admin/UserAdmin";
+import AddNewProduct from "./pages/admin/AddNewProduct";
+import AddNewBanner from "./pages/admin/AddNewBanner";
 
 function App() {
-  // const socket = io.connect();
   return (
     <Routes>
       <Route path={path.PUBLIC_LAYOUT} element={<Layout />}>
@@ -38,6 +46,18 @@ function App() {
         <Route path={path.BLOG} element={<Blog />} />
         <Route path={path.CLB} element={<Club />} />
       </Route>
+
+      <Route path={path.LAYOUTADMIN} element={<LayoutAdmin />}>
+        <Route path={path.DASHBOARD} index element={<DashBoard />} />
+        <Route path={path.PRODUCTADMIN} element={<ProductAdmin />} />
+        <Route path={path.CATEGORYADMIN} element={<CategoryAdmin />} />
+        <Route path={path.BLOGADMIN} element={<BlogAdmin />} />
+        <Route path={path.BANNERADMIN} element={<BannerAdmin />} />
+        <Route path={path.USERADMIN} element={<UserAdmin />} />
+      </Route>
+      <Route path={path.ADD_NEW_PRODUCT} element={<AddNewProduct />} />
+      <Route path={path.ADD_NEW_BANNER} element={<AddNewBanner />} />
+
       <Route path={path.LOGIN} element={<Login />} />
       <Route path={path.PROFILE} element={<Profile />} />
       <Route path={path.CHANGE_PASSWORD} element={<ChangePassword />} />
