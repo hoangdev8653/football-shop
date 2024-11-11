@@ -14,9 +14,6 @@ function SearchProduct() {
   const key = searchParams.get("s");
 
   const [currentItems, setCurrentItems] = useState([]);
-  const [pageCount, setPageCount] = useState(0);
-  const [itemOffset, setItemOffset] = useState(0);
-  const itemsPerPage = 10;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -28,16 +25,11 @@ function SearchProduct() {
     };
     fetchData();
   }, [key]);
-  useEffect(() => {
-    const endOffset = itemOffset + itemsPerPage;
-    setCurrentItems(data?.slice(itemOffset, endOffset));
-    setPageCount(Math.ceil(data?.length / itemsPerPage));
-  }, [itemOffset, itemsPerPage, data]);
 
-  const handlePageClick = (event) => {
-    const newOffset = (event.selected * itemsPerPage) % data?.length;
-    setItemOffset(newOffset);
+  const handlePageChange = (items) => {
+    setCurrentItems(items);
   };
+
   return (
     <div
       style={{ backgroundColor: "rgba(10, 10, 10, 0.01)" }}
@@ -100,7 +92,11 @@ function SearchProduct() {
                   </a>
                 ))}
             </div>
-            <Paginate pageCount={pageCount} handlePageClick={handlePageClick} />
+            <Paginate
+              data={data}
+              itemsPerPage={6}
+              onPageChange={handlePageChange}
+            />
           </div>
         </>
       ) : (

@@ -5,13 +5,11 @@ import { RiCoupon3Line } from "react-icons/ri";
 import styles from "./cart.module.scss";
 import Button from "../../../components/button";
 import { userStore } from "../../../store/userStore";
-import { productStore } from "../../../store/productStore";
 import { formatPrice } from "../../../utils/forrmatPriceVn";
 
 function Cart() {
-  const { user, getUserCurrent } = userStore();
-  const { deleteProduct } = productStore();
-
+  const { user, getUserCurrent, deleteCart, error, totalPrice, totalQuantity } =
+    userStore();
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -27,13 +25,9 @@ function Cart() {
     console.log(quantity + 1);
   };
 
-  const handleDeleteProduct = async (productId) => {
+  const handleDeleteProduct = (productId) => {
     try {
-      await deleteProduct(productId);
-
-      setTimeout(() => {
-        window.location.reload();
-      }, 3000);
+      deleteCart(productId);
     } catch (error) {
       console.log("Error: ", error);
     }
@@ -41,7 +35,7 @@ function Cart() {
 
   return (
     <div className="w-full bg-white">
-      {user?.cart && user?.cart.length > 0 ? (
+      {user && user.length > 0 ? (
         <>
           <div className="max-w-[1050px] mx-auto text-center justify-center">
             <div
@@ -78,8 +72,8 @@ function Cart() {
                       </tr>
                     </thead>
                     <tbody>
-                      {user.cart &&
-                        user.cart.map((item, index) => (
+                      {user &&
+                        user.map((item, index) => (
                           <tr key={index}>
                             <td>
                               <IoIosCloseCircleOutline
@@ -172,13 +166,13 @@ function Cart() {
                   <div className="flex mt-4 justify-between border-b-[1px] border-gray-200 mb-2">
                     <span>subtotal</span>
                     <span className="font-semibold">
-                      {formatPrice(user.totalPrice)}
+                      {formatPrice(totalPrice)}
                     </span>
                   </div>
                   <div className="flex  justify-between border-b-[3px] border-gray-200 mb-2">
                     <span>Total</span>
                     <span className="font-semibold">
-                      {formatPrice(user.totalPrice)}
+                      {formatPrice(totalPrice)}
                     </span>
                   </div>
                   <a href="/checkout">

@@ -160,17 +160,22 @@ export const productStore = create((set) => ({
     }
   },
 
-  addProductWhishList: async (data) => {
+  addProductWhishList: async (id) => {
     try {
-      console.log({ data });
+      console.log(id);
+
       set({ isLoading: true });
-      const response = await addProductWhishList(data);
-      console.log(response.data);
+      const response = await addProductWhishList(id);
       if (response.status === 201) {
-        set({ isLoading: false });
+        toast.success("Thêm Sản phẩm vào mục yêu thích");
+        set((state) => ({
+          isLoading: false,
+          data: [...state.data, response.data.content],
+        }));
       }
     } catch (error) {
       console.log(error);
+      toast.error("Thêm sản phẩm vào mục yêu thích thất bại");
       set({ error: error.message });
     }
   },
@@ -194,15 +199,18 @@ export const productStore = create((set) => ({
 
   deleteProduct: async (id) => {
     try {
-      set({ isLoading: true });
-      const response = await deleteProduct(id);
-      if (response.status === 200) {
-        toast.success("Xóa thành công");
-        set((state) => ({
-          isLoading: false,
-          data: state.data.filter((item) => item._id !== id),
-        }));
-      }
+      console.log(id);
+
+      // set({ isLoading: true });
+      // const response = await deleteProduct(id);
+      // if (response.status === 200) {
+      //   toast.success("Xóa thành công");
+      //   set((state) => ({
+      //     isLoading: false,
+      //     data: state.data.filter((item) => item._id !== id),
+      //   }));
+      //   return null;
+      // }
     } catch (error) {
       console.log(error);
       toast.error("xóa không thành công");
@@ -217,9 +225,11 @@ export const productStore = create((set) => ({
       if (response.status === 200) {
         set({ isLoading: false });
         toast.success("Cập nhật thành công");
+        return null;
       }
     } catch (error) {
       console.log(error);
+      toast.error("Cập nhật thất bại");
       set({ error: error.message });
     }
   },

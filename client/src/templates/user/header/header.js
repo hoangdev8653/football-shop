@@ -9,10 +9,12 @@ import Avarta from "./avarta/avarta";
 import { IoMdClose } from "react-icons/io";
 import { useState } from "react";
 import { getLocalStorage } from "../../../utils/LocalStorage";
+import { useLocation } from "react-router-dom";
 
 function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const user = getLocalStorage("user");
+  const location = useLocation();
 
   const handleOpenMenu = () => {
     setIsOpen(true);
@@ -56,28 +58,48 @@ function Header() {
                 </div>
                 <div className="text-center w-full py-4 my-4">
                   <a href="/ao-bong-da-clb/">
-                    <p className="text-white font-bold opacity-80 hover:opacity-100">
+                    <p
+                      className={`text-white font-bold opacity-80 hover:opacity-100 ${
+                        location.pathname === "/ao-bong-da-clb/" ??
+                        "text-orange-400"
+                      }`}
+                    >
                       ÁO BÓNG ĐÁ CÂU LẠC BỘ
                     </p>
                   </a>
                 </div>
                 <div className="text-center w-full py-4 my-4">
                   <a href="/ao-bong-da-doi-tuyen">
-                    <p className="text-white font-bold opacity-80 hover:opacity-100">
+                    <p
+                      className={`text-white font-bold opacity-80 hover:opacity-100 ${
+                        location.pathname === "/ao-bong-da-doi-tuyen" ??
+                        "text-orange-400"
+                      }`}
+                    >
                       ÁO BÓNG ĐÁ ĐỘI TUYỂN
                     </p>
                   </a>
                 </div>
                 <div className="text-center w-full  py-4 my-4">
                   <a href="/ao-bong-da-khong-logo">
-                    <p className="text-white font-bold opacity-80 hover:opacity-100">
+                    <p
+                      className={`text-white font-bold opacity-80 hover:opacity-100 ${
+                        location.pathname === "/ao-bong-da-khong-logo" ??
+                        "text-orange-400"
+                      }`}
+                    >
                       ÁO BÓNG ĐÁ KHÔNG LOGO
                     </p>
                   </a>
                 </div>
                 <div className="text-center w-full py-4 my-4">
                   <a href="/">
-                    <p className="text-white font-bold opacity-80 hover:opacity-100">
+                    <p
+                      className={`text-white font-bold opacity-80 hover:opacity-100 ${
+                        location.pathname === "/do-the-thao" ??
+                        "text-orange-400"
+                      }`}
+                    >
                       ĐỒ THỂ THAO
                     </p>
                   </a>
@@ -133,22 +155,44 @@ function Header() {
       </div>
       <div className={styles.nav_header}>
         <a className="my-2" href="/ao-bong-da-clb/">
-          <span className="opacity-80 hover:opacity-100">
+          <span
+            className={`opacity-80 hover:opacity-100 ${
+              location.pathname === "/ao-bong-da-clb/" ? "text-orange-400" : ""
+            }`}
+          >
             ÁO BÓNG ĐÁ CÂU LẠC BỘ
           </span>
         </a>
         <a className="my-2" href="/ao-bong-da-doi-tuyen">
-          <span className="opacity-80 hover:opacity-100">
+          <span
+            className={`opacity-80 hover:opacity-100 ${
+              location.pathname === "/ao-bong-da-doi-tuyen"
+                ? "text-orange-400"
+                : ""
+            }`}
+          >
             ÁO BÓNG ĐÁ ĐỘI TUYỂN
           </span>
         </a>
         <a className="my-2" href="/ao-bong-da-khong-logo">
-          <span className="opacity-80 hover:opacity-100">
+          <span
+            className={`opacity-80 hover:opacity-100 ${
+              location.pathname === "/ao-bong-da-khong-logo"
+                ? "text-orange-400"
+                : ""
+            }`}
+          >
             ÁO BÓNG ĐÁ KHÔNG LOGO
           </span>
         </a>
         <a className="my-2" href="/">
-          <span className="opacity-80 hover:opacity-100"> ĐỒ THỂ THAO </span>
+          <span
+            className={`opacity-80 hover:opacity-100 ${
+              location.pathname === "/do-the-thao" ? "text-orange-400" : ""
+            }`}
+          >
+            ĐỒ THỂ THAO
+          </span>
         </a>
       </div>
     </div>

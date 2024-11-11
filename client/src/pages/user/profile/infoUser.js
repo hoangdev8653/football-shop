@@ -16,6 +16,7 @@ function InfoUser() {
   const [currentImage, setCurrentImage] = useState(
     user?.image || avarta_deafaute
   );
+  console.log(user.image);
 
   const formik = useFormik({
     initialValues: {

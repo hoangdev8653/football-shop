@@ -15,7 +15,7 @@ function Payment({ address, totalPrice }) {
         {
           description: "Cool looking table",
           amount: {
-            value: totalPrice,
+            value: totalPrice ?? 1000000,
           },
         },
       ],
@@ -27,15 +27,15 @@ function Payment({ address, totalPrice }) {
       const order = await actions.order.capture();
       if (order.status === "COMPLETED") {
         try {
-          console.log("Address in onApprove:", address);
+          // console.log("Address in onApprove:", address);
 
-          // const response = await createCheckout({ address });
-          // if (response.status === 201) {
-          //   toast.success("Đã Thanh toán thành công");
-          //   setTimeout(() => {
-          //     navigate("/");
-          //   }, 3000);
-          // }
+          const response = await createCheckout({ address });
+          if (response.status === 201) {
+            toast.success("Đã Thanh toán thành công");
+            setTimeout(() => {
+              navigate("/");
+            }, 3000);
+          }
         } catch (error) {
           console.error("Thất bại:", error);
           toast.error("Thanh toán Thất bại");

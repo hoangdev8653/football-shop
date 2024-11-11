@@ -3,32 +3,27 @@ import { BsCart2 } from "react-icons/bs";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import styles from "./cart.module.scss";
 import Button from "../../../../components/button";
-import { toast } from "react-toastify";
 import { cartStore } from "../../../../store/cartStore";
 import { formatPrice } from "../../../../utils/forrmatPriceVn";
 
 function Cart() {
   const [isOpen, setIsOpen] = useState(false);
 
-  const cart = cartStore();
+  const { data, fetchCart, deleteProduct, totalQuantity } = cartStore();
 
   const [checkCart, setCheckCart] = useState(false);
   useEffect(() => {
-    if (cart.data && cart.data.length > 0) {
+    if (data && data.length > 0) {
       setCheckCart(true);
     } else {
       setCheckCart(false);
     }
-  }, [cart.data]);
+  }, [data]);
   useEffect(() => {
-    cart.fetchCart();
+    fetchCart();
   }, []);
-  const quantity = cart.data?.map((item) => item.quantity);
-  const totalQuantity = quantity.reduce(
-    (value, curentValue) => value + curentValue,
-    0
-  );
-  const priceOneProduct = cart.data?.map(
+
+  const priceOneProduct = data?.map(
     (item) => item.quantity * item.productId?.price
   );
   const totalPrice = priceOneProduct.reduce(
@@ -45,13 +40,12 @@ function Cart() {
 
   const handleDelete = async (productId) => {
     try {
-      await cart.deleteProduct(productId);
-      // toast.success("Xóa sản phẩm thành công");
+      await deleteProduct(productId);
       setTimeout(() => {
         window.location.reload();
       }, 2500);
     } catch (error) {
-      toast.error("Thất bại");
+      console.log(error);
     }
   };
 
@@ -69,8 +63,8 @@ function Cart() {
           <div className={styles.cart}>
             <div className="mx-4">
               <div className="max-h-[400px] overflow-y-auto">
-                {cart.data &&
-                  cart.data?.map((item, index) => (
+                {data &&
+                  data?.map((item, index) => (
                     <div
                       key={index}
                       className="flex mt-4 border-b-[1px] border-gray-400 border-solid mb-2 "
@@ -89,21 +83,19 @@ function Cart() {
                             {item?.productId.name}
                           </p>
                           <p className="text-gray-300 font-medium mb-1">
-                            {formatPrice(item?.productId.price)} *{" "}
+                            {formatPrice(Number(item?.productId.price))} *{" "}
                             {item?.quantity}
                           </p>
                         </div>
                       </a>
                       <IoIosCloseCircleOutline
-                        onClick={() =>
-                          handleDelete(item.productId._id, item.quantity)
-                        }
+                        onClick={() => handleDelete(item.productId._id)}
                         className={styles.icon_close}
                       />
                     </div>
                   ))}
               </div>
-              {cart.data && checkCart === true ? (
+              {data && checkCart === true ? (
                 <>
                   <div className="text-center mx-auto border-b-[1px] border-t-[1px] border-gray-400">
                     <p className="font-bold text-gray-500 my-2">

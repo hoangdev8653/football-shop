@@ -105,3 +105,10 @@ export const deleteUser = async (id) => {
     url: `user/delete?id=${id}`,
   });
 };
+
+export const deleteCart = async (productId) => {
+  return await axiosConfig({
+    method: "delete",
+    url: `user/deleteCart?productId=${productId}`,
+  });
+};

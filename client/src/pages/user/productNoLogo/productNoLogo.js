@@ -25,7 +25,6 @@ function ProductNoLogo() {
     };
     fetchData();
   }, []);
-  console.log(data);
   return (
     <div className={styles.productNoLogo}>
       <div className="w-full">

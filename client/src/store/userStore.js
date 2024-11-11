@@ -13,6 +13,7 @@ import {
   updateUserByAdmin,
   deleteUser,
   getAllUser,
+  deleteCart,
 } from "../apis/auth";
 import { setLocalStorage } from "../utils/LocalStorage";
 import { toast } from "react-toastify";
@@ -21,14 +22,16 @@ export const userStore = create((set) => ({
   user: [],
   error: null,
   isLoading: false,
+  quantity: [],
+  totalQuantity: 0,
+  priceOneProduct: 0,
+  totalPrice: 0,
 
   getAllUser: async () => {
     try {
       set({ isLoading: true });
       const response = await getAllUser();
       if (response.status === 200) {
-        set({ isLoading: false });
-        set({ user: response.data.content });
       }
     } catch (error) {
       console.log(error);
@@ -94,8 +97,16 @@ export const userStore = create((set) => ({
       set({ isLoading: true });
       const response = await getUserCurrent();
       if (response.status === 200) {
-        set({ user: response.data.content });
-        set({ isLoading: false });
+        const quantityArray = response.data.content.cart.map(
+          (item) => item.quantity
+        );
+        const totalQuantity = quantityArray.reduce((sum, qty) => sum + qty, 0);
+        set({
+          isLoading: false,
+          user: response.data.content.cart,
+          totalPrice: response.data.content.totalPrice,
+          totalQuantity: totalQuantity,
+        });
       }
     } catch (error) {
       console.log(error);
@@ -223,6 +234,45 @@ export const userStore = create((set) => ({
     } catch (error) {
       toast.error("Xóa thất bại");
       console.log(error);
+      set({ error: error.message });
+    }
+  },
+
+  deleteCart: async (productId) => {
+    try {
+      set({ isLoading: true });
+      const response = await deleteCart(productId);
+      if (response.status === 200) {
+        toast.success("xóa thành công");
+        set((state) => {
+          const newData = state.user.filter(
+            (item) => item.productId._id !== productId
+          );
+          const newQuantity = newData.map((item) => item.quantity);
+          const newTotalQuantity = newQuantity.reduce(
+            (sum, qty) => sum + qty,
+            0
+          );
+          const price = newData.map(
+            (item) => item.quantity * Number(item.productId.price)
+          );
+          const newTotalPrice = price.reduce(
+            (total, current) => total + current,
+            0
+          );
+
+          return {
+            isLoading: false,
+            error: null,
+            user: newData,
+            totalQuantity: newTotalQuantity,
+            totalPrice: newTotalPrice,
+          };
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Xóa thất bại");
       set({ error: error.message });
     }
   },

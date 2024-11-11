@@ -91,7 +91,7 @@ function ProductItems({ itemToShow = 5, data }) {
                 />
               </a>
               <div onClick={() => handleId(item._id)}>
-                <WishList id={idProduct} className="absolute top-2 right-2 " />
+                <WishList className="absolute top-2 right-2 " />
               </div>
             </div>
           ))}

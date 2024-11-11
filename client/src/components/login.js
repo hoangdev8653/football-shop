@@ -23,7 +23,7 @@ function Login() {
         } else if (role) {
           setTimeout(() => {
             if (role === "admin") {
-              Navigate("/dashboard");
+              Navigate("/dashboard/product");
             } else {
               Navigate("/");
             }

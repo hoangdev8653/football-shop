@@ -216,7 +216,7 @@ const profile = async (id) => {
   const cart = user.cart;
 
   const priceCart = cart.map(
-    (item) => parseInt(item.productId.price) * item.quantity
+    (item) => parseInt(item.productId?.price) * item.quantity
   );
 
   const totalPrice = priceCart.reduce(

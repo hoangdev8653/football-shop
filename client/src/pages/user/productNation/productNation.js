@@ -10,6 +10,7 @@ import { formatPrice } from "../../../utils/forrmatPriceVn";
 function ProductNation() {
   const [productNation, setProductNation] = useState([]);
   const [productFromVn, setProductFromVn] = useState([]);
+  const [idWhishList, setIdWhishList] = useState();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -21,6 +22,11 @@ function ProductNation() {
     };
     fetchData();
   }, []);
+
+  const handleWishListClick = (id) => {
+    setIdWhishList(id);
+  };
+  // console.log(idWhishList);
 
   return (
     <div className="product_nation ">
@@ -97,7 +103,12 @@ function ProductNation() {
                     pecentDiscount={15}
                   />
                 </a>
-                <WishList className="absolute top-2 right-2" />
+                <div onClick={() => handleWishListClick(item._id)}>
+                  <WishList
+                    id={idWhishList === item._id ? idWhishList : null}
+                    className="absolute top-2 right-2"
+                  />
+                </div>
               </div>
             ))}
         </div>
@@ -147,8 +158,13 @@ function ProductNation() {
                     className="absolute top-1 left-2 px-3 py-4 rounded-full"
                     pecentDiscount={15}
                   />
-                  <WishList className="absolute top-2 right-2" />
                 </a>
+                <div onClick={() => handleWishListClick(item._id)}>
+                  <WishList
+                    id={idWhishList === item._id ? idWhishList : null}
+                    className="absolute top-2 right-2"
+                  />
+                </div>
               </div>
             ))}
         </div>

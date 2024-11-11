@@ -7,7 +7,6 @@ import Button from "../../../components/button";
 import styles from "./productDeatail.module.scss";
 import { useParams } from "react-router-dom";
 import { quantityStore } from "../../../store/quantityStore";
-import { getLocalStorage } from "../../../utils/LocalStorage";
 import { toast } from "react-toastify";
 import Expandable from "./expandable/index";
 import { cartStore } from "../../../store/cartStore";
@@ -21,6 +20,8 @@ function ProductDeatails() {
   const { getProductBySlug, data, stockQuality } = productStore();
   const { addProduct } = cartStore();
   const { slug } = useParams();
+
+  // console.log(value);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -38,18 +39,21 @@ function ProductDeatails() {
   const handleSubmit = async () => {
     const productId = data?._id;
     const quantity = value;
-    console.log(quantity);
-    console.log(productId);
 
     try {
       await addProduct({ productId, quantity });
-      toast.success("Thêm sản phẩm vào giỏ hàng thành công");
       setTimeout(() => {
         window.location.reload();
       }, 2500);
     } catch (error) {
       toast.error(error.message);
     }
+  };
+
+  console.log(value);
+
+  const handleChangeQuantity = (e) => {
+    console.log(e.target.value);
   };
 
   var settings = {
@@ -171,7 +175,8 @@ function ProductDeatails() {
                     </button>
                     <input
                       onChange={deleteQuantity}
-                      type="text"
+                      // onChange={(e) => handleChangeQuantity(e)}
+                      type="number"
                       className="border-solid border-[1px] border-gray-300 text-center w-[50px] focus:outline-none"
                       value={value}
                     />
