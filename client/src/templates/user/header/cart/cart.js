@@ -4,13 +4,13 @@ import { IoIosCloseCircleOutline } from "react-icons/io";
 import styles from "./cart.module.scss";
 import Button from "../../../../components/button";
 import { cartStore } from "../../../../store/cartStore";
+import { whishListStore } from "../../../../store/wishListStore";
 import { formatPrice } from "../../../../utils/forrmatPriceVn";
 
 function Cart() {
   const [isOpen, setIsOpen] = useState(false);
-
   const { data, fetchCart, deleteProduct, totalQuantity } = cartStore();
-
+  const { getProductWhishList } = whishListStore();
   const [checkCart, setCheckCart] = useState(false);
   useEffect(() => {
     if (data && data.length > 0) {
@@ -21,6 +21,7 @@ function Cart() {
   }, [data]);
   useEffect(() => {
     fetchCart();
+    getProductWhishList();
   }, []);
 
   const priceOneProduct = data?.map(

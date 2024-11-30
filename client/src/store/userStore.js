@@ -130,7 +130,6 @@ export const userStore = create((set) => ({
       set({ isLoading: true });
       const response = await updateUser(data);
       if (response.status === 200) {
-        console.log(response);
         const updatedUser = {
           id: response.data.content._id,
           email: response.data.content.email,

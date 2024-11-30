@@ -26,16 +26,12 @@ export const productStore = create((set) => ({
 
   createProduct: async (data) => {
     try {
-      console.log(data);
-
       set({ isLoading: true });
       const response = await createProduct(data);
       if (response.status === 201) {
         set({ isLoading: true });
         toast.success("Thêm Mới thành công");
       }
-      console.log(response);
-
       return null;
     } catch (error) {
       console.log(error);
@@ -141,59 +137,6 @@ export const productStore = create((set) => ({
     } catch (error) {
       console.log(error);
       set({ isLoading: false, error: error.message });
-    }
-  },
-
-  getProductWhishList: async () => {
-    try {
-      set({ isLoading: true });
-      const response = await getProductWhishList();
-      if (response.status === 200) {
-        set((state) => ({
-          isLoading: false,
-          data: response.data.content,
-        }));
-      }
-    } catch (error) {
-      console.log(error);
-      set({ error: error.message });
-    }
-  },
-
-  addProductWhishList: async (id) => {
-    try {
-      console.log(id);
-
-      set({ isLoading: true });
-      const response = await addProductWhishList(id);
-      if (response.status === 201) {
-        toast.success("Thêm Sản phẩm vào mục yêu thích");
-        set((state) => ({
-          isLoading: false,
-          data: [...state.data, response.data.content],
-        }));
-      }
-    } catch (error) {
-      console.log(error);
-      toast.error("Thêm sản phẩm vào mục yêu thích thất bại");
-      set({ error: error.message });
-    }
-  },
-
-  deleteProductWhishList: async (id) => {
-    try {
-      set({ isLoading: true });
-      const response = await deleteProductWhishList(id);
-      console.log(response);
-      if (response.status === 200) {
-        set((state) => ({
-          isLoading: false,
-          data: state.data.filter((item) => item._id !== id),
-        }));
-      }
-    } catch (error) {
-      console.log(error);
-      set({ error: error.message });
     }
   },
 

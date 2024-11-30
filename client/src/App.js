@@ -35,6 +35,7 @@ function App() {
         <Route path={path.CART} element={<Cart />} />
         <Route path={path.BLOG} element={<Blog />} />
         <Route path={path.CLB} element={<Club />} />
+        <Route path={path.WHISHLIST} element={<WhishList />} />
       </Route>
 
       <Route path={path.LOGIN} element={<Login />} />
@@ -45,7 +46,6 @@ function App() {
       <Route path={path.ORDER_COMPLETE} element={<OrderComplete />} />
       <Route path={path.FORGOT_PASSWORD} element={<ForgotPassword />} />
       <Route path={path.RESET_PASSWORD} element={<ResetPassword />} />
-      <Route path={path.WHISHLIST} element={<WhishList />} />
       <Route path={path.NOTFOUND} element={<NotFound />} />
     </Routes>
   );

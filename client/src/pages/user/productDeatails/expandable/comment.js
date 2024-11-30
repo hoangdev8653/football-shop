@@ -59,6 +59,8 @@ function Comment({ data }) {
     getReviewsByProduct(productId);
   }, [productId, getReviewsByProduct]);
 
+  console.log(avatarDefault);
+
   return (
     <div className="comment">
       {isLoading ? (
@@ -110,13 +112,6 @@ function Comment({ data }) {
               </div>
               <div className="my-2 flex">
                 <div className="w-full cursor-pointer relative max-w-xl">
-                  <span style={{ top: "20%", left: "3%" }} className="absolute">
-                    <img
-                      className="rounded-full w-[40px] h-[40px] object-cover "
-                      src={user ? user.image : avatarDefault}
-                      alt="avatar"
-                    />
-                  </span>
                   <input
                     onChange={handleCommentText}
                     style={{
@@ -159,7 +154,7 @@ function Comment({ data }) {
                       >
                         <img
                           className="rounded-full w-[50px] h-[50px] object-cover"
-                          src={user?.image || avatarDefault}
+                          src={user.image !== "" ? user.image : avatarDefault}
                           alt="avatar"
                         />
                         <div className="block mt-1 mx-2">
@@ -195,7 +190,7 @@ function Comment({ data }) {
                   <span style={{ top: "20%", left: "3%" }} className="absolute">
                     <img
                       className="w-9 h-9 rounded-3xl"
-                      src={user ? user.image : avatarDefault}
+                      src={user.image !== "" ? user.image : avatarDefault}
                       alt="avatar"
                     />
                   </span>

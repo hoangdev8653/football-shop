@@ -13,10 +13,8 @@ function InfoUser() {
   const user = getLocalStorage("user");
   const fileInputRef = useRef(null);
   const avatarImageRef = useRef(null);
-  const [currentImage, setCurrentImage] = useState(
-    user?.image || avarta_deafaute
-  );
-  console.log(user.image);
+  const [currentImage, setCurrentImage] = useState(user?.image);
+  console.log(currentImage);
 
   const formik = useFormik({
     initialValues: {
@@ -82,9 +80,9 @@ function InfoUser() {
                     style={{ display: "none" }}
                   />
                   <img
-                    ref={avatarImageRef}
+                    // ref={avatarImageRef}
                     className="w-16 h-16 object-cover rounded-full"
-                    src={currentImage}
+                    src={currentImage !== "" ? currentImage : avarta_deafaute}
                     alt="avatar"
                   />
                   <button
@@ -122,13 +120,7 @@ function InfoUser() {
                       />
                     </div>
                     {formik.touched.username && formik.errors.username && (
-                      <div
-                        style={{
-                          color: "red",
-                          marginBottom: "8px",
-                          textAlign: "center",
-                        }}
-                      >
+                      <div className="text-red-500 mb-2 text-center">
                         {formik.errors.username}
                       </div>
                     )}
@@ -153,13 +145,7 @@ function InfoUser() {
                       />
                     </div>
                     {formik.touched.phone && formik.errors.phone && (
-                      <div
-                        style={{
-                          color: "red",
-                          marginBottom: "8px",
-                          textAlign: "center",
-                        }}
-                      >
+                      <div className="text-red-500 mb-2 text-center">
                         {formik.errors.phone}
                       </div>
                     )}
@@ -184,13 +170,7 @@ function InfoUser() {
                       />
                     </div>
                     {formik.touched.email && formik.errors.email && (
-                      <div
-                        style={{
-                          color: "red",
-                          marginBottom: "8px",
-                          textAlign: "center",
-                        }}
-                      >
+                      <div className="text-red-500 mb-2 text-center">
                         {formik.errors.email}
                       </div>
                     )}
@@ -258,7 +238,7 @@ function InfoUser() {
                 <img
                   ref={avatarImageRef}
                   className="w-16 h-16 object-cover rounded-full"
-                  src={user?.image}
+                  src={user?.image !== "" ? user.image : avarta_deafaute}
                   alt="avatar"
                 />
                 <button
@@ -296,13 +276,7 @@ function InfoUser() {
                     />
                   </div>
                   {formik.touched.username && formik.errors.username && (
-                    <div
-                      style={{
-                        color: "red",
-                        marginBottom: "8px",
-                        textAlign: "center",
-                      }}
-                    >
+                    <div className="text-red-500 mb-2 text-center">
                       {formik.errors.username}
                     </div>
                   )}
@@ -327,13 +301,7 @@ function InfoUser() {
                     />
                   </div>
                   {formik.touched.phone && formik.errors.phone && (
-                    <div
-                      style={{
-                        color: "red",
-                        marginBottom: "8px",
-                        textAlign: "center",
-                      }}
-                    >
+                    <div className="text-red-500 mb-2 text-center">
                       {formik.errors.phone}
                     </div>
                   )}
@@ -358,13 +326,7 @@ function InfoUser() {
                     />
                   </div>
                   {formik.touched.email && formik.errors.email && (
-                    <div
-                      style={{
-                        color: "red",
-                        marginBottom: "8px",
-                        textAlign: "center",
-                      }}
-                    >
+                    <div className="text-red-500 mb-2 text-center">
                       {formik.errors.email}
                     </div>
                   )}

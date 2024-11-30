@@ -16,19 +16,18 @@ import { formatPrice } from "../../../utils/forrmatPriceVn";
 
 function ProductDeatails() {
   const [loading, setLoading] = useState(true);
-  const { value, increment, decrement, deleteQuantity } = quantityStore();
+  const { value, increment, decrement, setQuantity } = quantityStore();
   const { getProductBySlug, data, stockQuality } = productStore();
   const { addProduct } = cartStore();
   const { slug } = useParams();
-
-  // console.log(value);
+  console.log(value);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         await getProductBySlug(slug);
       } catch (error) {
-        console.log(error);
+        console.error(error);
       } finally {
         setLoading(false);
       }
@@ -50,13 +49,20 @@ function ProductDeatails() {
     }
   };
 
-  console.log(value);
-
   const handleChangeQuantity = (e) => {
-    console.log(e.target.value);
+    const inputValue = e.target.value;
+
+    if (inputValue === "") {
+      setQuantity("");
+    } else {
+      const numberValue = parseInt(inputValue);
+      if (!isNaN(numberValue) && numberValue >= 0) {
+        setQuantity(numberValue);
+      }
+    }
   };
 
-  var settings = {
+  const sliderSettings = {
     infinite: true,
     dots: true,
     arrows: false,
@@ -79,15 +85,14 @@ function ProductDeatails() {
               <a className="hover:opacity-70" href="/">
                 Home
               </a>{" "}
-              /<p>đồ bóng đá </p> /
-              <p>Quần áo bóng đá đẹp mùa giải mới 23/24 </p> /<p>{data.name}</p>
+              /<p>đồ bóng đá </p> /<p>{data.name}</p>
             </div>
           </div>
           <div className="max-w-[1050px] mx-auto">
             <div className={styles.content}>
               <div className={styles.image_product}>
                 <div className="w-full relative">
-                  <Slider {...settings}>
+                  <Slider {...sliderSettings}>
                     <img
                       className="h-full w-full"
                       src={data.image[0]}
@@ -122,7 +127,7 @@ function ProductDeatails() {
                   <span className="text-orange-500 font-semibold uppercase">
                     {data.name}
                   </span>{" "}
-                  sân khách mùa giải 23/24
+                  mùa giải 23/24
                 </p>
                 <ul className="text-black my-2 list-disc ml-4">
                   <li className="my-2">Size: S - M - L - XL - 2XL - 3XL</li>
@@ -174,11 +179,10 @@ function ProductDeatails() {
                       -
                     </button>
                     <input
-                      onChange={deleteQuantity}
-                      // onChange={(e) => handleChangeQuantity(e)}
                       type="number"
                       className="border-solid border-[1px] border-gray-300 text-center w-[50px] focus:outline-none"
                       value={value}
+                      onChange={handleChangeQuantity}
                     />
                     <button
                       onClick={increment}
@@ -187,35 +191,21 @@ function ProductDeatails() {
                       +
                     </button>
                   </div>
-                  {(value === "" && typeof value === "string") ||
-                  value > stockQuality ? (
-                    <Button
-                      disabled={true}
-                      onClick={handleSubmit}
-                      className="text-white bg-orange-500 font-semibold opacity-45"
-                    >
-                      ADD TO CART
-                    </Button>
-                  ) : (
-                    <Button
-                      onClick={handleSubmit}
-                      className="text-white bg-orange-500 font-semibold hover:bg-orange-700"
-                    >
-                      ADD TO CART
-                    </Button>
-                  )}
+                  <Button
+                    disabled={value === "" || value > stockQuality}
+                    onClick={handleSubmit}
+                    className={`text-white bg-orange-500 font-semibold ${
+                      value === "" || value > stockQuality
+                        ? "opacity-45"
+                        : "hover:bg-orange-700"
+                    }`}
+                  >
+                    ADD TO CART
+                  </Button>
                 </div>
-                <div className="flex gap-1 ">
+                <div className="flex gap-1">
                   <p className="opacity-80 text-gray-500">Số lượng: </p>
                   <span className="font-semibold">{stockQuality}</span>
-                </div>
-                <div className="flex mt-8 ml-4 gap-4 font-semibold ">
-                  <Button className="text-white bg-red-700 hover:bg-red-900">
-                    TƯ VẤN NGAY
-                  </Button>
-                  <Button className="text-red-700 border-2 border-red-700 border-solid hover:text-white hover:bg-red-700">
-                    HOTLINE: 0936777554
-                  </Button>
                 </div>
               </div>
             </div>

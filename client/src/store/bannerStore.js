@@ -46,9 +46,6 @@ export const bannerStore = create((set) => ({
 
   updateBanner: async (id, data) => {
     try {
-      console.log(id);
-      console.log(data);
-
       set({ isLoading: true });
       const response = await updateBanner(id, data);
       if (response.status === 200) {

@@ -82,7 +82,7 @@ export const addProductWhishList = async (data) => {
   return await axiosConfig({
     method: "post",
     url: "/whishList/addProduct",
-    data,
+    data: { productId: data },
   });
 };
 
