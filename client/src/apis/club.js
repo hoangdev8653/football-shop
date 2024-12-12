@@ -25,7 +25,7 @@ export const getClubById = async (id) => {
 export const getClubBySlug = async (slug) => {
   return await axiosConfig({
     method: "get",
-    url: `/club/detail/${slug}`,
+    url: `/club/${slug}`,
   });
 };
 

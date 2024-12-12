@@ -8,8 +8,9 @@
 .image {
   display: block;
   width: 100%;
-  height: auto;
+  height: 400px;
   padding: 0 2px;
+  object-fit: cover;
 }
 
 .overlay {

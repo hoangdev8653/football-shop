@@ -1,26 +1,27 @@
 import { Route, Routes } from "react-router-dom";
 import { path } from "./utils/path";
-import Layout from "./templates/user/layout";
-import Home from "./pages/user/home/home";
-import Cart from "./pages/user/cart/cart";
-import ProductDeatails from "./pages/user/productDeatails/productDeatails";
-import ProductClb from "./pages/user/productClb/productClb";
-import ProductNation from "./pages/user/productNation/productNation";
-import ProductNoLogo from "./pages/user/productNoLogo/productNoLogo";
-import Blog from "./pages/user/blog/blog";
-import SearchProduct from "./pages/user/searchProduct/searchProduct";
-import Club from "./pages/user/club/club";
+import Layout from "./templates/layout";
+import Home from "./pages/home/Home";
+import Cart from "./pages/cart/cart";
+import ProductDeatails from "./pages/productDeatail/ProductDeatail";
+import ProductClb from "./pages/productClb/productClb";
+import ProductNation from "./pages/productNation/ProductNation";
+import ProductNoLogo from "./pages/productNoLogo/ProductNoLogo";
+import Blog from "./pages/Blog";
+import SearchProduct from "./pages/searchProduct/SearchProduct";
+import Club from "./pages/club/club";
+import WhishList from "./pages/WhishList";
+import Sport from "./pages/Sport";
 
 import Login from "./components/login";
-import NotFound from "./pages/user/404";
-import Profile from "./pages/user/profile/profile";
-import ChangePassword from "./pages/user/profile/changePassword";
+import NotFound from "./pages/404";
+import Profile from "./pages/profile/Profile";
+import ChangePassword from "./pages/profile/ChangePassword";
 import Register from "./components/register";
-import CheckOut from "./pages/user/checkout/checkout";
-import OrderComplete from "./pages/user/orderComplete/orderComplete";
-import ForgotPassword from "./pages/user/ForgotPassword";
-import ResetPassword from "./pages/user/ResetPassword";
-import WhishList from "./pages/user/whishList";
+import CheckOut from "./pages/checkout/checkout";
+import OrderComplete from "./pages/OrderComplete";
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
         <Route path={path.BLOG} element={<Blog />} />
         <Route path={path.CLB} element={<Club />} />
         <Route path={path.WHISHLIST} element={<WhishList />} />
+        <Route path={path.SPORT} element={<Sport />} />
       </Route>
 
       <Route path={path.LOGIN} element={<Login />} />

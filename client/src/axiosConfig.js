@@ -4,7 +4,7 @@ import {
   getLocalStorage,
   setLocalStorage,
   clearLocalStorage,
-} from "./utils/LocalStorage";
+} from "./utils/localStorage";
 export const axiosConfig = axios.create({
   baseURL: BASE_URL,
 });

@@ -1,0 +1,9 @@
+.avarta {
+    display: block;
+}
+
+@media screen and (max-width : 520px) {
+   .avarta { 
+    display: none;
+   }
+}
