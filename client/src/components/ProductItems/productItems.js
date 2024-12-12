@@ -6,8 +6,8 @@ import WishList from "../wishList";
 import { formatPrice } from "../../utils/forrmatPriceVn";
 import product_coming from "../../assets/product_coming-soon.jpg";
 
-function ProductItems({ itemToShow = 5, data }) {
-  const [idProduct, setIdProduct] = useState(null);
+function ProductItems({ itemToShow = 4, data }) {
+  const [idWhishList, setIdWhishList] = useState(null);
 
   var settings = {
     infinite: true,
@@ -27,7 +27,7 @@ function ProductItems({ itemToShow = 5, data }) {
         },
       },
       {
-        breakpoint: 600,
+        breakpoint: 720,
         settings: {
           slidesToShow: 2,
           slidesToScroll: 2,
@@ -43,9 +43,8 @@ function ProductItems({ itemToShow = 5, data }) {
       },
     ],
   };
-
-  const handleId = (id) => {
-    setIdProduct(id);
+  const handleWishListClick = (id) => {
+    setIdWhishList(id);
   };
   return (
     <div className="overflow-hidden bg-black">
@@ -61,7 +60,7 @@ function ProductItems({ itemToShow = 5, data }) {
                 />
                 <div className={styles.overlay}>
                   <img
-                    className="h-full"
+                    className={styles.image}
                     src={item.image[1] || product_coming}
                     alt={item.slug}
                   />
@@ -90,8 +89,12 @@ function ProductItems({ itemToShow = 5, data }) {
                   pecentDiscount={15}
                 />
               </a>
-              <div onClick={() => handleId(item._id)}>
-                <WishList className="absolute top-2 right-2 " />
+              <div onClick={() => handleWishListClick(item._id)}>
+                <WishList
+                  id={item._id}
+                  onClick={handleWishListClick}
+                  className="absolute top-2 right-2"
+                />
               </div>
             </div>
           ))}

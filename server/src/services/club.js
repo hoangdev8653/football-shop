@@ -23,14 +23,15 @@ const getClub = async (id) => {
 };
 
 const getClubBySlug = async ({ slug }) => {
-  const exits = await ClubModel.findOne({ slug }).populate(
+  const club = await ClubModel.findOne({ slug }).populate(
     "productId",
     "name price image slug -_id "
   );
-  if (!exits) {
+
+  if (!club) {
     throw Error("Not found");
   }
-  return await exits;
+  return await club;
 };
 
 const createClub = async ({

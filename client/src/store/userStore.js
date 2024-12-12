@@ -15,7 +15,7 @@ import {
   getAllUser,
   deleteCart,
 } from "../apis/auth";
-import { setLocalStorage } from "../utils/LocalStorage";
+import { setLocalStorage } from "../utils/localStorage";
 import { toast } from "react-toastify";
 
 export const userStore = create((set) => ({

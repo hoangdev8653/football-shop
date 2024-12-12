@@ -28,3 +28,22 @@
     user-select: none;
   }
   
+
+  @media screen and (max-width: 850px) {
+    .pagination li a {
+      padding: 0.3rem 0.5rem;
+      border: 1px solid #ddd;
+      color: #007bff;
+      text-decoration: none;
+    }
+  }
+    @media screen and (max-width: 550px) {
+      .pagination li a {
+        padding: 0.2rem 0.3rem;
+        border: 1px solid #ddd;
+        color: #007bff;
+        text-decoration: none;
+      }
+     
+}
+  

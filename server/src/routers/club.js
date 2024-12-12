@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.route("/").get(clubController.getAllClub);
 router.route("/findById").get(clubController.getClub);
-router.route("/detail/:slug").get(clubController.getClubBySlug);
+router.route("/:slug").get(clubController.getClubBySlug);
 router.route("/create").post(
   uploadCloud.fields([
     { name: "banner", maxCount: 1 },
