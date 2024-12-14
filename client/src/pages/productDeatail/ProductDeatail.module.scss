@@ -4,8 +4,8 @@
     padding: 16px 0;
     color: white;
     text-transform: uppercase;
-    font-size: 1.125rem/* 18px */;
-    line-height: 1.75rem/* 28px */;
+    font-size: 18px;
+    line-height: 28px;
     font-weight: 500;
     display: flex;
     text-align: center;
@@ -22,7 +22,7 @@
 }
 .image_product {
     width: 50%;
-    margin: 0 8px;
+    // margin: 8px;
 }
 .info_product {
     width: 50%;
@@ -42,8 +42,8 @@ input[type="number"] {
 @media screen and (max-width : 520px){
     .page_title {
         margin: 0 24px;
-        font-size: 16px;
-        line-height: 20px;
+        font-size: 14px;
+        line-height: 18px;
     }
     .content {
         display: block;
@@ -52,11 +52,11 @@ input[type="number"] {
     
     .image_product {
         width: 100%;
-        margin: 16px 8px;
+        margin: 8px 0px;
     }
     .info_product {
         overflow-x: hidden;
         width: 100%;
-        margin: 8px 16px;
+        margin: 0px 8px;
     }
 }
