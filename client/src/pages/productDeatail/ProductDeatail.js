@@ -20,7 +20,6 @@ function ProductDeatails() {
   const { getProductBySlug, data, stockQuality } = productStore();
   const { addProduct } = cartStore();
   const { slug } = useParams();
-  console.log(value);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -84,7 +83,7 @@ function ProductDeatails() {
               <a className="hover:opacity-70" href="/">
                 Home
               </a>{" "}
-              /<p>đồ bóng đá </p> /<p>{data.name}</p>
+              /<p>Đồ bóng Đá </p> /<p>{data.name}</p>
             </div>
           </div>
           <div className="max-w-[1050px] mx-auto">
@@ -98,7 +97,7 @@ function ProductDeatails() {
                       alt={data.slug}
                     />
                     <img
-                      className="w-full h-[700px]"
+                      className="w-full h-full"
                       src={data?.image[1] || image_comming_soon}
                       alt={data.slug}
                     />
@@ -110,7 +109,7 @@ function ProductDeatails() {
                 </div>
               </div>
               <div className={styles.info_product}>
-                <p className="uppercase text-orange-500 font-bold text-xl mb-2">
+                <p className="uppercase text-orange-500 font-bold text-xl my-2 lg:my-0">
                   {data.name}
                 </p>
                 <p className="text-xl flex gap-4">
