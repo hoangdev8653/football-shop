@@ -4,8 +4,8 @@ export const corsOptions = {
   origin: function (origin, callback) {
     if (
       whitelist_origin.includes(origin) ||
-      !origin || // For requests without a defined origin
-      isRequestFromPostman() // Additional check for Postman headers
+      !origin ||
+      isRequestFromPostman()
     ) {
       callback(null, true);
     } else {
