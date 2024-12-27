@@ -3,7 +3,7 @@ import { CiLock } from "react-icons/ci";
 import Discount from "../../components/discount";
 import WishList from "../../components/wishList";
 import Section from "../../components/section";
-import styles from "./club.module.scss";
+import styles from "./Club.module.scss";
 import Loadding from "../../components/loadding/Loadding";
 import product_coming from "../../assets/product_coming-soon.jpg";
 import { useParams } from "react-router-dom";
@@ -29,8 +29,9 @@ function Club() {
     fetchData();
   }, [slug]);
   console.log(data);
+
   return (
-    <div className="club w-full">
+    <div className=" w-full">
       {loading ? (
         <Loadding />
       ) : (
@@ -40,17 +41,23 @@ function Club() {
               Áo Bóng Đá {data.name} Mùa Giải Mới 24/25
             </div>
             <img
-              className={`${styles.size_img}`}
+              className="lg:w-full object-cover h-[400px]"
               src={data?.banner}
               alt={data?.slug}
             />
           </div>
           <div className="max-w-[1050px] mx-auto my-8">
-            <div className={styles.grid}>
-              <div className={styles.item_product}>
+            <div className="grid lg:grid-cols-4 gap-1 my-3 tablet:grid-cols-3 sx:grid-cols-2">
+              <div className="h-full w-full relative mx-[2px]">
                 <a href={`/product/${data?.productId[0]?.slug}` ?? "/"}>
                   <img
-                    className={styles.img_product}
+                    style={{
+                      background:
+                        "linear-gradient(to top, #323232 0%, rgba(50, 50, 50, 0) 33%)",
+                      boxShadow:
+                        "rgba(0, 0, 0, 0.35) 0px -50px 36px -28px inset",
+                    }}
+                    className="w-full h-full"
                     src={data.productId[0]?.image[0] || product_coming}
                     alt={data.slug || "product_comming"}
                   />
@@ -199,10 +206,10 @@ function Club() {
               </div>
             </div>
           </div>
-          <div className={styles.section_destop}>
+          <>
             <Section />
-          </div>
-          <div className={`${styles.mx} max-w-[1050px] mx-auto`}>
+          </>
+          <div className="max-w-[1050px] mx-auto">
             <p className="mb-2 mt-4 ">
               Quần áo bóng đá câu lạc bộ{" "}
               <span className="text-black font-semibold text-base">

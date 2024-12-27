@@ -1,12 +1,8 @@
 import React, { useState } from "react";
-import {
-  getLocalStorage,
-  clearLocalStorage,
-} from "../../../utils/localStorage";
-import UserDeafaute from "../../../assets/user_deafaute.jpg";
-import { logout } from "../../../apis/auth";
+import { getLocalStorage, clearLocalStorage } from "../../utils/localStorage";
+import UserDeafaute from "../../assets/user_deafaute.jpg";
+import { logout } from "../../apis/auth";
 import { useNavigate } from "react-router-dom";
-import styles from "./avarta.module.scss";
 
 function Avarta() {
   const [isOpen, setIsOpen] = useState(false);
@@ -30,7 +26,7 @@ function Avarta() {
   };
 
   return (
-    <div className={styles.avarta}>
+    <div className="sx:block hidden">
       <div
         onMouseEnter={handleAvartaHover}
         onMouseLeave={handleAvartaLeave}
@@ -42,28 +38,27 @@ function Avarta() {
             src={user?.image || UserDeafaute}
             alt="avatar"
           />
-        </a>{" "}
-        {/* <div className="bg-red-400 cursor-pointer ">.</div> */}
+        </a>
         {user && isOpen && (
           <div className="absolute z-50  right-[-16px] w-36 p-2 bg-gray-800">
             <a href="/profile">
               <p className="text-white font-semibold hover:bg-gray-400 cursor-pointer mt-2 text-lg">
-                Profile{" "}
-              </p>{" "}
-            </a>{" "}
+                Profile
+              </p>
+            </a>
             <a href="/whishList">
               <p className="text-white font-semibold cursor-pointer border-b border-gray-400 hover:bg-gray-400 text-lg">
-                WhishList{" "}
-              </p>{" "}
-            </a>{" "}
+                WhishList
+              </p>
+            </a>
             <div onClick={handleLogout}>
               <p className="text-white font-semibold hover:bg-gray-400 cursor-pointer mt-2 text-lg">
-                Sign Out{" "}
-              </p>{" "}
-            </div>{" "}
+                Sign Out
+              </p>
+            </div>
           </div>
-        )}{" "}
-      </div>{" "}
+        )}
+      </div>
     </div>
   );
 }

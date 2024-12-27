@@ -1,5 +1,5 @@
-import Description from "./decription";
-import Reviews from "./reviews";
+import Description from "./Decription";
+import Reviews from "./Reviews";
 
 function Index({ data }) {
   return (

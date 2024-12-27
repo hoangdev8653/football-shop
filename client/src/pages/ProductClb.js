@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from "react";
-import Banner from "../../assets/Banner-bong-da-clb.png";
-import BannerMobile from "../../assets/Banner_Bong-da-clb_thailan.webp";
-import Section from "../../components/section";
-import ProductItems from "../../components/ProductItems/productItems";
+import Banner from "../assets/Banner-bong-da-clb.png";
+import BannerMobile from "../assets/Banner_Bong-da-clb_thailan.webp";
+import Section from "../components/section";
+import ProductItems from "../components/productItems";
 import { BsCart2 } from "react-icons/bs";
 import { CiStar } from "react-icons/ci";
-import styles from "./productClub.module.scss";
-import Discount from "../../components/discount";
-import WishList from "../../components/wishList";
-import { getProductFromVn, getProductNoLogo } from "../../apis/product";
-import { formatPrice } from "../../utils/forrmatPriceVn";
+import Discount from "../components/discount";
+import WishList from "../components/wishList";
+import { getProductFromVn, getProductNoLogo } from "../apis/product";
+import { formatPrice } from "../utils/forrmatPriceVn";
 
 function ProductClb() {
   const [data, setData] = useState([]);
@@ -39,19 +38,29 @@ function ProductClb() {
   return (
     <div className="productClub w-full">
       <div className="bg-gray-800 ">
-        <div className={styles.title}>
-          QUẦN ÁO BÓNG ĐÁ ĐẸP NHẤT MÙA GIẢI MỚI 23/24 HÀNG VIỆT NAM VÀ THÁI LAN{" "}
+        <div className="mx-4 text-lg tablet:max-w-[1050px] tablet:mx-auto text-white lg:text-2xl font-bold tablet:uppercase tablet:py-4 tablet:items-center py-2">
+          <p className="mx-auto text-center">
+            QUẦN ÁO BÓNG ĐÁ ĐẸP NHẤT MÙA GIẢI MỚI 23/24 HÀNG VIỆT NAM VÀ THÁI
+            LAN
+          </p>{" "}
         </div>
       </div>
       <div className="w-full relative mb-8">
-        <img className={styles.banner} src={Banner} alt="banner" />
         <img
-          className={styles.bannerMobile}
+          className=" tablet:bg-cover tablet:w-full"
+          src={Banner}
+          alt="banner"
+        />
+        <img
+          className="tablet:bg-cover tablet:hidden block w-full"
           src={BannerMobile}
           alt="bannerMobile"
         />
-        <div className={styles.box_text}>
-          <div className="text-center text-white">
+        <div className="absolute  bottom-[36px]  bg-opacity-60 tablet:left-[10%] tablet:w-[80%] tablet:bottom-[72px]">
+          <div
+            style={{ backgroundColor: "rgba(0,0,0,0.6)" }}
+            className="text-center text-white "
+          >
             <p className="text-2xl pt-4 py-2 font-bold">
               ÁO BÓNG ĐÁ MÙA GIẢI MỚI
             </p>

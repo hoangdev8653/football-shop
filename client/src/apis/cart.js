@@ -1,7 +1,6 @@
 import { axiosConfig } from "../axiosConfig";
 
-export const addProduct = async (data) => {
-  console.log(data);
+export const addProductToCart = async (data) => {
   return await axiosConfig({
     url: "/user/createCart",
     method: "post",
@@ -9,10 +8,18 @@ export const addProduct = async (data) => {
   });
 };
 
-export const deleteProduct = async (productId) => {
+export const deleteProductToCart = async (productId) => {
   return await axiosConfig({
     url: `/user/deleteCart?productId=${productId}`,
     method: "delete",
+  });
+};
+
+export const updateQuantityCart = async (products) => {
+  return await axiosConfig({
+    url: "/user/updateCart",
+    method: "put",
+    data: { products },
   });
 };
 

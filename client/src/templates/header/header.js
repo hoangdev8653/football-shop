@@ -1,11 +1,11 @@
 import { FaFacebookF, FaInstagram, FaYoutube } from "react-icons/fa";
 import { MdOutlineMailOutline, MdOutlinePhone } from "react-icons/md";
-import ModalSearch from "./modalSearch/modalSearch";
+import ModalSearch from "./modalSearch/ModalSearch";
 import Logo from "../../assets/logo.png";
 import { IoMdMenu } from "react-icons/io";
-import styles from "./header.module.scss";
-import Cart from "./cart/cart";
-import Avarta from "./avarta/avarta";
+import styles from "./Header.module.scss";
+import Cart from "./cart/Cart";
+import Avarta from "./Avarta";
 import { IoMdClose } from "react-icons/io";
 import { useState } from "react";
 import { getLocalStorage } from "../../utils/localStorage";
@@ -25,7 +25,10 @@ function Header() {
   return (
     <div className="w-full h-auto">
       <div className="bg-black text-right ">
-        <div className={styles.socal_media}>
+        <div
+          // className={styles.socal_media}
+          className="tablet:text-white tablet:flex tablet:gap-2 tablet:justify-end tablet:mx-[15px] hidden"
+        >
           <a href="/" title="Facebook">
             <FaFacebookF />
           </a>

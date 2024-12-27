@@ -1,24 +1,19 @@
 import React, { useEffect, useState } from "react";
-import BannerNation from "../../assets/Banner-ao-doi-tuyen-2024.jpg";
+import BannerNation from "../assets/Banner-ao-doi-tuyen-2024.jpg";
 import { CiStar } from "react-icons/ci";
-import Discount from "../../components/discount";
-import WishList from "../../components/wishList";
-import styles from "./ProductNation.module.scss";
-import { getProductNation, getProductFromVn } from "../../apis/product";
-import { formatPrice } from "../../utils/forrmatPriceVn";
+import Discount from "../components/discount";
+import WishList from "../components/wishList";
+import { getProductNation } from "../apis/product";
+import { formatPrice } from "../utils/forrmatPriceVn";
 
 function ProductNation() {
   const [productNation, setProductNation] = useState([]);
-  const [productFromVn, setProductFromVn] = useState([]);
   const [idWhishList, setIdWhishList] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
       const responseNation = await getProductNation();
       setProductNation(responseNation.data.content);
-
-      const resFromVn = await getProductFromVn();
-      setProductFromVn(resFromVn.data.content);
     };
     fetchData();
   }, []);
@@ -30,7 +25,7 @@ function ProductNation() {
   return (
     <div className="product_nation">
       <div className="bg-white text-center justify-center w-full">
-        <p className="text-orange-500 font-bold text-2xl py-4">
+        <p className="text-orange-500 font-bold lg:text-2xl py-4 text-lg">
           TRANG PHỤC THI ĐẤU BÓNG ĐÁ ĐỘI TUYỂN MỚI NHẤT 2024
         </p>
       </div>
@@ -42,7 +37,7 @@ function ProductNation() {
         />
         <div
           style={{ backgroundColor: "rgba(0,0,0,0.51)" }}
-          className={styles.text_banner}
+          className="bottom-5 absolute left-[30%] z-10 text-white text-base"
         >
           <p className="font-bold text-center justify-center py-2 text-xl">
             ÁO BÓNG ĐÁ ĐỘI TUYỂN HÀNG ĐẦU
@@ -64,17 +59,24 @@ function ProductNation() {
           </div>
           <b className="block flex-1 h-[2px] bg-current font-bold mt-6 opacity-30 text-orange-300"></b>
         </div>
-        <div className={styles.grid}>
+        <div className="grid lg:grid-cols-4 gap-1 my-3 tablet:grid-cols-3 sx:grid-cols-2">
           {productNation.map((item, index) => (
-            <div key={index} className={styles.container}>
+            <div
+              key={index}
+              className="relative cursor-pointer overflow-y-hidden"
+            >
               <a href={`product/${item.slug}`}>
                 <img
-                  className={styles.image}
+                  className="block w-full h-auto p-[2px]"
                   src={item.image[0]}
                   alt={item.slug}
                 />
-                <div className={styles.overlay}>
-                  <img src={item.image[1]} alt={item.slug} />
+                <div className="absolute top-0 bottom-0 left-0 right-0 h-full w-full opacity-0 transition ease-in-out duration-500 hover:opacity-100">
+                  <img
+                    className="block w-full h-auto p-[2px]"
+                    src={item.image[1]}
+                    alt={item.slug}
+                  />
                 </div>
                 <div
                   style={{

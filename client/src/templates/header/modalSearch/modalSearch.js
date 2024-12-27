@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { BsSearch } from "react-icons/bs";
-import styles from "./modalSearch.module.scss";
+import styles from "./ModalSearch.module.scss";
 import { getProductByKey } from "../../../apis/product";
 import { useDebounce } from "../../../hooks/useDebounce";
 import { formatPrice } from "../../../utils/forrmatPriceVn";

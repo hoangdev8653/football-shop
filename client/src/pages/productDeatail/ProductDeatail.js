@@ -4,11 +4,10 @@ import Discount from "../../components/discount";
 import BannerIn from "../../assets/Banner-keu-goi-in.png";
 import image_comming_soon from "../../assets/product_coming-soon.jpg";
 import Button from "../../components/button";
-import styles from "./ProductDeatail.module.scss";
 import { useParams } from "react-router-dom";
 import { quantityStore } from "../../store/quantityStore";
 import { toast } from "react-toastify";
-import Expandable from "./expandable/index";
+import Expandable from "./expandable/Index";
 import { cartStore } from "../../store/cartStore";
 import { productStore } from "../../store/productStore";
 import Loadding from "../../components/loadding/Loadding";
@@ -18,7 +17,7 @@ function ProductDeatails() {
   const [loading, setLoading] = useState(true);
   const { value, increment, decrement, setQuantity } = quantityStore();
   const { getProductBySlug, data, stockQuality } = productStore();
-  const { addProduct } = cartStore();
+  const { addProductToCart } = cartStore();
   const { slug } = useParams();
 
   useEffect(() => {
@@ -38,7 +37,7 @@ function ProductDeatails() {
     const productId = data?._id;
     const quantity = value;
     try {
-      await addProduct({ productId, quantity });
+      await addProductToCart({ productId, quantity });
       setTimeout(() => {
         window.location.reload();
       }, 2500);
@@ -79,7 +78,10 @@ function ProductDeatails() {
             className="w-full"
             style={{ backgroundColor: "rgba(0,0,0,0.25)" }}
           >
-            <div className={styles.page_title}>
+            <div
+              // className={styles.page_title}
+              className="text-sm mx-6 py-4 max-w-[1050px] sx:mx-auto text-white uppercase sx:text-lg font-semibold flex items-center justify-center gap-2"
+            >
               <a className="hover:opacity-70" href="/">
                 Home
               </a>{" "}
@@ -87,8 +89,14 @@ function ProductDeatails() {
             </div>
           </div>
           <div className="max-w-[1050px] mx-auto">
-            <div className={styles.content}>
-              <div className={styles.image_product}>
+            <div
+              // className={styles.content}
+              className="w-full my-8 sx:flex pb-2 block overflow-hidden"
+            >
+              <div
+                // className={styles.image_product}
+                className="sx:w-1/2 my-1 w-full"
+              >
                 <div className="w-full relative">
                   <Slider {...sliderSettings}>
                     <img
@@ -108,7 +116,10 @@ function ProductDeatails() {
                   />
                 </div>
               </div>
-              <div className={styles.info_product}>
+              <div
+                // className={styles.info_product}
+                className="sx:w-1/2 mx-2 overflow-hidden w-full "
+              >
                 <p className="uppercase text-orange-500 font-bold text-xl my-2 lg:my-0">
                   {data.name}
                 </p>
