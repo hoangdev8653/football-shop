@@ -39,12 +39,11 @@ const createCart = async (req, res) => {
 const updateCart = async (req, res) => {
   try {
     const id = req.userId;
-    const productId = req.query.productId;
-    const { quantity } = req.body;
-    const cart = await userServices.updateCart(id, productId, { quantity });
+    const { products } = req.body;
+    const user = await userServices.updateCart(id, products);
     return res
       .status(StatusCodes.OK)
-      .json({ status: 200, message: "Xử lý thành công", content: cart });
+      .json({ status: 200, message: "Xử lý thành công", content: user });
   } catch (error) {
     console.log(error);
     res

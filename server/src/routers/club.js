@@ -13,10 +13,8 @@ router.route("/create").post(
   ]),
   clubController.createClub
 );
+router.route("/addProductId").put(clubController.addProductToClub);
 
-router
-  .route("/updateById")
-  .put(uploadCloud.single("logo"), clubController.updateClub);
 router.route("/delete").delete(clubController.deleteClub);
 
 export default router;

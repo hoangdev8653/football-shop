@@ -1,5 +1,6 @@
 import { StatusCodes } from "http-status-codes";
 import { productService } from "../services/product.js";
+import slug from "../Utils/customSlug.js";
 
 const getAllProduct = async (req, res) => {
   try {
@@ -141,7 +142,7 @@ const getProductPretty = async (req, res) => {
 const createProduct = async (req, res) => {
   try {
     const files = req.files;
-    const { name, description, price, stockQuality, image, slug, categoryId } =
+    const { name, description, price, stockQuality, image, categoryId } =
       req.body;
     const images = files.map((file) => file.path);
     const product = await productService.createProduct({
@@ -150,7 +151,7 @@ const createProduct = async (req, res) => {
       price,
       stockQuality,
       image: images,
-      slug,
+      slug: slug(name),
       categoryId,
     });
     return res
@@ -166,16 +167,13 @@ const updateProduct = async (req, res) => {
   try {
     const id = req.query.id;
     console.log(id);
-    const { name, description, price, stockQuality, slug, categoryId } =
-      req.body;
-    // const images = files?.map((file) => file.path);
+    const { name, description, price, stockQuality, categoryId } = req.body;
     const product = await productService.updateProduct(id, {
       name,
       description,
       price,
       stockQuality,
-      // image: images,
-      slug,
+      slug: slug(name),
       categoryId,
     });
     return res
