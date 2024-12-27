@@ -3,7 +3,7 @@ import ClubModel from "../models/club.js";
 const getAllClub = async () => {
   return await ClubModel.find({}).populate(
     "productId",
-    "name price image slug -_id "
+    "name price image slug _id"
   );
 };
 
@@ -11,7 +11,7 @@ const getClub = async (id) => {
   try {
     const club = await ClubModel.findById(id).populate(
       "productId",
-      "name price image slug -_id "
+      "name price image slug _id "
     );
     if (!club) {
       throw new { Error: "Không tồn tại " }();
@@ -25,7 +25,7 @@ const getClub = async (id) => {
 const getClubBySlug = async ({ slug }) => {
   const club = await ClubModel.findOne({ slug }).populate(
     "productId",
-    "name price image slug -_id "
+    "name price image slug _id "
   );
 
   if (!club) {
@@ -64,20 +64,26 @@ const createClub = async ({
   }
 };
 
-const updateClub = async (
-  id,
-  { name, nickname, slug, stadium, banner, logo, establish, productId }
-) => {
+const addProductToClub = async (id, productIds) => {
   try {
-    const club = await ClubModel.findById(id);
-    if (!club) {
-      throw new { Error: "Không tồn tại" }();
-    }
-    return await ClubModel.findByIdAndUpdate(
-      id,
-      { name, nickname, slug, stadium, banner, logo, establish, productId },
-      { new: true }
+    const club = await ClubModel.findById(id).populate(
+      "productId",
+      "name price image slug _id "
     );
+    if (!club) {
+      throw Error("Club Not Found");
+    }
+    const product = club.productId.findIndex(
+      (item) => item._id.toString() === productIds.toString()
+    );
+    console.log(productIds);
+
+    if (product !== -1) {
+      throw Error("Product already exists");
+    } else {
+      club.productId.push(productIds);
+      return await club.save();
+    }
   } catch (error) {
     console.log(error);
   }
@@ -100,6 +106,6 @@ export const clubService = {
   getClub,
   getClubBySlug,
   createClub,
-  updateClub,
+  addProductToClub,
   deleteclub,
 };
