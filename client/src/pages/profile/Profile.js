@@ -1,11 +1,10 @@
-import styles from "./Profile.module.scss";
-import { Tabs, Tab } from "./Tabs/Tabs";
+import { Tabs, Tab } from "./Tabs";
 import HistoryOrder from "./HistoryOrder";
 import InfoUser from "./InfoUser";
 
 function Profile() {
   return (
-    <div className={styles.profile}>
+    <div className="w-full">
       <div className="max-w-[1050px] mx-auto my-8 ">
         <div
           style={{ boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px" }}

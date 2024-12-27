@@ -1,66 +1,34 @@
 import React, { useState } from "react";
-import Slider from "react-slick";
-import styles from "./productItems.module.scss";
-import Discount from "../discount";
-import WishList from "../wishList";
-import { formatPrice } from "../../utils/forrmatPriceVn";
-import product_coming from "../../assets/product_coming-soon.jpg";
+import Discount from "./discount";
+import WishList from "./wishList";
+import { formatPrice } from "../utils/forrmatPriceVn";
+import product_coming from "../assets/product_coming-soon.jpg";
+import SliderConfig from "./slider";
 
 function ProductItems({ itemToShow = 4, data }) {
   const [idWhishList, setIdWhishList] = useState(null);
 
-  var settings = {
-    infinite: true,
-    speed: 500,
-    slidesToShow: itemToShow,
-    slidesToScroll: 2,
-    autoplay: true,
-    autoplaySpeed: 3000,
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 3,
-          slidesToScroll: 3,
-          infinite: true,
-          dots: true,
-        },
-      },
-      {
-        breakpoint: 720,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 2,
-          initialSlide: 2,
-        },
-      },
-      {
-        breakpoint: 480,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-        },
-      },
-    ],
-  };
   const handleWishListClick = (id) => {
     setIdWhishList(id);
   };
   return (
     <div className="overflow-hidden bg-black">
-      <Slider {...settings}>
+      <SliderConfig itemToShow={itemToShow}>
         {data &&
           data?.map((item, index) => (
-            <div key={index} className={styles.container}>
+            <div
+              key={index}
+              className="relative w-1/2 cursor-pointer overflow-y-hidden"
+            >
               <a href={`/product/${item.slug}`}>
                 <img
-                  className={styles.image}
+                  className="block w-full h-[400px] px-[2px] object-cover"
                   src={item.image[0] || product_coming}
                   alt={item.slug}
                 />
-                <div className={styles.overlay}>
+                <div className="absolute top-0 left-0 right-0 bottom-0 h-full w-full opacity-0 transition ease-in-out duration-500 hover:opacity-100">
                   <img
-                    className={styles.image}
+                    className="block w-full h-[400px] px-[2px] object-cover"
                     src={item.image[1] || product_coming}
                     alt={item.slug}
                   />
@@ -98,7 +66,7 @@ function ProductItems({ itemToShow = 4, data }) {
               </div>
             </div>
           ))}
-      </Slider>
+      </SliderConfig>
     </div>
   );
 }

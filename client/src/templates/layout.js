@@ -1,7 +1,7 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
-import Header from "./header/header";
-import Footer from "./footer";
+import Header from "./header/Header";
+import Footer from "./Footer";
 import BackToTop from "../components/backToTop";
 
 function layout() {

@@ -1,7 +1,4 @@
-.size_img {
-    width: 100%;
-    object-fit: cover;
-}
+
 
 .grid {
     display: grid;
@@ -25,9 +22,7 @@
             rgba(50, 50, 50, 0) 33%);
     box-shadow: rgba(0, 0, 0, 0.35) 0px -50px 36px -28px inset;
 }
-.mx {
-    padding: 0 16px;
-}
+
 
 @media screen and (max-width: 860px) {
     .grid {
@@ -35,35 +30,15 @@
         overflow: hidden;
         margin: 0 4px;
     }
-    .size_img {
-        height: 400px;
-    }
 
-    .section_destop {
-        display: none;
-    }
-    .mx {
-        margin: 0 8px;
-    }
 }
 @media screen and (max-width: 500px) {
-    .size_img {
-        height: 200px;
-    }
+    
 
     .grid {
         grid-template-columns: repeat(1, minmax(0, 1fr));
         overflow: hidden;
         margin: 0 4px;
     }
-    .img_product {
-        height: 335px;
-        object-fit: cover;
-    }
-    .section_destop {
-        display: none;
-    }
-    .mx {
-        margin: 0 8px;
-    }
+  
 }

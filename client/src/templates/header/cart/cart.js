@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { BsCart2 } from "react-icons/bs";
 import { IoIosCloseCircleOutline } from "react-icons/io";
-import styles from "./cart.module.scss";
+import styles from "./Cart.module.scss";
 import Button from "../../../components/button";
 import { cartStore } from "../../../store/cartStore";
 import { whishListStore } from "../../../store/wishListStore";
@@ -9,7 +9,8 @@ import { formatPrice } from "../../../utils/forrmatPriceVn";
 
 function Cart() {
   const [isOpen, setIsOpen] = useState(false);
-  const { data, fetchCart, deleteProduct, totalQuantity } = cartStore();
+  const { data, getProductToCart, deleteProductToCart, totalQuantity } =
+    cartStore();
   const { getProductWhishList } = whishListStore();
   const [checkCart, setCheckCart] = useState(false);
   useEffect(() => {
@@ -20,7 +21,7 @@ function Cart() {
     }
   }, [data]);
   useEffect(() => {
-    fetchCart();
+    getProductToCart();
     getProductWhishList();
   }, []);
 
@@ -41,7 +42,7 @@ function Cart() {
 
   const handleDelete = async (productId) => {
     try {
-      await deleteProduct(productId);
+      await deleteProductToCart(productId);
       setTimeout(() => {
         window.location.reload();
       }, 2500);

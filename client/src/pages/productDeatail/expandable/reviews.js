@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { IoMdArrowDown, IoMdArrowUp } from "react-icons/io";
-import Comment from "./comment";
+import Comment from "./Comment";
 
 function Reviews({ data }) {
   const [isShow, setIsShow] = useState(false);

@@ -24,9 +24,9 @@ function WhishList() {
   return (
     <div
       style={{ backgroundColor: "#f9f9f9" }}
-      className="w-full h-auto  items-center py-8"
+      className="w-full h-screen  items-center py-8"
     >
-      <div className="mx-auto w-[70%] bg-white h-[80%] flex shadow-md ">
+      <div className="mx-auto w-[70%] bg-white  flex shadow-md ">
         <div className="text-center items-center mx-8 my-8 w-full">
           {data?.length > 0 ? (
             <>

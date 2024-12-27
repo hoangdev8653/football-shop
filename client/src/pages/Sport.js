@@ -4,7 +4,7 @@ import Banner_do_bong_da_doi_tuyen from "../assets/Banner-quan-ao-bong-da-doi-tu
 import Banner_do_bong_da_khong_logo from "../assets/Banner-do-bong-da-khong-logo.webp";
 import Banner_phu_kien from "../assets/Banner-phu-kien.jpg";
 import Banner_bong_da_clb_vietnam from "../assets/Banner_Bong-da-clb_vietnam.webp";
-import ProductItems from "../components/ProductItems/productItems";
+import ProductItems from "../components/productItems";
 import {
   getProductFromVn,
   getProductNoLogo,
@@ -16,7 +16,6 @@ function Sport() {
   const [productVn, setProductVn] = useState([]);
   const [productNoLogo, setProductNoLogo] = useState([]);
   const [accessory, setAccessory] = useState([]);
-  const [idWhishList, setIdWhishList] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -33,10 +32,6 @@ function Sport() {
     };
     fetchData();
   }, []);
-
-  const handleWishListClick = (id) => {
-    setIdWhishList(id);
-  };
 
   return (
     <div className="w-full bg-black">

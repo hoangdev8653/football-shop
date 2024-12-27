@@ -10,6 +10,7 @@ module.exports = {
       screens: {
         xxs: { max: "549px" },
         sx: "550px",
+        tablet: "860px",
       },
     },
   },

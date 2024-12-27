@@ -2,10 +2,14 @@ import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import { createCheckout } from "../../../apis/cart";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
 
 function Payment({ address, totalPrice }) {
-  const navigate = useNavigate();
+  const [currentAddress, setCurrentAddress] = useState(address);
 
+  useEffect(() => {
+    setCurrentAddress(address); // Cập nhật nếu `address` thay đổi
+  }, [address]);
   const createOrder = (data, actions) => {
     return actions.order.create({
       intent: "CAPTURE",
@@ -19,15 +23,16 @@ function Payment({ address, totalPrice }) {
       ],
     });
   };
-  console.log(address);
 
   const onApprove = async (data, actions) => {
     const order = await actions.order.capture();
+    console.log(order);
     if (order.status === "COMPLETED") {
       try {
-        console.log("Address in onApprove:", address);
-        console.log(data);
-
+        console.log("Current Address:", currentAddress);
+        // console.log(order.status);
+        // console.log("Address in onApprove:", address);
+        // console.log(data);
         // Truyền trực tiếp `address` vào API
         // const response = await createCheckout({ address });
         // if (response.status === 201) {

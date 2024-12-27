@@ -1,16 +1,15 @@
 import React, { useEffect } from "react";
 import { CiStar } from "react-icons/ci";
-import BannerDestop from "../../assets/Home-banner.jpg";
-import BannerMobile from "../../assets/Banner-homepage-mobile-1.jpg";
-import Button from "../../components/button";
-import Section from "../../components/section";
-import ProductItems from "../../components/ProductItems/productItems";
+import BannerDestop from "../assets/Home-banner.jpg";
+import BannerMobile from "../assets/Banner-homepage-mobile-1.jpg";
+import Button from "../components/button";
+import Section from "../components/section";
+import ProductItems from "../components/productItems";
 import { MdOutlineNavigateNext } from "react-icons/md";
-import Slider from "react-slick";
 import { FaAngleDown } from "react-icons/fa";
-import styles from "./home.module.scss";
-import { blogStore } from "../../store/blogStore";
-import { productStore } from "../../store/productStore";
+import { blogStore } from "../store/blogStore";
+import { productStore } from "../store/productStore";
+import SliderConfig from "../components/slider";
 
 function Home() {
   const blog = blogStore();
@@ -20,58 +19,25 @@ function Home() {
     productClub.getProductClub();
   }, []);
 
-  var settings = {
-    infinite: true,
-    speed: 500,
-    slidesToShow: 4,
-    slidesToScroll: 2,
-    autoplay: true,
-    autoplaySpeed: 3000,
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 2,
-          infinite: true,
-        },
-      },
-      {
-        breakpoint: 600,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 2,
-          initialSlide: 1,
-        },
-      },
-      {
-        breakpoint: 550,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-        },
-      },
-    ],
-  };
   return (
     <div className="w-full h-auto">
       <div className="relative">
         <img
-          className={styles.banner_destop}
+          className=" hidden sx:block sx:w-full"
           src={BannerDestop}
           alt="banner-destop"
         />
         <img
-          className={styles.banner_mobile}
+          className="block w-full sx:hidden sx:w-full sx:mx-auto"
           src={BannerMobile}
           alt="banner-destop"
         />
-        <div className="absolute bottom-2 w-full">
+        <div className="absolute bottom-2 w-full ">
           <div
             className="items-center justify-center text-center "
             style={{ backgroundColor: "rgba(0,0,0,0.5)" }}
           >
-            <div className={styles.text_box_destop}>
+            <div className="mb-[60px] hidden sx:block">
               <p className="text-white p-4 text-xs sm:text-lg">
                 <span className="text-orange-600 font-bold">H7Sport</span> là
                 nơi bạn có thể đặt áo bóng đá với giá tốt nhất tại{" "}
@@ -98,12 +64,12 @@ function Home() {
                 </div>
               </div>
             </div>
-            <div className={styles.text_box_mobile}>
+            <div className="mb-[60px] block sx:text-white sx:items-center sx:mx-2 sx:hidden">
               <p className="uppercase text-center text-2xl font-bold py-4 px-2">
                 quần áo bóng đá
               </p>
               <p className="text-xs mx-2">
-                HHSport là nơi bạn có thể đặt áo bóng đá với giá tốt nhất tại
+                H7Sport là nơi bạn có thể đặt áo bóng đá với giá tốt nhất tại
                 TPHCM mà bạn không thể bỏ qua…
               </p>
               <div className="flex text-center text-xs gap-4 justify-center font-semibold my-4">
@@ -121,7 +87,7 @@ function Home() {
           </div>
         </div>
       </div>
-      <div className={styles.sectionMobile}>
+      <div className="hidden sx:block">
         <Section />
       </div>
       <div className=" w-full bg-black">
@@ -148,7 +114,7 @@ function Home() {
               <b className="block flex-1 h-[2px] bg-current font-bold mt-6 opacity-30 "></b>
               <p className=" flex mx-2 my-2">
                 <CiStar className="text-white text-4xl " />
-                <span className={styles.title_newBlog}>
+                <span className="sx:text-white sx:font-bold sx:text-2xl text-base mt-1">
                   NHỮNG BÀI VIẾT MỚI NHẤT
                 </span>
               </p>
@@ -161,28 +127,28 @@ function Home() {
               </a>
             </div>
           </div>
-          <Slider {...settings}>
+          <SliderConfig>
             {blog.data &&
               blog.data.map((item, index) => (
                 <div key={index} className="w-1/4 cursor-pointer mb-4 ">
                   <a href="/blog">
                     <img
-                      className={`${styles.size} h-[217px] `}
+                      className="w-full h-[217px] object-cover"
                       src={item.image}
                       alt={item.title}
                     />
                     <div className="items-center justify-center text-center cursor-pointer">
-                      <p className="text-orange-500 font-bold mx-2 my-2 ">
+                      <p className="text-orange-500 font-bold mx-2 my-2 lg:text-lg text-base">
                         {item.title}
                       </p>
-                      <span className="text-white hover:opacity-60 mx-2 my-2">
+                      <span className="text-white hover:opacity-60 mx-2 my-2 lg:text-base text-sm">
                         {item.content}
                       </span>
                     </div>
                   </a>
                 </div>
               ))}
-          </Slider>
+          </SliderConfig>
           <div className="text-center items-center justify-center py-2 ">
             <FaAngleDown className="text-white mx-auto text-4xl cursor-pointer" />
           </div>

@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
-import styles from "./checkout.module.scss";
+import styles from "./Checkout.module.scss";
 import Logo from "../../assets/logo.png";
 import { IoMdLock } from "react-icons/io";
 import { MdOutlineNavigateNext } from "react-icons/md";
-import Footer from "../../templates/footer";
+import Footer from "../../templates/Footer";
 import { useFormik } from "formik";
 import { checkoutValidate } from "../../validations/checkout";
 import { getUserCurrent } from "../../apis/auth";
-import Payment from "./payment/payment";
+import Payment from "./payment/Payment";
 import { formatPrice } from "../../utils/forrmatPriceVn";
 
 function Checkout() {
@@ -56,24 +56,32 @@ function Checkout() {
       setIsDiscount(null);
     }
   }, [valueDiscount]);
-  console.log(formik.values.street);
 
   return (
-    <div className={styles.checkout}>
-      <div className="max-w-[1050px] mx-auto">
+    <div
+      // className={styles.checkout}
+      className="w-full bg-white"
+    >
+      <div className="max-w-[1050px] mx-auto p-2">
         <a className=" block mt-10" href="/">
           <img
-            className={styles.logo}
+            // className={styles.logo}
+            className="tablet:w-[300px] w-[300px] tablet:text-left text-center mx-auto"
             src={Logo}
             alt="logo"
             title="Hệ Thống Bán Lẻ Đồ Thể Thao Sporter.vn - Chuyên cung cấp Quần áo bóng đá, thảm tập yoga, quần áo tập GYM – Yoga chất lượng cao"
           />
         </a>
-        <div className={styles.nav_items}>
+        <div
+          // className={styles.nav_items}
+          style={{ color: "rgb(153 163 175 / var(1)" }}
+          className="flex tablet:opacity-60 tablet:my-4 tablet:text-xl text-sm"
+        >
           <a className="hover:opacity-100 hover:text-black" href="/cart">
-            <span className="flex ">
-              <IoMdLock className="text-2xl mt-[2px]" /> SHOPPING CART
-            </span>
+            <p className="flex ">
+              <IoMdLock className="text-2xl mt-[2px]" />
+              <span className="">SHOPPING CART</span>
+            </p>
           </a>
           <span>
             <MdOutlineNavigateNext className="text-3xl" />

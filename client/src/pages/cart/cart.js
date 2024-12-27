@@ -2,50 +2,31 @@ import React, { useEffect } from "react";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { RiCoupon3Line } from "react-icons/ri";
-import styles from "./cart.module.scss";
+import styles from "./Cart.module.scss";
 import Button from "../../components/button";
-import { quantityStore } from "../../store/quantityStore";
 import { formatPrice } from "../../utils/forrmatPriceVn";
 import { cartStore } from "../../store/cartStore";
 
 function Cart() {
-  const { data, fetchCart } = cartStore();
-  const { value, increment, decrement, setQuantity } = quantityStore();
+  const {
+    data,
+    getProductToCart,
+    totalPrice,
+    increaseQuantity,
+    decreaseQuantity,
+    updateQuantityCart,
+  } = cartStore();
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        await fetchCart();
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchData();
+    getProductToCart();
   }, []);
-
-  // console.log(data);
-
-  const handleChangeQuantity = (e) => {
-    const inputValue = e.target.value;
-
-    if (inputValue === "") {
-      setQuantity("");
-    } else {
-      const numberValue = parseInt(inputValue);
-      if (!isNaN(numberValue) && numberValue >= 0) {
-        setQuantity(numberValue);
-      }
-    }
-  };
 
   return (
     <div className="w-full bg-white">
       {data && data.length > 0 ? (
         <>
           <div className="max-w-[1050px] mx-auto text-center justify-center">
-            <div
-              className={`${styles.title_cart_destop} flex font-bold gap-2 text-2xl justify-center my-8 `}
-            >
+            <div className="hidden tablet:flex font-bold gap-2 text-2xl justify-center my-8 ">
               <span className="text-black cursor-pointer">SHOPPING CART</span>
               <MdOutlineKeyboardArrowRight className="text-orange-500 opacity-60 text-3xl mt-[2px]  " />
               <a href="/checkout">
@@ -57,15 +38,13 @@ function Cart() {
               <MdOutlineKeyboardArrowRight className="text-orange-500 opacity-60 text-3xl mt-[2px] " />
               <span className="text-gray-300">ORDER COMPLETE</span>
             </div>
-            <div className={styles.title_cart_mobile}>
+            <div className="tablet:hidden block mt-5">
               <span className="text-black cursor-pointer text-xl font-semibold">
                 SHOPPING CART
               </span>
             </div>
-            <div className={`${styles.cart} py-[30px]`}>
-              <div
-                className={`${styles.detail_product}  mx-1 px-[10px] border-r-2 border-solid border-gray-200`}
-              >
+            <div className="tablet:flex block overflow-hidden py-[30px] ">
+              <div className="w-full mb-5 mx-1 px-[10px] border-r-2 border-solid border-gray-200 tablet:w-[65%]">
                 <div className="mb-4">
                   <table className="w-full mb-1 border-solid border-gray-100 ">
                     <thead>
@@ -102,10 +81,10 @@ function Cart() {
                                 <span className="text-orange-400 hover:opacity-60 uppercase">
                                   {item.productId.name} * {item.quantity}
                                 </span>
-                                <p className={styles.price_one_product}>
+                                <p className="tablet:hidden block m-1">
                                   1 x{" "}
                                   <span className="font-semibold">
-                                    {formatPrice(item.productId.price)}
+                                    {formatPrice(Number(item.productId.price))}
                                   </span>
                                 </p>
                               </a>
@@ -120,8 +99,9 @@ function Cart() {
                             <td>
                               <div className="flex">
                                 <button
-                                  // onClick={decrement}
-                                  onClick={() => console.log(item.productId)}
+                                  onClick={() =>
+                                    decreaseQuantity(item.productId._id)
+                                  }
                                   className="border-[1px] border-solid border-gray-300 px-2 py-2"
                                 >
                                   -
@@ -130,14 +110,11 @@ function Cart() {
                                   type="number"
                                   className="border-solid border-[1px] border-gray-300 text-center w-[40px] focus:outline-none"
                                   value={item.quantity}
-                                  // value={value}
-                                  onChange={handleChangeQuantity}
                                 />
                                 <button
-                                  // onClick={() => {
-                                  //   handleClickCart(item.quantity);
-                                  // }}
-                                  onClick={increment}
+                                  onClick={() =>
+                                    increaseQuantity(item.productId._id)
+                                  }
                                   className="border-[1px] border-solid border-gray-300 px-2 py-2"
                                 >
                                   +
@@ -164,7 +141,10 @@ function Cart() {
                         CONTINUE SHOPPING
                       </Button>
                     </a>
-                    <Button className="border-solid border-2  bg-green-500 hover:opacity-80">
+                    <Button
+                      onClick={() => updateQuantityCart(data)}
+                      className="border-solid border-2  bg-green-500 hover:opacity-80"
+                    >
                       UPDATE CART
                     </Button>
                   </div>
@@ -178,15 +158,13 @@ function Cart() {
                   <div className="flex mt-4 justify-between border-b-[1px] border-gray-200 mb-2">
                     <span>subtotal</span>
                     <span className="font-semibold">
-                      {/* {formatPrice(totalPrice)} */}
-                      200000
+                      {formatPrice(totalPrice)}
                     </span>
                   </div>
                   <div className="flex  justify-between border-b-[3px] border-gray-200 mb-2">
                     <span>Total</span>
                     <span className="font-semibold">
-                      {/* {formatPrice(totalPrice)} */}
-                      200000
+                      {formatPrice(totalPrice)}
                     </span>
                   </div>
                   <a href="/checkout">
