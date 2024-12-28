@@ -28,11 +28,11 @@ export const deleteKey = async (key) => {
     RedisClient.del(key, (err, reply) => {
       if (err) {
         console.error(`Error deleting key ${key}: ${err}`);
-        reject(err); // Phát hiện lỗi và reject Promise
+        reject(err);
         return;
       }
       console.log(`Deleted key ${key} successfully  `);
-      resolve(reply); // Hoàn thành Promise nếu xóa thành công
+      resolve(reply);
     });
   });
 };

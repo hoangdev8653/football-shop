@@ -43,24 +43,49 @@ const createCart = async (id, { productId, quantity }) => {
   return updateCart;
 };
 
-const updateCart = async (id, productId, { quantity }) => {
+const updateCart = async (id, products) => {
   try {
     const user = await UserModel.findById(id);
-    if (!user) throw new Error("user Not found");
-    const cart = user.cart;
-    const productIndex = cart.findIndex(
-      (product) => product.productId.toString() === productId
-    );
+    if (!user) throw new Error("User not found");
 
-    if (productIndex !== -1) {
-      cart[productIndex].quantity = quantity;
+    if (!Array.isArray(products) || products.length === 0) {
+      throw new Error("Invalid products data");
     }
-    const updateCart = await user.save();
-    return updateCart;
+    const cart = user.cart;
+    const arrayProductIds = products.map((product) => product.productId);
+    const productsToUpdate = cart.filter((item) =>
+      arrayProductIds.includes(item.productId.toString())
+    );
+    if (productsToUpdate.length === 0) {
+      throw new Error("No matching products found in the cart");
+    }
+    const bulkOperations = products.map((product) => ({
+      updateOne: {
+        filter: { _id: id, "cart.productId": product.productId },
+        update: { $set: { "cart.$.quantity": product.quantity } },
+      },
+    }));
+    await UserModel.bulkWrite(bulkOperations);
+
+    for (const product of products) {
+      const productDoc = await ProductModel.findById(product.productId);
+      const newStockQuantity =
+        productDoc.stockQuality -
+        product.quantity +
+        cart.find((item) => item.productId.toString() === product.productId)
+          .quantity;
+      console.log(newStockQuantity);
+      const productAfterUpdate = await ProductModel.findByIdAndUpdate(
+        product.productId,
+        { stockQuality: newStockQuantity },
+        { new: true }
+      );
+    }
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
+
 const deleteCart = async (id, productId) => {
   try {
     const product = await ProductModel.findById(productId);

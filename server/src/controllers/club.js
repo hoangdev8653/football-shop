@@ -1,4 +1,4 @@
-import { convertJoiError } from "../Utils/validationUntil.js";
+import { convertJoiError } from "../utils/validationUntil.js";
 import { clubValidation } from "../validations/club.js";
 import { StatusCodes } from "http-status-codes";
 import { clubService } from "../services/club.js";
@@ -85,29 +85,21 @@ const createClub = async (req, res) => {
   }
 };
 
-const updateClub = async (req, res) => {
+const addProductToClub = async (req, res) => {
   try {
     const id = req.query.id;
-    const { name, slug, banner, image, nickname, establish, stadium, logo } =
-      req.body;
-    const bannerFile = req.files["banner"] ? req.files["banner"][0] : null;
-    const logoFile = req.files["logo"] ? req.files["logo"][0] : null;
-    const club = await clubService.updateClub(id, {
-      name,
-      nickname,
-      slug,
-      stadium,
-      establish,
-      banner: bannerFile?.path,
-      logo: logoFile?.path,
-      productId,
-    });
+    const { productIds } = req.body;
+    // console.log(productId);
+    const club = await clubService.addProductToClub(id, productIds);
+
     return res
       .status(StatusCodes.OK)
       .json({ status: 200, message: "Xử lý thành công", content: club });
   } catch (error) {
     console.log(error);
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ Error: "Lỗi Server" });
+    res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ Error: "Server Error" });
   }
 };
 
@@ -129,6 +121,6 @@ export const clubController = {
   getClub,
   getClubBySlug,
   createClub,
-  updateClub,
+  addProductToClub,
   deleteClub,
 };

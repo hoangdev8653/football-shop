@@ -36,7 +36,6 @@ export const reviewStore = create((set) => ({
     try {
       set({ isLoading: true });
       const response = await createReview(data);
-      console.log(response);
       if (response.status === 201) {
         set((state) => ({
           data: [response.data.content, ...state.data],
@@ -44,7 +43,7 @@ export const reviewStore = create((set) => ({
           ratingLength: state.ratingLength + 1,
           averageRating:
             (state.totalRating + response.data.content.rating) /
-            (state.ratingLength + 1), // Sửa công thức
+            (state.ratingLength + 1),
         }));
         setTimeout(() => {
           set({ isLoading: false });
