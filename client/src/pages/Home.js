@@ -37,36 +37,36 @@ function Home() {
             className="items-center justify-center text-center "
             style={{ backgroundColor: "rgba(0,0,0,0.5)" }}
           >
-            <div className="mb-[60px] hidden sx:block">
-              <p className="text-white p-4 text-xs sm:text-lg">
+            <div className="mb-[20px] hidden sx:block">
+              <p className="text-white p-4 text-sm md:text-base lg:text-lg">
                 <span className="text-orange-600 font-bold">H7Sport</span> là
                 nơi bạn có thể đặt áo bóng đá với giá tốt nhất tại{" "}
                 <span className="text-orange-600 font-bold">HỘI AN</span> mà bạn
                 không thể bỏ qua...
               </p>
               <div className="justify-between items-center ">
-                <div className="ml-6 sm:pb-8 ">
+                <div className="ml-6 sm:pb-4 ">
                   <a href="/ao-bong-da-clb/">
-                    <Button className="text-orange-600 my-1 text-xs sm:text-base bg-transparent mx-2 hover:text-white hover:bg-orange-500 border-orange-600 border-solid border-2 font-semibold ">
+                    <Button className="text-orange-600 my-1 text-xs md:text-base bg-transparent mx-2 hover:text-white hover:bg-orange-500 border-orange-600 border-solid border-2 font-semibold ">
                       CÂU LẠC BỘ 23/24
                     </Button>
                   </a>
                   <a href="/ao-bong-da-doi-tuyen">
-                    <Button className="text-orange-600 my-1 text-xs sm:text-base bg-transparent mx-2 hover:text-white hover:bg-orange-500 border-orange-600 border-solid border-2 font-semibold ">
+                    <Button className="text-orange-600 my-1 text-xs md:text-base bg-transparent mx-2 hover:text-white hover:bg-orange-500 border-orange-600 border-solid border-2 font-semibold ">
                       ĐỘI TUYỂN QUỐC GIA 2024
                     </Button>
                   </a>
                   <a href="/ao-bong-da-khong-logo">
-                    <Button className="text-orange-600 my-1 text-xs sm:text-base bg-transparent mx-2 hover:text-white hover:bg-orange-500 border-orange-600 border-solid border-2 font-semibold ">
+                    <Button className="text-orange-600 my-1 text-xs md:text-base bg-transparent mx-2 hover:text-white hover:bg-orange-500 border-orange-600 border-solid border-2 font-semibold ">
                       BÓNG ĐÁ KHÔNG LOGO
                     </Button>
                   </a>
                 </div>
               </div>
             </div>
-            <div className="mb-[60px] block sx:text-white sx:items-center sx:mx-2 sx:hidden">
-              <p className="uppercase text-center text-2xl font-bold py-4 px-2">
-                quần áo bóng đá
+            <div className="mb-[60px] block text-white items-center mx-2 sx:hidden">
+              <p className="uppercase text-center text-2xl font-bold py-4 px-2 ">
+                Quần áo bóng đá
               </p>
               <p className="text-xs mx-2">
                 H7Sport là nơi bạn có thể đặt áo bóng đá với giá tốt nhất tại
@@ -87,7 +87,7 @@ function Home() {
           </div>
         </div>
       </div>
-      <div className="hidden sx:block">
+      <div>
         <Section />
       </div>
       <div className=" w-full bg-black">

@@ -89,9 +89,7 @@ const addProductToClub = async (req, res) => {
   try {
     const id = req.query.id;
     const { productIds } = req.body;
-    // console.log(productId);
     const club = await clubService.addProductToClub(id, productIds);
-
     return res
       .status(StatusCodes.OK)
       .json({ status: 200, message: "Xử lý thành công", content: club });

@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
-import Discount from "../../components/discount";
-import styles from "./SearchProduct.module.scss";
+import Discount from "../components/discount";
 import { useLocation } from "react-router-dom";
-import product_coming from "../../assets/product_coming-soon.jpg";
-import { productStore } from "../../store/productStore";
-import Paginate from "../../components/paginate/Paginate";
-import { formatPrice } from "../../utils/forrmatPriceVn";
+import product_coming from "../assets/product_coming-soon.jpg";
+import { productStore } from "../store/productStore";
+import Paginate from "../components/paginate/Paginate";
+import { formatPrice } from "../utils/forrmatPriceVn";
 
 function SearchProduct() {
   const { getProductByKey, data } = productStore();
@@ -39,12 +38,12 @@ function SearchProduct() {
       {data && data.length > 0 ? (
         <>
           <div className="max-w-[1050px] mx-auto">
-            <div className={styles.page_title}>
-              <div className="flex gap-2 text-gray-400 text-lg">
+            <div className="tablet:my-4 tablet:mx-auto flex lg:mx-4 lg:my-2 lg:justify-between">
+              <div className="flex gap-1 text-gray-400 text-lg my-1">
                 <a href="/">
                   <p className="cursor-pointer hover:text-black">HOME</p>
                 </a>
-                <span className="">/</span>
+                <span>/</span>
                 <a href="/">
                   <p className="cursor-pointer hover:text-black">SHOP</p>
                 </a>
@@ -53,41 +52,41 @@ function SearchProduct() {
                   SEARCH RESULTS FOR "{key}"
                 </p>
               </div>
-              <div className={styles.result}>
+              <div className="flex items-center mt-4 lg:mt-0 my-1">
                 <p>
                   Showing all{" "}
                   <span className="font-semibold">{data?.length}</span> results
                 </p>
               </div>
             </div>
-            <div className={styles.grid}>
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
               {currentItems &&
                 currentItems.map((item, index) => (
-                  <div key={index} className={styles.container}>
+                  <div key={index} className="relative">
                     <a href={`/product/${item.slug}`}>
                       <img
-                        className={styles.image}
+                        className="w-full h-[400px] object-cover"
                         src={item.image[0]}
                         alt={item.slug}
                       />
-                      <div className={styles.overlay}>
+                      <div className="absolute inset-0 opacity-0 hover:opacity-100 transition-opacity duration-300">
                         <img
-                          className={styles.image}
+                          className="w-full h-[400px] object-cover"
                           src={item.image[1] || product_coming}
                           alt={item.slug}
                         />
                       </div>
-                      <div className=" text-orange-500 uppercase text-base my-2">
+                      <div className="text-orange-500 uppercase text-base my-2">
                         <p className="mx-auto text-center hover:opacity-65 uppercase">
                           {item.name}
                         </p>
                         <div className="flex gap-2 justify-center">
-                          <p className=" text-center">
+                          <p className="text-center">
                             <del className="text-gray-400">
                               {formatPrice(330000)}
                             </del>
                           </p>
-                          <p className=" text-center">
+                          <p className="text-center">
                             <ins className="text-orange-500">
                               <strong>{formatPrice(Number(item.price))}</strong>
                             </ins>
@@ -111,7 +110,7 @@ function SearchProduct() {
         </>
       ) : (
         <>
-          <div className="py-8 mx-auto text-center">
+          <div className=" py-8 mx-auto text-center">
             No products were found matching your selection.
           </div>
         </>

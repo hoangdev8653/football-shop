@@ -4,6 +4,7 @@ import Banner_do_bong_da_doi_tuyen from "../assets/Banner-quan-ao-bong-da-doi-tu
 import Banner_do_bong_da_khong_logo from "../assets/Banner-do-bong-da-khong-logo.webp";
 import Banner_phu_kien from "../assets/Banner-phu-kien.jpg";
 import Banner_bong_da_clb_vietnam from "../assets/Banner_Bong-da-clb_vietnam.webp";
+import Banner_bong_da_thai_lan from "../assets/Banner-do-bong-da-thai-lan.webp";
 import ProductItems from "../components/productItems";
 import {
   getProductFromVn,
@@ -143,8 +144,8 @@ function Sport() {
               <div className="relative w-1/3 mx-4 duration-500 ease-in-out hover:opacity-100 opacity-80 hover:shadow-lg hover:-translate-y-2 transform transition-all">
                 <img
                   className="w-full object-cover "
-                  src={Banner_phu_kien}
-                  alt="banner_phu_kien"
+                  src={Banner_bong_da_thai_lan}
+                  alt="banner_bong_da_thai_lan"
                 />
                 <div className="absolute w-[68%] h-[68%] bottom-[10%] left-1/2 transform -translate-x-1/2">
                   <div
@@ -153,11 +154,11 @@ function Sport() {
                   >
                     <div className="absolute right-0 left-0 top-1/2 transform -translate-y-1/2 text-center">
                       <h2 className="uppercase text-white md:text-base lg:text-lg text-xxs my-2 md:leading-none">
-                        <strong>Phụ Kiện</strong>
+                        <strong>Áo Bóng Đá Thái Lan</strong>
                       </h2>
                       <a href="/ao-bong-da-doi-tuyen">
                         <span className="text-white font-semibold border-2 border-white uppercase px-2.5 py-1.5 text-xxxs lg:text-xs hover:bg-white hover:text-black">
-                          Phụ Kiện
+                          Áo Bóng Đá Thái Lan
                         </span>
                       </a>
                     </div>

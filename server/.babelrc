@@ -1,5 +1,4 @@
 
-
 {
   "presets": [["@babel/preset-env", { "targets": { "node": "current" } }]],
   "plugins": [["dotenv", { "path": ".env" }]]

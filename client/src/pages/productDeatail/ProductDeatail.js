@@ -7,7 +7,7 @@ import Button from "../../components/button";
 import { useParams } from "react-router-dom";
 import { quantityStore } from "../../store/quantityStore";
 import { toast } from "react-toastify";
-import Expandable from "./expandable/Index";
+import Expandable from "./expandable/index";
 import { cartStore } from "../../store/cartStore";
 import { productStore } from "../../store/productStore";
 import Loadding from "../../components/loadding/Loadding";

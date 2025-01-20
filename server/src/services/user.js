@@ -74,7 +74,6 @@ const updateCart = async (id, products) => {
         product.quantity +
         cart.find((item) => item.productId.toString() === product.productId)
           .quantity;
-      console.log(newStockQuantity);
       const productAfterUpdate = await ProductModel.findByIdAndUpdate(
         product.productId,
         { stockQuality: newStockQuantity },

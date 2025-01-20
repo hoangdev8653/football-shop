@@ -103,7 +103,7 @@ function ProductClb() {
                     className="relative"
                   >
                     <img
-                      className="w-full"
+                      className="w-full h-full"
                       src={item.image[0]}
                       alt={item.slug}
                     />

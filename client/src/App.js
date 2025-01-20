@@ -6,10 +6,10 @@ import Cart from "./pages/cart/Cart";
 import ProductDeatails from "./pages/productDeatail/ProductDeatail";
 import ProductClb from "./pages/ProductClb";
 import ProductNation from "./pages/ProductNation";
-import ProductNoLogo from "./pages/productNoLogo/ProductNoLogo";
+import ProductNoLogo from "./pages/ProductNoLogo";
 import Blog from "./pages/Blog";
-import SearchProduct from "./pages/searchProduct/SearchProduct";
-import Club from "./pages/club/Club";
+import SearchProduct from "./pages/SearchProduct";
+import Club from "./pages/Club";
 import WhishList from "./pages/WhishList";
 import Sport from "./pages/Sport";
 

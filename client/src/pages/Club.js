@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { CiLock } from "react-icons/ci";
-import Discount from "../../components/discount";
-import WishList from "../../components/wishList";
-import Section from "../../components/section";
-import styles from "./Club.module.scss";
-import Loadding from "../../components/loadding/Loadding";
-import product_coming from "../../assets/product_coming-soon.jpg";
+import Discount from "../components/discount";
+import Section from "../components/section";
+import Loadding from "../components/loadding/Loadding";
+import product_coming from "../assets/product_coming-soon.jpg";
 import { useParams } from "react-router-dom";
-import { getClubBySlug } from "../../apis/club";
-import { formatPrice } from "../../utils/forrmatPriceVn";
+import { getClubBySlug } from "../apis/club";
+import { formatPrice } from "../utils/forrmatPriceVn";
 
 function Club() {
   const { slug } = useParams();
@@ -28,7 +26,6 @@ function Club() {
     };
     fetchData();
   }, [slug]);
-  console.log(data);
 
   return (
     <div className=" w-full">
@@ -49,7 +46,7 @@ function Club() {
           <div className="max-w-[1050px] mx-auto my-8">
             <div className="grid lg:grid-cols-4 gap-1 my-3 tablet:grid-cols-3 sx:grid-cols-2">
               <div className="h-full w-full relative mx-[2px]">
-                <a href={`/product/${data?.productId[0]?.slug}` ?? "/"}>
+                <a href={`/product/${data?.productId[0].slug}`}>
                   <img
                     style={{
                       background:
@@ -58,158 +55,170 @@ function Club() {
                         "rgba(0, 0, 0, 0.35) 0px -50px 36px -28px inset",
                     }}
                     className="w-full h-full"
-                    src={data.productId[0]?.image[0] || product_coming}
-                    alt={data.slug || "product_comming"}
+                    src={data?.productId[0].image[0]}
+                    alt={data.slug}
                   />
-                </a>
-                <div
-                  style={{ textShadow: "1px 1px 1px rgba(0,0,0,0.5)" }}
-                  className="absolute  w-full bottom-0 "
-                >
-                  <div className="mx-10 text-center">
-                    <p className="text-gray-200">
-                      {data?.productId[0]?.name ||
-                        `Áo bóng đá ${data?.name} sắp ra mắt`}
-                    </p>
-
-                    <p className="text-gray-400 ">
-                      <span className="">
-                        <del className="mx-1">{formatPrice(330000)}</del>
-                        <ins className="mx-1 text-white">
-                          <strong>
-                            {formatPrice(
-                              Number(data.productId[0]?.price || 280000)
-                            )}
-                          </strong>
-                        </ins>
-                      </span>
-                    </p>
-                    <div className="text-center mt-2 mb-2">
-                      <p className=" text-white flex items-center justify-center gap-2 ">
-                        <CiLock
-                          title="Add to Cart"
-                          className="text-3xl hover:opacity-60 cursor-pointer"
-                        />
-                        <button className="bg-black rounded-2xl px-[6px] font-medium hover:text-black hover:bg-white">
-                          Quick view
-                        </button>
+                  <div
+                    style={{ textShadow: "1px 1px 1px rgba(0,0,0,0.5)" }}
+                    className="absolute  w-full bottom-0 "
+                  >
+                    <div className="mx-10 text-center">
+                      <p className="text-gray-200 uppercase">
+                        {data?.productId[0].name}
                       </p>
-                    </div>
-                  </div>
-                </div>
-                <Discount
-                  className="absolute px-2 py-3 rounded-3xl top-4"
-                  pecentDiscount={15}
-                />
-                <WishList className="absolute right-3 top-2 " />
-              </div>
-              <div className={styles.item_product}>
-                <a href={`/product/${data.productId[0]?.slug}` || "/"}>
-                  <img
-                    className={styles.img_product}
-                    src={
-                      data.productId[0]?.image[1] ||
-                      data?.productId[1]?.image[0] ||
-                      product_coming
-                    }
-                    alt={data.slug || "product_comming"}
-                  />
-                </a>
-                <div
-                  style={{ textShadow: "1px 1px 1px rgba(0,0,0,0.5)" }}
-                  className="absolute  w-full bottom-0 "
-                >
-                  <div className="mx-10 text-center">
-                    <a href="/">
-                      <p className="text-gray-200">
-                        <p className="text-gray-200">
-                          {data?.productId[0]?.name ||
-                            data?.productId[1]?.name ||
-                            `Áo bóng đá ${data?.name} sắp ra mắt`}
+
+                      <p className="text-gray-400 ">
+                        <span className="">
+                          <del className="mx-1">{formatPrice(330000)}</del>
+                          <ins className="mx-1 text-white">
+                            <strong>
+                              {formatPrice(
+                                Number(data.productId[0]?.price || 280000)
+                              )}
+                            </strong>
+                          </ins>
+                        </span>
+                      </p>
+                      <div className="text-center mt-2 mb-2">
+                        <p className=" text-white flex items-center justify-center gap-2 ">
+                          <CiLock
+                            title="Add to Cart"
+                            className="text-3xl hover:opacity-60 cursor-pointer"
+                          />
+                          <button className="bg-black rounded-2xl px-[6px] font-medium hover:text-black hover:bg-white">
+                            Quick view
+                          </button>
                         </p>
-                      </p>
-                    </a>
-
-                    <p className="text-gray-400 ">
-                      <span className="">
-                        <del className="mx-1">{formatPrice(330000)}</del>
-                        <ins className="mx-1 text-white">
-                          <strong>
-                            {formatPrice(
-                              Number(data.productId[0]?.price || 280000)
-                            )}
-                          </strong>
-                        </ins>
-                      </span>
-                    </p>
-                    <div className="text-center mt-2 mb-2">
-                      <p className=" text-white flex items-center justify-center gap-2 ">
-                        <CiLock
-                          title="Add to Cart"
-                          className="text-3xl hover:opacity-60 cursor-pointer"
-                        />
-                        <button className="bg-black rounded-2xl px-[6px] font-medium hover:text-black hover:bg-white">
-                          Quick view
-                        </button>
-                      </p>
+                      </div>
                     </div>
                   </div>
-                </div>
+                </a>
                 <Discount
                   className="absolute px-2 py-3 rounded-3xl top-4"
                   pecentDiscount={15}
                 />
-                <WishList className="absolute right-2 top-2 " />
               </div>
-              <div className={styles.item_product}>
-                <img
-                  className={styles.img_product}
-                  src={product_coming}
-                  alt={data?.slug}
-                />
-                <div
-                  style={{ textShadow: "1px 1px 1px rgba(0,0,0,0.5)" }}
-                  className="absolute  w-full bottom-0 "
+              <div className="h-full w-full relative mx-[2px]">
+                <a
+                  href={
+                    data?.productId[1]
+                      ? `/product/${data.productId[1]?.slug}`
+                      : "/"
+                  }
                 >
-                  <div className="mx-10 text-center">
-                    <a href="/">
-                      <p className="text-gray-200">
-                        Áo bóng đá {data.name} sắp ra mắt
+                  <img
+                    style={{
+                      background:
+                        "linear-gradient(to top, #323232 0%, rgba(50, 50, 50, 0) 33%)",
+                      boxShadow:
+                        "rgba(0, 0, 0, 0.35) 0px -50px 36px -28px inset",
+                    }}
+                    className="w-full h-full"
+                    src={data.productId[1]?.image[0] || product_coming}
+                    alt={data.productId[1]?.slug || "Product coming"}
+                  />
+                  <div
+                    style={{ textShadow: "1px 1px 1px rgba(0,0,0,0.5)" }}
+                    className="absolute  w-full bottom-0 "
+                  >
+                    <div className="mx-10 text-center">
+                      <p className="text-gray-200 uppercase">
+                        {data?.productId[1]?.name ||
+                          `Áo bóng đá ${data?.name} sắp ra mắt`}
                       </p>
-                    </a>
-                    <p className="text-gray-400 ">
-                      <span className="">
-                        <del className="mx-1">{formatPrice(330000)}</del>
-                        <ins className="mx-1 text-white">
-                          <strong>{formatPrice(280000)}</strong>
-                        </ins>
-                      </span>
-                    </p>
-                    <div className="text-center mt-2 mb-2">
-                      <p className=" text-white flex items-center justify-center gap-2 ">
-                        <CiLock
-                          title="Add to Cart"
-                          className="text-3xl hover:opacity-60 cursor-pointer"
-                        />
-                        <button className="bg-black rounded-2xl px-[6px] font-medium hover:text-black hover:bg-white">
-                          Quick view
-                        </button>
+                      <p className="text-gray-400 ">
+                        <span className="">
+                          <del className="mx-1">{formatPrice(330000)}</del>
+                          <ins className="mx-1 text-white">
+                            <strong>
+                              {formatPrice(
+                                Number(data.productId[0]?.price || 280000)
+                              )}
+                            </strong>
+                          </ins>
+                        </span>
                       </p>
+                      <div className="text-center mt-2 mb-2">
+                        <p className=" text-white flex items-center justify-center gap-2 ">
+                          <CiLock
+                            title="Add to Cart"
+                            className="text-3xl hover:opacity-60 cursor-pointer"
+                          />
+                          <button className="bg-black rounded-2xl px-[6px] font-medium hover:text-black hover:bg-white">
+                            Quick view
+                          </button>
+                        </p>
+                      </div>
                     </div>
                   </div>
-                </div>
+                </a>
+
                 <Discount
                   className="absolute px-2 py-3 rounded-3xl top-4"
                   pecentDiscount={15}
                 />
-                <WishList className="absolute right-2 top-2 " />
+              </div>
+              <div className="h-full w-full relative mx-[2px]">
+                <a
+                  href={
+                    data?.productId[2]
+                      ? `/product/${data.productId[2]?.slug}`
+                      : "/"
+                  }
+                >
+                  <img
+                    style={{
+                      background:
+                        "linear-gradient(to top, #323232 0%, rgba(50, 50, 50, 0) 33%)",
+                      boxShadow:
+                        "rgba(0, 0, 0, 0.35) 0px -50px 36px -28px inset",
+                    }}
+                    className="w-full h-full"
+                    src={data?.productId[2]?.image[0] || product_coming}
+                    alt={data?.productId[2]?.slug || "Product coming"}
+                  />
+                  <div
+                    style={{ textShadow: "1px 1px 1px rgba(0,0,0,0.5)" }}
+                    className="absolute  w-full bottom-0 "
+                  >
+                    <div className="mx-10 text-center">
+                      <p className="text-gray-200 uppercase">
+                        {data?.productId[2]?.name ||
+                          `Áo bóng đá ${data?.name} sắp ra mắt`}
+                      </p>
+                      <p className="text-gray-400 ">
+                        <span className="">
+                          <del className="mx-1">{formatPrice(330000)}</del>
+                          <ins className="mx-1 text-white">
+                            <strong>{formatPrice(280000)}</strong>
+                          </ins>
+                        </span>
+                      </p>
+                      <div className="text-center mt-2 mb-2">
+                        <p className=" text-white flex items-center justify-center gap-2 ">
+                          <CiLock
+                            title="Add to Cart"
+                            className="text-3xl hover:opacity-60 cursor-pointer"
+                          />
+                          <button className="bg-black rounded-2xl px-[6px] font-medium hover:text-black hover:bg-white">
+                            Quick view
+                          </button>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </a>
+                <Discount
+                  className="absolute px-2 py-3 rounded-3xl top-4"
+                  pecentDiscount={15}
+                />
               </div>
             </div>
           </div>
           <>
             <Section />
           </>
-          <div className="max-w-[1050px] mx-auto">
+          <div className="max-w-[1050px] mx-auto px-2">
             <p className="mb-2 mt-4 ">
               Quần áo bóng đá câu lạc bộ{" "}
               <span className="text-black font-semibold text-base">

@@ -17,7 +17,7 @@ function Section() {
   }, []);
 
   return (
-    <div className="w-full bg-black relative h-auto">
+    <div className="w-full bg-black relative h-auto hidden sx:block">
       <div className="max-w-[1050px] mx-auto bg-black">
         <div className="text-orange-500 py-4 flex">
           <b className="block flex-1 h-[2px] bg-current font-bold mt-5 opacity-30"></b>
