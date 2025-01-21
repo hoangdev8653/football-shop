@@ -26,7 +26,6 @@ function Header() {
     <div className="w-full h-auto">
       <div className="bg-black text-right ">
         <div
-          // className={styles.socal_media}
           className="tablet:text-white tablet:flex tablet:gap-2 tablet:justify-end tablet:mx-[15px] hidden"
         >
           <a href="/" title="Facebook">

@@ -1,10 +1,10 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
 import Header from "./header/Header";
-import Footer from "./Footer";
+import Footer from "./footer";
 import BackToTop from "../components/backToTop";
 
-function Layout() {
+function layout() {
   return (
     <>
       <Header />
@@ -15,4 +15,4 @@ function Layout() {
   );
 }
 
-export default Layout;
+export default layout;

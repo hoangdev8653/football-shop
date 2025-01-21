@@ -3,7 +3,7 @@ import styles from "./Checkout.module.scss";
 import Logo from "../../assets/logo.png";
 import { IoMdLock } from "react-icons/io";
 import { MdOutlineNavigateNext } from "react-icons/md";
-import Footer from "../../templates/Footer";
+import Footer from "../../templates/footer";
 import { useFormik } from "formik";
 import { checkoutValidate } from "../../validations/checkout";
 import { getUserCurrent } from "../../apis/auth";
