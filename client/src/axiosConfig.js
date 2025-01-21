@@ -1,12 +1,12 @@
 import axios from "axios";
-import { BASE_URL } from "./utils/constants";
+import { BASE_URL_PRODUCTION } from "./utils/constants";
 import {
   getLocalStorage,
   setLocalStorage,
   clearLocalStorage,
 } from "./utils/localStorage";
 export const axiosConfig = axios.create({
-  baseURL: BASE_URL,
+  baseURL: BASE_URL_PRODUCTION,
 });
 
 axiosConfig.interceptors.request.use(
