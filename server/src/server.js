@@ -9,7 +9,7 @@ import bodyParser from "body-parser";
 import { corsOptions } from "./configs/cors.js";
 import morgan from "morgan";
 
-const port = process.env.PORT;
+const port = process.env.PORT || 4000;
 connectDB();
 // connectRedis();
 
@@ -28,6 +28,25 @@ app.use("/product", routers.productRoutes);
 app.use("/blog", routers.blogRoutes);
 app.use("/order", routers.orderRoutes);
 app.use("/whishList", routers.whishListRoutes);
+
+app.get("/", (req, res) => {
+  res.send("Football-shop");
+});
+app.all("*", (req, res, next) => {
+  const err = new Error(`Can't find ${req.originalUrl} on the server`);
+  err.status = "fail";
+  err.statusCode = 404;
+  next(err);
+});
+
+app.use((error, req, res, next) => {
+  error.statusCode = error.statusCode || 500;
+  error.status = error.status || "error";
+  res.status(error.statusCode).json({
+    status: error.statusCode,
+    message: error.message,
+  });
+});
 
 app.listen(port, (req, res) => {
   console.log(`listen running on port ${port}`);
