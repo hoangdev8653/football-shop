@@ -1,4 +1,4 @@
-import { convertJoiError } from "../utils/validationUntil.js";
+import { convertJoiError } from "../Utils/validationUntil.js";
 import { clubValidation } from "../validations/club.js";
 import { StatusCodes } from "http-status-codes";
 import { clubService } from "../services/club.js";
