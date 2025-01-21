@@ -4,7 +4,7 @@ import Header from "./header/Header";
 import Footer from "./Footer";
 import BackToTop from "../components/backToTop";
 
-function layout() {
+function Layout() {
   return (
     <>
       <Header />
@@ -15,4 +15,4 @@ function layout() {
   );
 }
 
-export default layout;
+export default Layout;
