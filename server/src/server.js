@@ -32,12 +32,6 @@ app.use("/whishList", routers.whishListRoutes);
 app.get("/", (req, res) => {
   res.send("Football-shop");
 });
-app.all("*", (req, res, next) => {
-  const err = new Error(`Can't find ${req.originalUrl} on the server`);
-  err.status = "fail";
-  err.statusCode = 404;
-  next(err);
-});
 
 app.use((error, req, res, next) => {
   error.statusCode = error.statusCode || 500;
