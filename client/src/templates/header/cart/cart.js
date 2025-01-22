@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { BsCart2 } from "react-icons/bs";
 import { IoIosCloseCircleOutline } from "react-icons/io";
-import styles from "./Cart.module.scss";
+import styles from "./cart.module.scss";
 import Button from "../../../components/button";
 import { cartStore } from "../../../store/cartStore";
 import { whishListStore } from "../../../store/wishListStore";
