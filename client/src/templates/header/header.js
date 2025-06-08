@@ -1,10 +1,10 @@
 import { FaFacebookF, FaInstagram, FaYoutube } from "react-icons/fa";
 import { MdOutlineMailOutline, MdOutlinePhone } from "react-icons/md";
-import ModalSearch from "./modalSearch/ModalSearch";
+import ModalSearch from "./modalSearch/modalSearch";
 import Logo from "../../assets/logo.png";
 import { IoMdMenu } from "react-icons/io";
-import styles from "./Header.module.scss";
-import Cart from "./cart/Cart";
+import styles from "./header.module.scss";
+import Cart from "./cart/cart";
 import Avarta from "./Avarta";
 import { IoMdClose } from "react-icons/io";
 import { useState } from "react";

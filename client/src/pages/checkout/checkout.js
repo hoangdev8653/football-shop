@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import styles from "./Checkout.module.scss";
+import styles from "./checkout.module.scss";
 import Logo from "../../assets/logo.png";
 import { IoMdLock } from "react-icons/io";
 import { MdOutlineNavigateNext } from "react-icons/md";
@@ -7,7 +7,7 @@ import Footer from "../../templates/footer";
 import { useFormik } from "formik";
 import { checkoutValidate } from "../../validations/checkout";
 import { getUserCurrent } from "../../apis/auth";
-import Payment from "./payment/Payment";
+import Payment from "./payment/payment";
 import { formatPrice } from "../../utils/forrmatPriceVn";
 
 function Checkout() {
