@@ -32,7 +32,6 @@ axiosConfig.interceptors.response.use(
         const refreshToken = getLocalStorage("refreshToken");
         if (!refreshToken) {
           console.error("Refresh token is missing");
-          window.location.href = "/login";
           return Promise.reject(error);
         }
         const response = await axios.post(

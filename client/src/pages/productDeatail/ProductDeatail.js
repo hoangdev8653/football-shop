@@ -31,7 +31,7 @@ function ProductDeatails() {
       }
     };
     fetchData();
-  }, [slug]);
+  }, [slug, getProductBySlug]);
 
   const handleSubmit = async () => {
     const productId = data?._id;
@@ -78,36 +78,27 @@ function ProductDeatails() {
             className="w-full"
             style={{ backgroundColor: "rgba(0,0,0,0.25)" }}
           >
-            <div
-              // className={styles.page_title}
-              className="text-sm mx-6 py-4 max-w-[1050px] sx:mx-auto text-white uppercase sx:text-lg font-semibold flex items-center justify-center gap-2"
-            >
+            <div className="text-sm mx-6 py-4 max-w-[1050px] sx:mx-auto text-white uppercase sx:text-lg font-semibold flex items-center justify-center gap-2">
               <a className="hover:opacity-70" href="/">
                 Home
               </a>{" "}
-              /<p>Đồ bóng Đá </p> /<p>{data.name}</p>
+              /<p>Đồ bóng Đá </p> /<p>{data?.name}</p>
             </div>
           </div>
           <div className="max-w-[1050px] mx-auto">
-            <div
-              // className={styles.content}
-              className="w-full my-8 sx:flex pb-2 block overflow-hidden"
-            >
-              <div
-                // className={styles.image_product}
-                className="sx:w-1/2 my-1 w-full"
-              >
+            <div className="w-full my-8 sx:flex pb-2 block overflow-hidden">
+              <div className="sx:w-1/2 my-1 w-full">
                 <div className="w-full relative">
                   <Slider {...sliderSettings}>
                     <img
                       className="h-full w-full"
-                      src={data.image[0]}
-                      alt={data.slug}
+                      src={data?.image[0]}
+                      alt={data?.slug}
                     />
                     <img
                       className="w-full h-full"
                       src={data?.image[1] || image_comming_soon}
-                      alt={data.slug}
+                      alt={data?.slug}
                     />
                   </Slider>
                   <Discount
@@ -116,25 +107,22 @@ function ProductDeatails() {
                   />
                 </div>
               </div>
-              <div
-                // className={styles.info_product}
-                className="sx:w-1/2 mx-2 overflow-hidden w-full "
-              >
+              <div className="sx:w-1/2 mx-2 overflow-hidden w-full ">
                 <p className="uppercase text-orange-500 font-bold text-xl my-2 lg:my-0">
-                  {data.name}
+                  {data?.name}
                 </p>
                 <p className="text-xl flex gap-4">
                   <del className="opacity-30">
                     <span>{formatPrice(330000)}</span>
                   </del>
                   <ins className="text-orange-500 font-semibold">
-                    <span>{formatPrice(Number(data.price))}</span>
+                    <span>{formatPrice(Number(data?.price))}</span>
                   </ins>
                 </p>
                 <p className="my-2">
                   Áo bóng đá{" "}
                   <span className="text-orange-500 font-semibold uppercase">
-                    {data.name}
+                    {data?.name}
                   </span>{" "}
                   mùa giải 23/24
                 </p>

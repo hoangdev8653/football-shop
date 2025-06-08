@@ -6,7 +6,6 @@ import { AiTwotoneLike } from "react-icons/ai";
 import FormatDate from "../../../utils/formatDate";
 import { getLocalStorage } from "../../../utils/localStorage";
 import { reviewStore } from "../../../store/reviewStore";
-import { MdDeleteForever } from "react-icons/md";
 import Loadding from "../../../components/loadding/Loadding";
 
 function Comment({ data }) {
@@ -14,7 +13,6 @@ function Comment({ data }) {
   const {
     createReview,
     getReviewsByProduct,
-    deleteReview,
     data: content,
     averageRating,
     isLoading,
@@ -31,13 +29,7 @@ function Comment({ data }) {
   const handleCommentText = (e) => {
     setComment(e.target.value);
   };
-  const handleDeleteReview = async (id) => {
-    try {
-      await deleteReview(id);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+
   const commentApi = async () => {
     try {
       await createReview({ productId, rating, comment });
@@ -110,7 +102,7 @@ function Comment({ data }) {
                   <span style={{ top: "20%", left: "3%" }} className="absolute">
                     <img
                       className="w-9 h-9 rounded-3xl"
-                      src={user.image !== "" ? user.image : avatarDefault}
+                      src={user && user.image ? user.image : avatarDefault}
                       alt="avatar"
                     />
                   </span>
@@ -156,19 +148,19 @@ function Comment({ data }) {
                         className="flex border-b-[1px] border-gray-300 mt-2"
                       >
                         <img
-                          className="rounded-full w-[50px] h-[50px] object-cover"
-                          src={user.image !== "" ? user.image : avatarDefault}
+                          className="w-9 h-9 rounded-3xl"
+                          src={user && user.image ? user.image : avatarDefault}
                           alt="avatar"
                         />
                         <div className="block mt-1 mx-2">
                           <p className="text-base">{user?.username || ""}</p>
-                          <Rating disabled={true} rating={item.rating} />
-                          <p className="text-xs">{FormatDate(item.time)}</p>
-                          <p className="my-1">{item.comment}</p>
+                          <Rating disabled={true} rating={item?.rating} />
+                          <p className="text-xs">{FormatDate(item?.time)}</p>
+                          <p className="my-1">{item?.comment}</p>
                           <div className="flex opacity-60 gap-1 mb-2">
                             <AiTwotoneLike className="text-xl cursor-pointer" />
                             <span className="text-sm">
-                              {item.like !== 0 ? item.like : ""}
+                              {item?.like !== 0 ? item?.like : ""}
                             </span>
                           </div>
                         </div>
@@ -193,7 +185,7 @@ function Comment({ data }) {
                   <span style={{ top: "20%", left: "3%" }} className="absolute">
                     <img
                       className="w-9 h-9 rounded-3xl"
-                      src={user.image !== "" ? user.image : avatarDefault}
+                      src={user && user.image ? user.image : avatarDefault}
                       alt="avatar"
                     />
                   </span>
