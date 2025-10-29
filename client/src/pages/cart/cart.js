@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { IoIosCloseCircleOutline } from "react-icons/io";
 import { RiCoupon3Line } from "react-icons/ri";
-import styles from "./Cart.module.scss";
+import styles from "./cart.module.scss";
 import Button from "../../components/button";
 import { formatPrice } from "../../utils/forrmatPriceVn";
 import { cartStore } from "../../store/cartStore";
