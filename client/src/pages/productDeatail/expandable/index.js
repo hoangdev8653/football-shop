@@ -1,4 +1,4 @@
-import Description from "./decription";
+import Description from "./Decription";
 import Reviews from "./reviews";
 
 function Index({ data }) {

@@ -21,4 +21,9 @@ export const path = {
   NOTFOUND: "*",
   WHISHLIST: "/whishList",
   SPORT: "/sport",
+
+  DASHBOARD: "/dashboard",
+  PRODUCT_ADMIN: "/dashboard/product",
+  USER_ADMIN: "/dashboard/user",
+  CLUB_ADMIN: "/dashboard/club",
 };

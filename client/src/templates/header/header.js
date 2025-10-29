@@ -3,7 +3,7 @@ import { MdOutlineMailOutline, MdOutlinePhone } from "react-icons/md";
 import ModalSearch from "./modalSearch/modalSearch";
 import Logo from "../../assets/logo.png";
 import { IoMdMenu } from "react-icons/io";
-import styles from "./header.module.scss";
+import styles from "./Header.module.scss";
 import Cart from "./cart/cart";
 import Avarta from "./Avarta";
 import { IoMdClose } from "react-icons/io";
@@ -25,9 +25,7 @@ function Header() {
   return (
     <div className="w-full h-auto">
       <div className="bg-black text-right ">
-        <div
-          className="tablet:text-white tablet:flex tablet:gap-2 tablet:justify-end tablet:mx-[15px] hidden"
-        >
+        <div className="tablet:text-white tablet:flex tablet:gap-2 tablet:justify-end tablet:mx-[15px] hidden">
           <a href="/" title="Facebook">
             <FaFacebookF />
           </a>

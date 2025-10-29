@@ -14,6 +14,10 @@ import Club from "./pages/Club";
 import WhishList from "./pages/WhishList";
 import Sport from "./pages/Sport";
 
+import Dashboard from "./pages/admin/Dashboard";
+import ProductAdmin from "./pages/admin/Product";
+import UserAdmin from "./pages/admin/User";
+
 import Login from "./components/login";
 import NotFound from "./pages/404";
 import Profile from "./pages/profile/Profile";
@@ -88,6 +92,31 @@ function App() {
         element={
           <PrivateLayout>
             <OrderComplete />
+          </PrivateLayout>
+        }
+      />
+
+      <Route
+        path={path.DASHBOARD}
+        element={
+          <PrivateLayout>
+            <Dashboard />
+          </PrivateLayout>
+        }
+      />
+      <Route
+        path={path.USER_ADMIN}
+        element={
+          <PrivateLayout>
+            <UserAdmin />
+          </PrivateLayout>
+        }
+      />
+      <Route
+        path={path.PRODUCT_ADMIN}
+        element={
+          <PrivateLayout>
+            <ProductAdmin />
           </PrivateLayout>
         }
       />
